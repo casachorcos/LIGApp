@@ -8,6 +8,7 @@ public class Equipos {
     nombre = null;
     id = 0;
     ListaJugadores = new Lista<Jugadores>();
+	makelele
   }
 
 }
