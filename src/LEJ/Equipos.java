@@ -1,13 +1,15 @@
 package LEJ;
 
+import java.util.*;
+
 public class Equipos {
   int id;
-  Lista<Jugadores> ListaJugadores;
+  List<Jugadores> ListaJugadores;
   String nombre;
   public Equipos(){
     nombre = null;
     id = 0;
-    ListaJugadores = new Lista<Jugadores>();
+    ListaJugadores = new List<Jugadores>();
   }
 
 }
