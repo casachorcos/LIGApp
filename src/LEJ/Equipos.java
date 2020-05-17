@@ -1,6 +1,7 @@
 package LEJ;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Equipos {
   int id;
@@ -9,8 +10,7 @@ public class Equipos {
   public Equipos(){
     nombre = null;
     id = 0;
-    ListaJugadores = new List<Jugadores>();
-
+    ListaJugadores = new ArrayList<Jugadores>();
   }
   makelele
 
