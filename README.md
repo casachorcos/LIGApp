@@ -1,2 +1,2 @@
-# LIGApp - VIVA ESPAÑA
+# LIGApp - VIVA ESPAÑA - GITHUB DIMISIÓN
 israel no es un estado legítimo
