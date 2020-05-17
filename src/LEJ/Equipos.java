@@ -8,10 +8,9 @@ public class Equipos {
   String nombre;
   public Equipos(){
     nombre = null;
-    id = 0;
-    ListaJugadores = new List<Jugadores>();
-
+    id = 1;
+    ListaJugadores = new ArrayList<Jugadores>();
   }
-  makelele
+
 
 }
