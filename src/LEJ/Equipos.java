@@ -12,6 +12,6 @@ public class Equipos {
     id = 1;
     ListaJugadores = new ArrayList<Jugadores>();
   }
-  makelele
+
 
 }
