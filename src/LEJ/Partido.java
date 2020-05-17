@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Partido implements Comparable<Partido> {
 	//Relacionamos con los dos equipos y la jornada en la que se juega
-	private Equipos local;
-	private Equipos visitante;
+	private Equipo local;
+	private Equipo visitante;
 	private Jornada jornada;
 	//Datos del partido
 	private int golesLocal;
@@ -13,8 +13,8 @@ public class Partido implements Comparable<Partido> {
 	private String campo;
 	private Date fecha;
 	private boolean jugado;
-	
-	public Partido(Equipos loc, Equipos vis, Jornada jor, String c, Date f) {
+
+	public Partido(Equipo loc, Equipo vis, Jornada jor, String c, Date f) {
 		//Inicializamos
 		local = loc;
 		visitante = vis;
@@ -25,31 +25,31 @@ public class Partido implements Comparable<Partido> {
 		fecha = f;
 		jugado = false; //No se ha jugado cuando lo construimos
 	}
-	
-	public Equipos getLocal() {
+
+	public Equipo getLocal() {
 		return local;
 	}
 
-	public Equipos getVisitante() {
+	public Equipo getVisitante() {
 		return visitante;
 	}
 
 	public Jornada getJornada() {
 		return jornada;
 	}
-	
+
 	public int getGolesLocal() {
 		return golesLocal;
 	}
-	
+
 	public void incrementaGolesLocal() {
 		golesLocal++;
 	}
-	
+
 	public int getGolesVisitante() {
 		return golesVisitante;
 	}
-	
+
 	public void incrementaGolesVisitante() {
 		golesVisitante++;
 	}
@@ -69,8 +69,8 @@ public class Partido implements Comparable<Partido> {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	
+
+
 	public boolean haSidoJugado() {
 		return jugado;
 	}
