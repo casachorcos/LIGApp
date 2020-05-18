@@ -12,9 +12,10 @@ public class Partido implements Comparable<Partido> {
 	private int golesVisitante;
 	private String campo;
 	private Date fecha;
+	private int hora;
 	private boolean jugado;
 
-	public Partido(Equipo loc, Equipo vis, Jornada jor, String c, Date f) {
+	public Partido(Equipo loc, Equipo vis, Jornada jor, String c, Date f, int h) {
 		//Inicializamos
 		local = loc;
 		visitante = vis;
@@ -23,6 +24,7 @@ public class Partido implements Comparable<Partido> {
 		golesVisitante = 0;
 		campo = new String(c);
 		fecha = f;
+		hora = h;
 		jugado = false; //No se ha jugado cuando lo construimos
 	}
 
@@ -70,6 +72,13 @@ public class Partido implements Comparable<Partido> {
 		this.fecha = fecha;
 	}
 
+	public int getHora() {
+		return hora;
+	}
+
+	public void setHora(int hora) {
+		this.hora = hora;
+	}
 
 	public boolean haSidoJugado() {
 		return jugado;
