@@ -11,9 +11,9 @@ public class Liga {
 	private List<Equipo> ListaEquipos;
 	private String nombre;
 	
-	public Liga(String nom) {
+	public Liga(int id, String nom) {
 		nombre = nom;
-		id = 0;
+		this.id = id;
 		ListaEquipos = new ArrayList<Equipo>(50);
 	}
 	

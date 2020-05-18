@@ -14,8 +14,10 @@ public class Equipo {
 		ListaJugadores = new ArrayList<Jugador>(50);
 	}
 	  
-	public Equipo(){
-		new Equipo(null);
+	public Equipo(int id, String nom) {
+		nombre = nom;
+		this.id = id;
+		ListaJugadores = new ArrayList<Jugador>(50);
 	}
 	 
 	public void aniadirJugador(Jugador j) {

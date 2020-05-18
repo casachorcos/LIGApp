@@ -3,13 +3,9 @@ import java.util.List;
 
 
 public class Jugador {
-    
-
-
-    public static int id = 1;
-  
     private String nombre;
-    private int identificacion;
+    private int id;
+
     private int edad;
     private String rol;
     private int goles = 0;
@@ -17,23 +13,10 @@ public class Jugador {
     private int rojas = 0;
     private boolean capitan = false;
 
-    
-
-    public void setNombre(String nombre, boolean cap){
-        this.nombre = nombre;
-        identificacion = id;
-        id++;
-        if(cap){
-            capitan = true;
-        }
-    }
-
-    public void setEdad(int edad){
-        if(edad > 0){
-            this.edad = edad;
-        }else{
-            throw new RuntimeException("La edad no puede ser 0 o negativa");
-        }
+    public Jugador(int id, String nombre, int edad) {
+    	this.nombre = nombre;
+    	this.edad = edad;
+    	this.id = id;
     }
 
     public void setRol(String rol){
@@ -46,15 +29,23 @@ public class Jugador {
         goles = goles + g;
     }
 
+    public String getNombre() {
+    	return nombre;
+    }
+    
+    public int getEdad() {
+    	return edad;
+    }    
+
+    public int getId() {
+    	return id;
+    }    
+   
     public void incAmarillas(int a){
         amarillas = amarillas + a;
     }
 
-    private void incRojas(int r){
+    public void incRojas(int r){
         rojas = rojas + r;
     }
-
-
-
-
 }
