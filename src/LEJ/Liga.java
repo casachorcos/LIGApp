@@ -6,9 +6,6 @@ import java.util.List;
 
 public class Liga {
 
-
-
-public class Liga {
 	private File Logo;
 	private int id;
 	private List<Equipo> ListaEquipos;
