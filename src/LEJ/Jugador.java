@@ -12,13 +12,17 @@ import java.util.List;
     private int goles = 0;
     private int amarillas = 0;
     private int rojas = 0;
+    private boolean capitan = false;
 
     
 
-    public void setNombre(String nombre){
+    public void setNombre(String nombre, boolean cap){
         this.nombre = nombre;
         identificacion = id;
         id++;
+        if(cap){
+            capitan = true;
+        }
     }
 
     public void setEdad(int edad){
