@@ -20,7 +20,7 @@ public class Equipo {
 	 
 	public void aniadirJugador(Jugador j) {
 		ListaJugadores.add(j);
-		//Añadir a la base de datos?
+		//Aï¿½adir a la base de datos?
 	}
 	  
 	public void eliminarJugador(Jugador j) {
