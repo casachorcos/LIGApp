@@ -1,5 +1,5 @@
 package LEJ;
 
-public class Clasificación {
+public class Clasificaciï¿½n {
 
 }
