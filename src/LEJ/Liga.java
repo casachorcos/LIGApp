@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Liga {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	private File Logo;
 	private int id;
 	private List<Equipo> ListaEquipos;
