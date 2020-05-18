@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Jornada {
 	
-	private date fechaInicio;
-	private date fechaFin;
+	private Date fechaInicio;
+	private Date fechaFin;
 
 	
 	public Jornada() {
