@@ -12,9 +12,9 @@ public class Jornada {
 		
 	}
 	
-	public Jornada(fIni,fFin) {
+	public Jornada(Date fIni, Date fFin) {
 		
-		fIni = fechaInicio;
-		fFin = fechaFin;
+		this.fechaInicio = fIni;
+		this.fechaFin = fFin;
 	}
 }
