@@ -19,7 +19,7 @@ public class Jornada {
 		this.fechaFin = fFin;
 		this.nombreLiga = l.getNombre();
 		this.numeroJornada = 0; // Deberia incrementarse segun haya 
-								// más jornadas vinculadas a una liga
+								// mas jornadas vinculadas a una liga
 	}
 	
 	public void getFechaInicio() {
@@ -37,7 +37,7 @@ public class Jornada {
 	public String toString() {
 		
 		StringJoiner sj = new StringJoiner("; ","( "," )");
-		sj.add("Jornada número " + numeroJornada + "de la liga " this.nombreLiga);
+		sj.add("Jornada numero " + numeroJornada + "de la liga " this.nombreLiga);
 		sj.add("Fecha de Inicio: " + getFechaInicio());
 		sj.add("Fecha de Fin: " + getFechafin() + ".");
 		
