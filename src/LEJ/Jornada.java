@@ -22,24 +22,28 @@ public class Jornada {
 								// mas jornadas vinculadas a una liga
 	}
 	
-	public void getFechaInicio() {
+	public Date getFechaInicio() {
 		return this.fechaInicio;
 	}
 	
-	public void getFechaFin() {
+	public Date getFechaFin() {
 		return this.fechaFin;
 	}
 	
-	public void getNumeroJornada() {
+	public int getNumeroJornada() {
 		return this.numeroJornada;
+	}
+	
+	public String getNombreLiga() {
+		return this.nombreLiga;
 	}
 	
 	public String toString() {
 		
 		StringJoiner sj = new StringJoiner("; ","( "," )");
-		sj.add("Jornada numero " + numeroJornada + "de la liga " this.nombreLiga);
+		sj.add("Jornada numero " + numeroJornada + "de la liga " + getNombreLiga());
 		sj.add("Fecha de Inicio: " + getFechaInicio());
-		sj.add("Fecha de Fin: " + getFechafin() + ".");
+		sj.add("Fecha de Fin: " + getFechaFin() + ".");
 		
 		return sj.toString();
 	}
