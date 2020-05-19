@@ -23,5 +23,7 @@ public abstract class ConexionConBasedeDatos {
 	
 	public abstract void crearLiga(Liga l);
 	public abstract void eliminarLiga(Liga l);
+	
+	
 
 }

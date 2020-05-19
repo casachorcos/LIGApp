@@ -9,6 +9,11 @@ public class ConexionBaseDatosJDBC extends ConexionConBasedeDatos {
 	private Connection conn;
 
 	private static ConexionBaseDatosJDBC instanciaInterfaz = null;
+	
+	
+	
+	
+	
 
 	private ConexionBaseDatosJDBC() {
 		try {
@@ -80,7 +85,7 @@ public class ConexionBaseDatosJDBC extends ConexionConBasedeDatos {
 	
 	public List<Jugador> listaJugadores() {
 		ArrayList<Jugador> lJugadores = new ArrayList<>();
-		String selectQueryBody = "SELECT * FROM JUGADOR";
+		String selectQueryBody = "SELECT Nombre, Identificacion, Edad FROM Jugador";
 		Statement querySt;
 		try {
 			querySt = conn.createStatement();
@@ -88,8 +93,8 @@ public class ConexionBaseDatosJDBC extends ConexionConBasedeDatos {
 			// position result to first
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					int id = rs.getInt(1);
-					String name = rs.getString(2);
+					String name = rs.getString(1);
+					int id = rs.getInt(3);
 					int edad = rs.getInt(3);
 					lJugadores.add(new Jugador(id, name, edad));
 				}
