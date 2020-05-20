@@ -13,8 +13,8 @@ public class main_ligapp {
 
 		accesoBD = ConexionBaseDatosJDBC.getInstance();
 //		//		accesoBD = ConexionBaseDatosHibernate.getInstance();
-//		List<Equipo> listEquipos = accesoBD.listaEquipos();
-		List<Jugador> listJugadores = accesoBD.listaJugadores();
+		List<Equipo> listEquipos = accesoBD.listaEquipos();
+//		List<Jugador> listJugadores = accesoBD.listaJugadores();
 //		ListIterator<Jugador> it = listJugadores.listIterator();
 //		while(it.hasNext()) {
 //			if (it.next().getIdEquipo() != null) {
@@ -34,7 +34,7 @@ public class main_ligapp {
 //		frame.getContentPane().add(createJTabbedPane(accesoBD, listEquipos, listJugadores));
 //
 //		// Display the window.
-		System.out.println(listJugadores.toArray().toString());
+		System.out.println(listEquipos.toArray().toString());
 	}
 	 
 	
