@@ -85,7 +85,7 @@ public class ConexionBaseDatosJDBC extends ConexionConBasedeDatos {
 	
 	public List<Jugador> listaJugadores() {
 		ArrayList<Jugador> lJugadores = new ArrayList<>();
-		String selectQueryBody = "SELECT Nombre, Identificacion, Edad FROM Jugador";
+		String selectQueryBody = "SELECT nombre, id, edad FROM Jugador";
 		Statement querySt;
 		try {
 			querySt = conn.createStatement();
