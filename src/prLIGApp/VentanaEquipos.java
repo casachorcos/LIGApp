@@ -79,7 +79,7 @@ public class VentanaEquipos extends JFrame {
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea borrar el jugador?");
+				int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea borrar el equipo?");
 				if (res == 0) {
 					int pos = list.getSelectedIndex();
 					String elemento = listaJ.get(pos).toString();
