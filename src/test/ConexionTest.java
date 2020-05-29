@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +44,14 @@ class ConexionTest {
 		assertAll("Eliminar Liga",
 				() -> assertNotEquals(ultimaDespues, ligaBorrada),
 				() -> assertEquals(ultimaAntes, ultimaDespues));
+	}
+	
+	@AfterAll
+	static void tearDownAll() {
+		Liga liga = new Liga(conexion.generarID(), "JUnitTestBasica");
+		Liga ligaCreada = new Liga(conexion.generarID(), "JUnitTestCrear");
+		conexion.eliminarLiga(liga);
+		conexion.eliminarLiga(ligaCreada);
 	}
 
 	
