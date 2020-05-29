@@ -16,16 +16,16 @@ public class Jornada {
 	
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			
-	public Jornada(int c) {
+	public Jornada(int cod) {
 		
-		codigoJornada = c;
+		codigoJornada = cod;
 		fechaInicio = new Date(Calendar.getInstance().getTime().getTime());
 		fechaFin = new Date(fechaInicio.getTime() + 6 * 24 * 60 * 60 * 1000);
 		this.nombreLiga = null;
 		this.numeroJornada = 1;
 	}
 	
-	public Jornada(int c, String nomLiga) {
+	public Jornada(int cod, String nomLiga) {
 		
 		fechaInicio = new Date(Calendar.getInstance().getTime().getTime());
 		fechaFin = new Date(fechaInicio.getTime() + 6 * 24 * 60 * 60 * 1000);
@@ -33,7 +33,7 @@ public class Jornada {
 		this.numeroJornada = 1;
 	}
 	
-	public Jornada(int c, int numJor, String nomLiga, Date fIni) {
+	public Jornada(int cod, int numJor, String nomLiga, Date fIni) {
 		
 		fechaInicio = fIni;
 		fechaFin = new Date(fechaInicio.getTime() + 6 * 24 * 60 * 60 * 1000);
@@ -41,7 +41,7 @@ public class Jornada {
 		this.numeroJornada = numJor;
 	}
 	
-	public Jornada(int c, int numJor, String nomLiga, Date fIni, Date fFin) {
+	public Jornada(int cod, int numJor, String nomLiga, Date fIni, Date fFin) {
 		
 		fechaInicio = fIni;
 		fechaFin = fFin;
@@ -69,8 +69,8 @@ public class Jornada {
 		return this.nombreLiga;
 	}
 	
-	public void setCodigoJornada(int c) {
-		codigoJornada = c;
+	public void setCodigoJornada(int cod) {
+		codigoJornada = cod;
 	}
 	
 	public void setFechaInicio(Date fIni) {
@@ -92,9 +92,9 @@ public class Jornada {
 	public String toString() {
 		
 		StringJoiner sj = new StringJoiner("; ","( "," )");
-		sj.add("Jornada numero " + numeroJornada + " de la liga " + getNombreLiga());
+		sj.add("Jornada numero " + getNumeroJornada() + " de la liga " + getNombreLiga());
 		sj.add("Fecha de Inicio: " + formatter.format(getFechaInicio()));
-		sj.add("Fecha de Fin: " + formatter.format(getFechaFin())+ ".");
+		sj.add("Fecha de Fin: " + formatter.format(getFechaFin())+ ". (CODIGO JORNADA: " + getCodigoJornada() + ").");
 		
 		return sj.toString();
 	}

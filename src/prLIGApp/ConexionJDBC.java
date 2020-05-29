@@ -145,6 +145,11 @@ public class ConexionJDBC extends Conexion {
 		return jornadas;
 	}	
 	
+	public List<Partido> listaPartidos() {
+		ArrayList<Partido> partidos = new ArrayList<>();
+		return partidos;
+	}	
+	
 	public void crearUsuario(Usuario u) {
 		String query = "INSERT INTO Usuario (nombre, correo, password) VALUES (?, ?, ?)";
 		try {
@@ -215,6 +220,9 @@ public class ConexionJDBC extends Conexion {
 			e.printStackTrace();
 		}
 	}
+	
+	public void crearPartido(Partido p) {
+	}
 
 	@Override
 	public void eliminarUsuario(Usuario u) {
@@ -278,12 +286,39 @@ public class ConexionJDBC extends Conexion {
 		}
 	}
 	
+	@Override
+	public void eliminarPartido(Partido p) {
+	}
+	
+	
 	
 	private void actualizarID(int id) {
 		String updateBody = "UPDATE IncrementaId SET iteradorId = ?";
 		try {
 			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
 			pS.setInt(1, id);
+			int res = pS.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void actualizarCodJornada(int cod) {
+		String updateBody = "UPDATE IncrementaCodJornada SET iteradorJornada = ?";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+			pS.setInt(1, cod);
+			int res = pS.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void actualizarCodPartido(int cod) {
+		String updateBody = "UPDATE IncrementaCodPartido SET iteradorPartido = ?";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+			pS.setInt(1, cod);
 			int res = pS.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -307,6 +342,44 @@ public class ConexionJDBC extends Conexion {
 			e.printStackTrace();
 		}
 		return id;
+	}
+	
+	public int generarCodJornada() {
+		int cod = 0;
+		String query = "SELECT * FROM IncrementaCodJornada";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					cod = rs.getInt(1);	
+				}
+			}
+			actualizarCodJornada(cod+1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cod;
+	}
+	
+	public int generarCodPartido() {
+		int cod = 0;
+		String query = "SELECT * FROM IncrementaCodPartido";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					cod = rs.getInt(1);	
+				}
+			}
+			actualizarCodPartido(cod+1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cod;
 	}
 	
 	private List<Integer> jugadores(String n) {
