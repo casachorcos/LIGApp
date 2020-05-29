@@ -13,16 +13,19 @@ public abstract class Conexion {
 	public abstract List<Jugador> listaJugadores();
 	public abstract List<Equipo> listaEquipos();
 	public abstract List<Liga> listaLigas();
+	public abstract List<Jornada> listaJornadas();
 	
 	public abstract void crearUsuario(Usuario u);
 	public abstract void crearJugador(Jugador j);
 	public abstract void crearEquipo(Equipo eq);
 	public abstract void crearLiga(Liga a);
+	public abstract void crearJornada(Jornada jor);
 	
 	public abstract void eliminarUsuario(Usuario u);
 	public abstract void eliminarJugador(Jugador j);
 	public abstract void eliminarEquipo(Equipo eq);
 	public abstract void eliminarLiga(Liga a);
+	public abstract void eliminarJornada(Jornada jor);
 	
 	public abstract int generarID();
 	

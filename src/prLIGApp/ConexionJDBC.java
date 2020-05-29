@@ -1,6 +1,7 @@
 package prLIGApp;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -120,6 +121,30 @@ public class ConexionJDBC extends Conexion {
 		return ligas;
 	}		
 	
+	public List<Jornada> listaJornadas() {
+		ArrayList<Jornada> jornadas = new ArrayList<>();
+		String query = "SELECT * FROM Jornada";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					int cod = rs.getInt(1);
+					int numJor = rs.getInt(2);
+					String nomLiga = rs.getString(3);
+					Date fIni = rs.getDate(4);
+					Date fFin = rs.getDate(5);
+					jornadas.add(new Jornada(cod, numJor, nomLiga, fIni, fFin));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return jornadas;
+	}	
+	
 	public void crearUsuario(Usuario u) {
 		String query = "INSERT INTO Usuario (nombre, correo, password) VALUES (?, ?, ?)";
 		try {
@@ -173,6 +198,23 @@ public class ConexionJDBC extends Conexion {
 			e.printStackTrace();
 		}
 	}
+	
+	public void crearJornada(Jornada jor) {
+		String query = "INSERT INTO Jornada (codjornada, numjornada, liga,"
+				+ " iniciojornada, finjornada) VALUES (?, ?, ?, ?, ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			pS.setInt(1, jor.getCodigoJornada());
+			pS.setInt(2, jor.getNumeroJornada());
+			pS.setString(3, jor.getNombreLiga());
+			pS.setDate(4, jor.getFechaInicio());
+			pS.setDate(5, jor.getFechaFin());
+			int res = pS.executeUpdate();
+			ResultSet rs = pS.getGeneratedKeys();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void eliminarUsuario(Usuario u) {
@@ -218,6 +260,18 @@ public class ConexionJDBC extends Conexion {
 		try {
 			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
 			pS.setInt(1, a.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void eliminarJornada(Jornada jor) {
+		String deleteBody = "DELETE FROM Jornada WHERE (codjornada = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+			pS.setInt(1, jor.getCodigoJornada());
 			int res = pS.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
