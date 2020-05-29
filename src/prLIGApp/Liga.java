@@ -48,4 +48,15 @@ public class Liga {
 	public String toString() {
 		return id + " " + nombre;
 	}
+	
+	//TODO: Identificador o nombre
+	public boolean equals(Object o) {
+		boolean res = false;
+		if (o instanceof Liga) {
+			Liga u = (Liga) o;
+			res = nombre.equals(u.getNombre());
+		}
+		
+		return res;
+	}
 }
