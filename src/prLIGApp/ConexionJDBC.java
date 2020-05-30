@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.lang.Math;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -433,6 +435,37 @@ public class ConexionJDBC extends Conexion {
 		return cod;
 	}
 	
+	public void parEnfrentado(Equipo l, Equipo v, Jornada jor) {
+		
+		int cod = generarCodPartido();
+		Partido p = new Partido(cod, l.getId(),v.getId(), jor.getCodigoJornada());
+		crearPartido(p);
+		actualizarCodPartido(cod + 1);
+		
+	}
+	
+	public void emparejamientos(Jornada jor) {
+		
+		List<Equipo> equipos = listaEquipos();
+		
+		do {
+			
+			int i, j;
+			Random r = new Random();
+			
+			i = Math.abs(r.nextInt() % equipos.size());
+			Equipo eq1 = equipos.get(i);
+			equipos.remove(i);
+			
+			j = Math.abs(r.nextInt() % equipos.size());
+			Equipo eq2 = equipos.get(j);
+			equipos.remove(j);
+			
+			parEnfrentado(eq1, eq2, jor);
+			
+		} while (equipos.size() > 1);
+	}
+
 	private List<Integer> jugadores(String n) {
         ArrayList<Integer> jugadores = new ArrayList<>();
         String query = "SELECT idJugadorR4 FROM R4 WHERE idUsuarioR4 = " + n;

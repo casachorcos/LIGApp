@@ -34,6 +34,9 @@ public abstract class Conexion {
 	public abstract int generarCodJornada();
 	public abstract int generarCodPartido();
 	
+	public abstract void parEnfrentado(Equipo l, Equipo v, Jornada jor);
+	public abstract void emparejamientos(Jornada jor);
+	
 	public abstract List<Jugador> usuario_jugador(Usuario u);
 	public abstract List<Equipo> usuario_equipo(Usuario u);
 	public abstract List<Liga> usuario_liga(Usuario u);

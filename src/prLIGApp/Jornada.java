@@ -27,6 +27,7 @@ public class Jornada {
 	
 	public Jornada(int cod, int id) {
 		
+		codigoJornada = cod;
 		fechaInicio = new Date(Calendar.getInstance().getTime().getTime());
 		fechaFin = new Date(fechaInicio.getTime() + 6 * 24 * 60 * 60 * 1000);
 		this.idLiga = id;
@@ -35,6 +36,7 @@ public class Jornada {
 	
 	public Jornada(int cod, int numJor, int id, Date fIni) {
 		
+		codigoJornada = cod;
 		fechaInicio = fIni;
 		fechaFin = new Date(fechaInicio.getTime() + 6 * 24 * 60 * 60 * 1000);
 		this.idLiga = id;
@@ -43,6 +45,7 @@ public class Jornada {
 	
 	public Jornada(int cod, int numJor, int id, Date fIni, Date fFin) {
 		
+		codigoJornada = cod;
 		fechaInicio = fIni;
 		fechaFin = fFin;
 		this.idLiga = id;
