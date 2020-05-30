@@ -12,7 +12,7 @@ public class Jornada {
 	private int numeroJornada;
 	private Date fechaInicio;
 	private Date fechaFin;
-	private String nombreLiga;
+	private int idLiga;
 	
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			
@@ -21,31 +21,31 @@ public class Jornada {
 		codigoJornada = cod;
 		fechaInicio = new Date(Calendar.getInstance().getTime().getTime());
 		fechaFin = new Date(fechaInicio.getTime() + 6 * 24 * 60 * 60 * 1000);
-		this.nombreLiga = null;
+		this.idLiga = 0;
 		this.numeroJornada = 1;
 	}
 	
-	public Jornada(int cod, String nomLiga) {
+	public Jornada(int cod, int id) {
 		
 		fechaInicio = new Date(Calendar.getInstance().getTime().getTime());
 		fechaFin = new Date(fechaInicio.getTime() + 6 * 24 * 60 * 60 * 1000);
-		this.nombreLiga = nomLiga;
+		this.idLiga = id;
 		this.numeroJornada = 1;
 	}
 	
-	public Jornada(int cod, int numJor, String nomLiga, Date fIni) {
+	public Jornada(int cod, int numJor, int id, Date fIni) {
 		
 		fechaInicio = fIni;
 		fechaFin = new Date(fechaInicio.getTime() + 6 * 24 * 60 * 60 * 1000);
-		this.nombreLiga = nomLiga;
+		this.idLiga = id;
 		this.numeroJornada = numJor;
 	}
 	
-	public Jornada(int cod, int numJor, String nomLiga, Date fIni, Date fFin) {
+	public Jornada(int cod, int numJor, int id, Date fIni, Date fFin) {
 		
 		fechaInicio = fIni;
 		fechaFin = fFin;
-		this.nombreLiga = nomLiga;
+		this.idLiga = id;
 		this.numeroJornada = numJor;
 	}
 	
@@ -65,8 +65,8 @@ public class Jornada {
 		return this.numeroJornada;
 	}
 	
-	public String getNombreLiga() {
-		return this.nombreLiga;
+	public int getIdLiga() {
+		return this.idLiga;
 	}
 	
 	public void setCodigoJornada(int cod) {
@@ -85,16 +85,17 @@ public class Jornada {
 		numeroJornada = numJor;
 	}
 	
-	public void setNombreLiga(Liga l) {
-		nombreLiga = l.getNombre();
+	public void setNombreLiga(int id) {
+		idLiga = id;
 	}
 	
 	public String toString() {
 		
 		StringJoiner sj = new StringJoiner("; ","( "," )");
-		sj.add("Jornada numero " + getNumeroJornada() + " de la liga " + getNombreLiga());
+		sj.add("Jornada numero " + getNumeroJornada() + " de la liga con id " + getIdLiga());
 		sj.add("Fecha de Inicio: " + formatter.format(getFechaInicio()));
-		sj.add("Fecha de Fin: " + formatter.format(getFechaFin())+ ". (CODIGO JORNADA: " + getCodigoJornada() + ").");
+		sj.add("Fecha de Fin: " + formatter.format(getFechaFin())+ ". (CODIGO JORNADA: "
+		+ getCodigoJornada() + ").");
 		
 		return sj.toString();
 	}

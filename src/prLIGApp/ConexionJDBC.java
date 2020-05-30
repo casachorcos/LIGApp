@@ -132,10 +132,10 @@ public class ConexionJDBC extends Conexion {
 				while (rs.next()) {
 					int cod = rs.getInt(1);
 					int numJor = rs.getInt(2);
-					String nomLiga = rs.getString(3);
+					int id = rs.getInt(3);
 					Date fIni = rs.getDate(4);
 					Date fFin = rs.getDate(5);
-					jornadas.add(new Jornada(cod, numJor, nomLiga, fIni, fFin));
+					jornadas.add(new Jornada(cod, numJor, id, fIni, fFin));
 				}
 			}
 		} catch (SQLException e) {
@@ -147,6 +147,30 @@ public class ConexionJDBC extends Conexion {
 	
 	public List<Partido> listaPartidos() {
 		ArrayList<Partido> partidos = new ArrayList<>();
+		String query = "SELECT * FROM Partido";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					int cod = rs.getInt(1);
+					int idL = rs.getInt(2);
+					int idV = rs.getInt(3);
+					int codJor = rs.getInt(4);
+					int gL = rs.getInt(5);
+					int gV = rs.getInt(6);
+					String ca = rs.getString(7);
+					Date f = rs.getDate(8);
+					boolean ju = rs.getBoolean(9);
+					String h = rs.getString(10);
+					partidos.add(new Partido(cod, idL, idV, codJor, gL, gV, ca, f, ju, h));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return partidos;
 	}	
 	
@@ -211,7 +235,7 @@ public class ConexionJDBC extends Conexion {
 			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			pS.setInt(1, jor.getCodigoJornada());
 			pS.setInt(2, jor.getNumeroJornada());
-			pS.setString(3, jor.getNombreLiga());
+			pS.setInt(3, jor.getIdLiga());
 			pS.setDate(4, jor.getFechaInicio());
 			pS.setDate(5, jor.getFechaFin());
 			int res = pS.executeUpdate();
@@ -222,6 +246,25 @@ public class ConexionJDBC extends Conexion {
 	}
 	
 	public void crearPartido(Partido p) {
+		String query = "INSERT INTO Partido (codpartido, local, visitante, jornada, goleslocal,"
+		+ " golesvisitante, campo, fecha, jugado, hora) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			pS.setInt(1, p.getCodigoPartido());
+			pS.setInt(2, p.getIdLocal());
+			pS.setInt(3, p.getIdVisitante());
+			pS.setInt(4, p.getCodigoJornada());
+			pS.setInt(5, p.getGolesLocal());
+			pS.setInt(6, p.getGolesVisitante());
+			pS.setString(7, p.getCampo());
+			pS.setDate(8, p.getFecha());
+			pS.setBoolean(9, p.getJugado());
+			pS.setString(10, p.getHora());
+			int res = pS.executeUpdate();
+			ResultSet rs = pS.getGeneratedKeys();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -288,6 +331,14 @@ public class ConexionJDBC extends Conexion {
 	
 	@Override
 	public void eliminarPartido(Partido p) {
+		String deleteBody = "DELETE FROM Partido WHERE (codpartido = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+			pS.setInt(1, p.getCodigoPartido());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
