@@ -51,4 +51,14 @@ public class Jugador {
     public String toString() {
 		return id + " " + nombre;
 	}
+    
+    public boolean equals(Object o) {
+		boolean res = false;
+		if (o instanceof Jugador) {
+			Jugador u = (Jugador) o;
+			res = id == u.getId();
+		}
+		
+		return res;
+	}
 }

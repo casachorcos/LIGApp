@@ -49,12 +49,11 @@ public class Liga {
 		return id + " " + nombre;
 	}
 	
-	//TODO: Identificador o nombre
 	public boolean equals(Object o) {
 		boolean res = false;
 		if (o instanceof Liga) {
 			Liga u = (Liga) o;
-			res = nombre.equals(u.getNombre());
+			res = id == u.getId();
 		}
 		
 		return res;

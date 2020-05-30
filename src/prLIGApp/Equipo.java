@@ -50,4 +50,14 @@ public class Equipo {
 	public String toString() {
 		return id + " " + nombre;
 	}
+	
+	public boolean equals(Object o) {
+		boolean res = false;
+		if (o instanceof Equipo) {
+			Equipo u = (Equipo) o;
+			res = id == u.getId();
+		}
+		
+		return res;
+	}
 }
