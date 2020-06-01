@@ -72,4 +72,6 @@ public abstract class Conexion {
 	
 	public abstract void actualizarclasi(int codLiga, int codEquipo, int punt, int goMar, int goCont);
 	public abstract Clasificacion equipoclasificacion(int codLiga, int codEquipo);
+
+	public abstract List<Equipo> equiposLiga(int codLiga);
 }

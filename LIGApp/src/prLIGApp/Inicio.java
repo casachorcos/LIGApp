@@ -110,7 +110,7 @@ public class Inicio extends JFrame {
 					menu.setVisible(true);
 					setVisible(false);
 				} else {
-					error.setText("Nombre de usuario o contraseña incorrecto");
+					error.setText("Nombre de usuario o contraseï¿½a incorrecto");
 				}
 				usuario.setText("");
 				password.setText("");
@@ -168,7 +168,7 @@ public class Inicio extends JFrame {
     					menu.setVisible(true);
     					setVisible(false);
     				} else {
-    					error.setText("Nombre de usuario o contraseña incorrecto");
+    					error.setText("Nombre de usuario o contraseï¿½a incorrecto");
     				}
     				usuario.setText("");
     				password.setText("");

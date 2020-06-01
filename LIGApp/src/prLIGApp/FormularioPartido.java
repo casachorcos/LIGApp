@@ -147,7 +147,7 @@ public class FormularioPartido extends JFrame {
 		Conexion accesoBD;
 		accesoBD = ConexionJDBC.getInstance();
 
-		listae = accesoBD.usuario_equipo(Inicio.nombreUsuario);
+		listae = accesoBD.equiposLiga(Ligas.seleccionado.getId());
 		listaJ = new DefaultListModel();
 		
 		JList list = new JList();

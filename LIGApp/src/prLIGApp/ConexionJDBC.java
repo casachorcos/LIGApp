@@ -848,5 +848,32 @@ public class ConexionJDBC extends Conexion {
 	}
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    
+	
+	public List<Equipo> equiposLiga(int codLiga){
+		List<Equipo> equipos = new ArrayList<>();
+
+		String query = "SELECT e.id, e.nombre FROM Equipo e, Clasificacion c WHERE e.id =c.idEquipoClasificacion AND c.idLigaClasificacion = "+ codLiga;
+		
+		try {
+			PreparedStatement ps = (PreparedStatement) con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					int id = rs.getInt(1);
+					String nombre = rs.getString(2);
+					equipos.add(new Equipo(id,nombre));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return equipos;
+	}
+
+
+
+
+
+
 }
