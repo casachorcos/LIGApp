@@ -610,7 +610,8 @@ public class ConexionJDBC extends Conexion {
     }
 	
 	public void emparejamientos(Jornada jor) {
-        List<Equipo> equipos = usuario_equipo(Inicio.nombreUsuario);listaEquipos();
+        List<Equipo> equipos = equiposLiga(jor.getNombreLiga());
+        listaEquipos();
         do {
             int i, j;
             Random r = new Random();
