@@ -167,15 +167,19 @@ public class Jornadas extends JFrame {
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (listae.isEmpty()) {
-					accesoBD.crearJornada(new Jornada(accesoBD.generarCodJornada(), Ligas.seleccionado.getId()));
+					Jornada jor = new Jornada(accesoBD.generarCodJornada(), Ligas.seleccionado.getId());
+					accesoBD.crearJornada(jor);
 					accesoBD.actualizarCodJornada(accesoBD.generarCodJornada() + 1);
+					accesoBD.emparejamientos(jor);
 					Jornadas jorna = new Jornadas();
 					jorna.setVisible(true);
 					setVisible(false);
 				} else {
 					int id = accesoBD.generarCodJornada();
-					accesoBD.crearJornada(new Jornada(id, listae.size() + 1, Ligas.seleccionado.getId(), null));
+					Jornada jor = new Jornada(id, listae.size() + 1, Ligas.seleccionado.getId(), null);
+					accesoBD.crearJornada(jor);
 					accesoBD.actualizarCodJornada(accesoBD.generarCodJornada() + 1);
+					accesoBD.emparejamientos(jor);
 					Jornadas jorna = new Jornadas();
 					jorna.setVisible(true);
 					setVisible(false);
