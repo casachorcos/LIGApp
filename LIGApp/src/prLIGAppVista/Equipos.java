@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -158,8 +159,7 @@ public class Equipos extends JFrame {
 		listaJ = new DefaultListModel();
 		
 		JList list = new JList();
-		list.setBounds(25, 81, 396, 382);
-		panel_1.add(list);
+		list.setBounds(1, 1, 363, 346);
 		list.setModel(listaJ);
 		
 		for (Equipo j : listae) {
@@ -198,6 +198,12 @@ public class Equipos extends JFrame {
 		});
 		eliminar.setBounds(472, 252, 130, 30);
 		panel_1.add(eliminar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(25, 85, 365, 348);
+		scrollPane.setViewportView(list);
+		list.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
 	}

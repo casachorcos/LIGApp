@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -171,8 +172,7 @@ public class DatosEquipo extends JFrame {
 		jugadores = accesoBD.usuario_jugador(Inicio.nombreUsuario);
 		
 		JList list = new JList();
-		list.setBounds(125, 172, 142, 207);
-		panel_1.add(list);
+		list.setBounds(1, 1, 14, 205);
 		list.setModel(listaJ);
 		
 		JLabel lblPlantilla = new JLabel("Plantilla:");
@@ -187,7 +187,7 @@ public class DatosEquipo extends JFrame {
 		JButton button = new JButton("Eliminar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				accesoBD.eliminarJugadorEnEquipo(listae.get(list.getSelectedIndex()));
+				accesoBD.eliminarJugadorEnEquipo(listae.get(list.getSelectedIndex()), Equipos.seleccionado);
 				DatosEquipo de = new DatosEquipo();
 				setVisible(false);
 				de.setVisible(true);
@@ -197,8 +197,7 @@ public class DatosEquipo extends JFrame {
 		panel_1.add(button);
 		
 		JList list_1 = new JList();
-		list_1.setBounds(387, 172, 142, 207);
-		panel_1.add(list_1);
+		list_1.setBounds(1, 1, 140, 205);
 		
 		listaJUG = new DefaultListModel();
 		
@@ -225,6 +224,17 @@ public class DatosEquipo extends JFrame {
 		btnAadir.setBounds(399, 397, 130, 30);
 		panel_1.add(btnAadir);
 		
+		JScrollPane scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(125, 172, 142, 207);
+		scrollPane1.setViewportView(list);
+		list.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane1);
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBounds(387, 172, 142, 207);
+		scrollPane2.setViewportView(list_1);
+		list_1.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane2);
 		
 		this.setLocationRelativeTo(null);
 	}

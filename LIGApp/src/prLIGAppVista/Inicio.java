@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import java.awt.event.KeyAdapter;
 
 public class Inicio extends JFrame {
 
@@ -85,7 +86,35 @@ public class Inicio extends JFrame {
 		lblNewLabel_1.setBounds(41, 206, 46, 14);
 		panel.add(lblNewLabel_1);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setForeground(Color.RED);
+		error.setBounds(19, 350, 264, 14);
+		panel.add(error);
+		
 		JTextField usuario = new JTextField();
+		usuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					Conexion accesoBD;
+					accesoBD = ConexionJDBC.getInstance();
+					String user = usuario.getText();
+					String pass = String.valueOf(password.getPassword());
+					Usuario u = new Usuario(user, null, pass);
+					List<Usuario> usuarios = accesoBD.listaUsuarios();
+					if (usuarios.contains(u)) {
+						nombreUsuario = u.getNombre();
+						MenuPrincipal menu = new MenuPrincipal();
+						menu.setVisible(true);
+						setVisible(false);
+					} else {
+						error.setText("Nombre de usuario o contraseña incorrecto");
+					}
+					usuario.setText("");
+					password.setText("");
+				}
+			}
+		});
 		usuario.setBounds(97, 204, 186, 20);
 		panel.add(usuario);
 		usuario.setColumns(10);
@@ -95,10 +124,7 @@ public class Inicio extends JFrame {
 		lblContasea.setBounds(19, 246, 68, 14);
 		panel.add(lblContasea);
 		
-		JLabel error = new JLabel("", SwingConstants.CENTER);
-		error.setForeground(Color.RED);
-		error.setBounds(19, 350, 264, 14);
-		panel.add(error);
+		
 		
 		JButton acceder = new JButton("Acceder");
 		acceder.addActionListener(new ActionListener() {
@@ -138,6 +164,29 @@ public class Inicio extends JFrame {
 		
 		
 		password = new JPasswordField();
+		password.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					Conexion accesoBD;
+					accesoBD = ConexionJDBC.getInstance();
+					String user = usuario.getText();
+					String pass = String.valueOf(password.getPassword());
+					Usuario u = new Usuario(user, null, pass);
+					List<Usuario> usuarios = accesoBD.listaUsuarios();
+					if (usuarios.contains(u)) {
+						nombreUsuario = u.getNombre();
+						MenuPrincipal menu = new MenuPrincipal();
+						menu.setVisible(true);
+						setVisible(false);
+					} else {
+						error.setText("Nombre de usuario o contraseña incorrecto");
+					}
+					usuario.setText("");
+					password.setText("");
+				}
+			}
+		});
 		password.setBounds(97, 244, 186, 20);
 		panel.add(password);
 		

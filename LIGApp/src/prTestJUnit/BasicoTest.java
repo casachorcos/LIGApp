@@ -15,7 +15,7 @@ import prLIGAppModelo.Usuario;
 
 import java.util.List;
 
-class ConexionTest {
+class BasicoTest {
 
 	private static final Conexion conexion = ConexionJDBC.getInstance();
 	
@@ -30,13 +30,32 @@ class ConexionTest {
 	
 	// Comenzamos con zzz para que quede el ultimo en la lista de usuarios
 	
+	// TODO: Cambiar contraseña cuando tenga un minimo de caracteres
 	private static Usuario usuario = new Usuario("zzzATest", "", "");
 	private static Usuario usuarioCreado = new Usuario("zzzBTest", "", "");
+
+	
+	/*
+	 * Creamos un objeto de cada clase que vamos a probar
+	 * para asegurarnos que cuando intentemos borrar siempre
+	 * haya alguno
+	 */
 	
 	@BeforeAll
 	static void initAll() {
+		
 		conexion.crearLiga(liga);
+		conexion.crearEquipo(equipo);
+		conexion.crearJugador(jugador);
+		conexion.crearUsuario(usuario);
+		
 	}
+	
+	/*
+	 * Cuando insertamos una liga se posiciona al final
+	 * de la tabla. Comprobamos que, en la lista, la
+	 * última liga es diferente a la anterior antes de añadirse esta
+	 */
 	
 	@Test
 	void testCrearLiga() {
@@ -49,6 +68,12 @@ class ConexionTest {
 				() -> assertNotEquals(ultimaAntes, ultimaDespues),
 				() -> assertEquals(ligaCreada, ultimaDespues));
 	}
+	
+	
+	/*
+	 * Comprobamos que la liga borrada no sigue en la lista
+	 * y que la última liga es la misma que antes de la operación
+	 */
 	
 	@Test
 	void testEliminarLiga() {
@@ -63,6 +88,12 @@ class ConexionTest {
 				() -> assertEquals(ultimaAntes, ultimaDespues));
 	}
 	
+	/*
+	 * Cuando insertamos una equipo se posiciona al final
+	 * de la tabla. Comprobamos que, en la lista, el
+	 * último equipo es diferente al anterior antes de añadirse este
+	 */
+	
 	@Test
 	void testCrearEquipo() {
 		List<Equipo> equiposAntes = conexion.listaEquipos();
@@ -74,6 +105,11 @@ class ConexionTest {
 				() -> assertNotEquals(ultimoAntes, ultimoDespues),
 				() -> assertEquals(equipoCreado, ultimoDespues));
 	}
+	
+	/*
+	 * Comprobamos que el equipo borrado no sigue en la lista
+	 * y que el último equipo es el mismo que antes de la operación
+	 */
 	
 	@Test
 	void testEliminarEquipo() {
@@ -88,6 +124,13 @@ class ConexionTest {
 				() -> assertEquals(ultimoAntes, ultimoDespues));
 	}
 	
+	
+	/*
+	 * Cuando insertamos una jugador se posiciona al final
+	 * de la tabla. Comprobamos que, en la lista, el
+	 * último jugador es diferente al anterior antes de añadirse este
+	 */
+	
 	@Test
 	void testCrearJugador() {
 		List<Jugador> jugadoresAntes = conexion.listaJugadores();
@@ -99,6 +142,12 @@ class ConexionTest {
 				() -> assertNotEquals(ultimoAntes, ultimoDespues),
 				() -> assertEquals(jugadorCreado, ultimoDespues));
 	}
+	
+	
+	/*
+	 * Comprobamos que el jugador borrado no sigue en la lista
+	 * y que el último jugador es el mismo que antes de la operación
+	 */
 	
 	@Test
 	void testEliminarJugador() {
@@ -113,6 +162,13 @@ class ConexionTest {
 				() -> assertEquals(ultimoAntes, ultimoDespues));
 	}
 	
+	
+	/*
+	 * Cuando insertamos una usuario se posiciona al final
+	 * de la tabla. Comprobamos que, en la lista, el
+	 * último usuario es diferente al anterior antes de añadirse este
+	 */
+	
 	@Test
 	void testCrearUsuario() {
 		List<Usuario> usuariosAntes = conexion.listaUsuarios();
@@ -124,6 +180,11 @@ class ConexionTest {
 				() -> assertNotEquals(ultimoAntes, ultimoDespues),
 				() -> assertEquals(usuarioCreado, ultimoDespues));
 	}
+	
+	/*
+	 * Comprobamos que el usuario borrado no sigue en la lista
+	 * y que el último usuario es el mismo que antes de la operación
+	 */
 	
 	@Test
 	void testEliminarUsuario() {
@@ -138,8 +199,16 @@ class ConexionTest {
 				() -> assertEquals(ultimoAntes, ultimoDespues));
 	}
 	
+	
+	
+	/*
+	 * Eliminamos objetos creados que no se habían eliminado
+	 * durante los tests
+	 */
+	
 	@AfterAll
 	static void tearDownAll() {
+		
 		conexion.eliminarLiga(liga);
 		conexion.eliminarLiga(ligaCreada);
 		conexion.eliminarEquipo(equipo);
@@ -148,6 +217,7 @@ class ConexionTest {
 		conexion.eliminarJugador(jugadorCreado);
 		conexion.eliminarUsuario(usuario);
 		conexion.eliminarUsuario(usuarioCreado);
+		
 	}
 
 	

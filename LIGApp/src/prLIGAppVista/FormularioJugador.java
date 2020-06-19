@@ -23,6 +23,7 @@ import prLIGAppModelo.Jugador;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 
 public class FormularioJugador extends JFrame {
 
@@ -58,8 +59,6 @@ public class FormularioJugador extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(51, 153, 102));
@@ -171,17 +170,19 @@ public class FormularioJugador extends JFrame {
 		cancelar.setBounds(386, 414, 130, 30);
 		panel_1.add(cancelar);
 		
+		listaJ = new DefaultListModel();
+		
+		JList list = new JList();
+		list.setBounds(209, 216, 289, 167);
+		list.setModel(listaJ);
+		list.setLayoutOrientation(JList.VERTICAL);
+		
 		
 		Conexion accesoBD;
 		accesoBD = ConexionJDBC.getInstance();
 
 		listae = accesoBD.usuario_equipo(Inicio.nombreUsuario);
-		listaJ = new DefaultListModel();
 		
-		JList list = new JList();
-		list.setBounds(199, 205, 299, 172);
-		panel_1.add(list);
-		list.setModel(listaJ);
 		
 		for (Equipo e : listae) {
 			listaJ.addElement(e.toString());
@@ -217,6 +218,11 @@ public class FormularioJugador extends JFrame {
 		});
 		aceptar.setBounds(111, 414, 130, 30);
 		panel_1.add(aceptar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(209, 216, 289, 167);
+		scrollPane.setViewportView(list);
+		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
 	}

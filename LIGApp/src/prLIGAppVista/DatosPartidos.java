@@ -133,7 +133,7 @@ public class DatosPartidos extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel(Partidos.seleccionadoS);
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
-		lblNewLabel.setBounds(25, 11, 438, 53);
+		lblNewLabel.setBounds(25, 11, 618, 53);
 		panel_1.add(lblNewLabel);
 		
 		JLabel lblNombre = new JLabel("Goles equipo local:");

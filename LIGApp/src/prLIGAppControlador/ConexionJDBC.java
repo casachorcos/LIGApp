@@ -753,6 +753,18 @@ public class ConexionJDBC extends Conexion {
         }
     }
     
+    public void eliminarJugadorEnEquipo(Jugador j, Equipo eq) {
+        String deleteBody = "DELETE FROM Plantilla WHERE (idJugador = ?) AND (idEquipo = ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+            pS.setInt(1, j.getId());
+            pS.setInt(2, eq.getId());
+            int res = pS.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void eliminarJugadorEnEquipo(Equipo j) {
         String deleteBody = "DELETE FROM Plantilla WHERE (idEquipo = ?)";
         try {
