@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -162,8 +163,7 @@ public class FormularioEquipo extends JFrame {
 		listaJ = new DefaultListModel();
 		
 		JList list = new JList();
-		list.setBounds(199, 205, 299, 172);
-		panel_1.add(list);
+		list.setBounds(209, 216, 289, 167);
 		list.setModel(listaJ);
 		
 		for (Liga e : listae) {
@@ -172,7 +172,7 @@ public class FormularioEquipo extends JFrame {
 		
 		JLabel lblSeleccinDeEquipo = new JLabel("Selecci\u00F3n de liga:");
 		lblSeleccinDeEquipo.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblSeleccinDeEquipo.setBounds(35, 230, 154, 14);
+		lblSeleccinDeEquipo.setBounds(43, 217, 154, 30);
 		panel_1.add(lblSeleccinDeEquipo);
 		
 		nombreequipo = new JTextField();
@@ -205,6 +205,11 @@ public class FormularioEquipo extends JFrame {
 		});
 		aceptar.setBounds(111, 414, 130, 30);
 		panel_1.add(aceptar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(207, 188, 289, 186);
+		scrollPane.setViewportView(list);
+		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
 	}

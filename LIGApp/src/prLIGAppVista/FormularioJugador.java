@@ -60,8 +60,6 @@ public class FormularioJugador extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		
-		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(51, 153, 102));
 		panel.setBounds(0, 0, 210, 474);
