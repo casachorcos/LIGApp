@@ -205,20 +205,6 @@ public class DatosJugadores extends JFrame {
 			listaJ.addElement(j.toString());
 		}
 		
-		JButton eliminar = new JButton("Eliminar");
-		eliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (!list.isSelectionEmpty()) {
-					acceso.eliminarJugadorEnEquipo(jugadores.seleccionado);
-					jugadores jugado = new jugadores();
-					jugado.setVisible(true);
-					setVisible(false);
-				}
-			}
-		});
-		eliminar.setBounds(159, 433, 130, 30);
-		panel_1.add(eliminar);
-		
 		this.setLocationRelativeTo(null);
 	}
 }
