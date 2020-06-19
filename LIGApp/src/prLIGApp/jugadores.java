@@ -17,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
 
 public class jugadores extends JFrame {
 
@@ -122,6 +123,11 @@ public class jugadores extends JFrame {
 		user.setBorder(null);
 	    user.setBorderPainted(false);
 	    user.setContentAreaFilled(false);
+	    
+	    JList list = new JList();
+	    list.setBounds(0, 0, 365, 348);
+	    listaJ = new DefaultListModel();
+	    list.setModel(listaJ);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(204, 255, 204));
@@ -149,12 +155,6 @@ public class jugadores extends JFrame {
 		accesoBD = ConexionJDBC.getInstance();
 
 		bdlista = accesoBD.usuario_jugador(Inicio.nombreUsuario);
-		listaJ = new DefaultListModel();
-		
-		JList list = new JList();
-		list.setBounds(25, 81, 396, 382);
-		panel_1.add(list);
-		list.setModel(listaJ);
 		
 		for (Jugador j : bdlista) {
 			listaJ.addElement(j.toString());
@@ -193,6 +193,12 @@ public class jugadores extends JFrame {
 		});
 		ver.setBounds(472, 362, 130, 30);
 		panel_1.add(ver);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(25, 85, 365, 348);
+		scrollPane.setLayout(new BorderLayout());
+		scrollPane.add(list, BorderLayout.NORTH);
+		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
 	}
