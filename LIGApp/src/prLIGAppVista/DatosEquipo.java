@@ -187,7 +187,6 @@ public class DatosEquipo extends JFrame {
 		JButton button = new JButton("Eliminar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				accesoBD.eliminarJugadorEnEquipo(listae.get(list.getSelectedIndex()));
 				DatosEquipo de = new DatosEquipo();
 				setVisible(false);
 				de.setVisible(true);

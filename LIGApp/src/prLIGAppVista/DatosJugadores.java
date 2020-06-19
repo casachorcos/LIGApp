@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -191,10 +192,14 @@ public class DatosJugadores extends JFrame {
 		
 		listaJ = new DefaultListModel();
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(125, 215, 357, 189);
+		panel_1.add(scrollPane);
+		
 		JList list = new JList();
-		list.setBounds(125, 194, 357, 207);
-		panel_1.add(list);
+		scrollPane.setViewportView(list);
 		list.setModel(listaJ);
+		list.setLayoutOrientation(JList.VERTICAL);
 		
 		JLabel lblPlantilla = new JLabel("Juega en:");
 		lblPlantilla.setFont(new Font("Gadugi", Font.PLAIN, 12));
@@ -204,6 +209,8 @@ public class DatosJugadores extends JFrame {
 		for (Equipo j : listadelosequipos) {
 			listaJ.addElement(j.toString());
 		}
+		
+		
 		
 		this.setLocationRelativeTo(null);
 	}
