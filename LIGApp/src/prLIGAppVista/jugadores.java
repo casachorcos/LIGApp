@@ -130,7 +130,7 @@ public class jugadores extends JFrame {
 	    user.setContentAreaFilled(false);
 	    
 	    JList list = new JList();
-	    list.setBounds(0, 0, 365, 348);
+	    list.setBounds(1, 1, 363, 346);
 	    listaJ = new DefaultListModel();
 	    list.setModel(listaJ);
 		
@@ -202,7 +202,8 @@ public class jugadores extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 85, 365, 348);
 		scrollPane.add(list);
-		scrollPane.getViewport().setBackground(null);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setBorder(null);
 		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
