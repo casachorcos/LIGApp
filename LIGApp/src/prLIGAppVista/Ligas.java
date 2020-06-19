@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -155,8 +156,7 @@ public class Ligas extends JFrame {
 		listaJ = new DefaultListModel();
 		
 		JList list = new JList();
-		list.setBounds(25, 81, 396, 382);
-		panel_1.add(list);
+		list.setBounds(1, 1, 363, 346);
 		list.setModel(listaJ);
 		
 		for (Liga j : listae) {
@@ -195,6 +195,12 @@ public class Ligas extends JFrame {
 		});
 		ver.setBounds(472, 362, 130, 30);
 		panel_1.add(ver);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(25, 85, 365, 348);
+		scrollPane.setViewportView(list);
+		list.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
 	}
