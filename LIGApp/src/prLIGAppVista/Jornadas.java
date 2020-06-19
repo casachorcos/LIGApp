@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -29,6 +30,7 @@ public class Jornadas extends JFrame {
 	private List<Jornada> listae;
 	public static Jornada seleccionado;
 	public static String nombreJornada;
+	public static String nombreJornadaSimple;
 
 	/**
 	 * Launch the application.
@@ -150,10 +152,10 @@ public class Jornadas extends JFrame {
 		list.setModel(listaJ);
 		
 		for (Jornada j : listae) {
-			listaJ.addElement("Jornada " + j.getNumeroJornada());
+			listaJ.addElement("Jornada " + j.getNumeroJornada() + "    -    Inicio: " + j.getFechaInicio() + "    Fin: " + j.getFechaFin());
 		}
 		
-		JButton ver = new JButton("Ver");
+		JButton ver = new JButton("Ver Datos de Jornada");
 		ver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!list.isSelectionEmpty()) {
@@ -165,10 +167,22 @@ public class Jornadas extends JFrame {
 				}
 			}
 		});
-		ver.setBounds(472, 362, 130, 30);
+		
+		ver.setBounds(456, 312, 160, 30);
 		panel_1.add(ver);
 		
-		JButton anyadir = new JButton("A\u00F1adir");
+		JButton volver = new JButton("Volver");
+		volver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DatosLiga j = new DatosLiga();
+				j.setVisible(true);
+				setVisible(false);
+			}
+		});
+		volver.setBounds(513, 433, 130, 30);
+		panel_1.add(volver);
+		
+		JButton anyadir = new JButton("Añadir Nueva Jornada");
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (listae.isEmpty()) {
@@ -181,7 +195,8 @@ public class Jornadas extends JFrame {
 					setVisible(false);
 				} else {
 					int id = accesoBD.generarCodJornada();
-					Jornada jor = new Jornada(id, listae.size() + 1, Ligas.seleccionado.getId(), null);
+					Date d = new Date(listae.get(listae.size() - 1).getFechaFin().getTime() + 1 * 24 * 60 * 60 * 1000);
+					Jornada jor = new Jornada(id, listae.size() + 1, Ligas.seleccionado.getId(), d);
 					accesoBD.crearJornada(jor);
 					accesoBD.actualizarCodJornada(accesoBD.generarCodJornada() + 1);
 					accesoBD.emparejamientos(jor);
@@ -191,28 +206,32 @@ public class Jornadas extends JFrame {
 				}
 			}
 		});
-		anyadir.setBounds(472, 132, 130, 30);
+		anyadir.setBounds(456, 104, 160, 30);
 		panel_1.add(anyadir);
 		
-		JButton eliminar = new JButton("Eliminar");
+		JButton eliminar = new JButton("Eliminar Jornada");
 		eliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				if (!listaJ.isEmpty() && !list.isSelectionEmpty()) {
 					int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea borrar la jornada?");
 					if (res == 0) {
-						accesoBD.eliminarJornada(listae.get(list.getSelectedIndex()));
+						
 						List<Partido> partidos = accesoBD.listaPartidos(listae.get(list.getSelectedIndex()).getCodigoJornada());
 						for (Partido p : partidos) {
 							accesoBD.eliminarPartido(p);
 						}
 					}
+					int numJor = listae.get(list.getSelectedIndex()).getNumeroJornada();
+					accesoBD.eliminarJornada(listae.get(list.getSelectedIndex()));
+					accesoBD.ajustarNumerosJornada(numJor);
+					
 					Jornadas jorna = new Jornadas();
 					jorna.setVisible(true);
 					setVisible(false);
 				}
 			}
 		});
-		eliminar.setBounds(472, 252, 130, 30);
+		eliminar.setBounds(456, 207, 160, 30);
 		panel_1.add(eliminar);
 		
 		this.setLocationRelativeTo(null);

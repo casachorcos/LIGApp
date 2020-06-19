@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -28,6 +29,7 @@ public class Partidos extends JFrame {
 	private JPanel contentPane;
 	private List<Partido> listae = new ArrayList<Partido>();
 	private List<Partido> partidoslista;
+	private List<Equipo> equiposEnLaLiga;
 	DefaultListModel listaJ;
 	public static Partido seleccionadoP;
 	public static String seleccionadoS;
@@ -135,14 +137,20 @@ public class Partidos extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel(Jornadas.nombreJornada);
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
+		JLabel lblNewLabel = new JLabel("Jornada " + Jornadas.seleccionado.getNumeroJornada());
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
 		panel_1.add(lblNewLabel);
 		
 		Conexion accesoBD;
 		accesoBD = ConexionJDBC.getInstance();
-
+		
+		equiposEnLaLiga = accesoBD.equiposLiga(Jornadas.seleccionado.getNombreLiga());
 		partidoslista = accesoBD.listaPartidos(Jornadas.seleccionado.getCodigoJornada());
 		listaJ = new DefaultListModel();
 		
@@ -196,18 +204,49 @@ public class Partidos extends JFrame {
 		ver.setBounds(472, 362, 130, 30);
 		panel_1.add(ver);
 		
-		JButton anyadir = new JButton("A\u00F1adir");
+		JButton anyadir = new JButton("A\u00F1adir Nuevo Partido");
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FormularioPartido formu = new FormularioPartido();
-				formu.setVisible(true);
+				
+				if (partidoslista.size()  <  (equiposEnLaLiga.size() / 2) ) {
+
+					FormularioPartido formu = new FormularioPartido();
+					formu.setVisible(true);
+					setVisible(false);
+					
+				} else {
+					
+					error.setText("Ya no se pueden crear más partidos en esta jornada");
+					
+				}
+			}
+		});
+		anyadir.setBounds(459, 96, 156, 30);
+		panel_1.add(anyadir);
+
+		JButton button = new JButton("Modificar Jornada");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DatosJornadas j = new DatosJornadas();
+				j.setVisible(true);
 				setVisible(false);
 			}
 		});
-		anyadir.setBounds(472, 132, 130, 30);
-		panel_1.add(anyadir);
+		button.setBounds(459, 241, 156, 30);
+		panel_1.add(button);
 		
-		JButton eliminar = new JButton("Eliminar");
+		JButton volver = new JButton("Volver");
+		volver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Jornadas j = new Jornadas();
+				j.setVisible(true);
+				setVisible(false);
+			}
+		});
+		volver.setBounds(513, 433, 130, 30);
+		panel_1.add(volver);
+		
+		JButton eliminar = new JButton("Eliminar Partido");
 		eliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				if (!listaJ.isEmpty() && !list.isSelectionEmpty()) {
@@ -221,10 +260,9 @@ public class Partidos extends JFrame {
 				}
 			}
 		});
-		eliminar.setBounds(472, 252, 130, 30);
+		eliminar.setBounds(459, 165, 156, 30);
 		panel_1.add(eliminar);
 		
 		this.setLocationRelativeTo(null);
 	}
-
 }

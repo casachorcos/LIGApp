@@ -21,6 +21,7 @@ import prLIGAppModelo.Jugador;
 import prLIGAppModelo.Liga;
 import prLIGAppModelo.Partido;
 import prLIGAppModelo.Usuario;
+import prLIGAppVista.Ligas;
 
 public class ConexionJDBC extends Conexion {
 	private Connection con;
@@ -591,6 +592,24 @@ public class ConexionJDBC extends Conexion {
 			e.printStackTrace();
 		}
 		return cod;
+	}
+	
+	public void ajustarNumerosJornada(int numJor) {
+		int n = numJor;
+		List<Jornada> lista = listaJornadas(Ligas.seleccionado.getId());
+		
+		for(int i = n ; i <= lista.size(); i++) {
+			
+			String updateBody = "UPDATE Jornada j SET numjornada = ? WHERE j.liga = " + 
+					Ligas.seleccionado.getId() + " AND j.numJornada = " + (i + 1);
+			try {
+				PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+				pS.setInt(1, i);
+				int res = pS.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	
