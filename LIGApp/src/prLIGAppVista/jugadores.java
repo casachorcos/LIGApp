@@ -201,8 +201,8 @@ public class jugadores extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 85, 365, 348);
-		scrollPane.setLayout(new ScrollPaneLayout());
 		scrollPane.add(list);
+		scrollPane.getViewport().setBackground(null);
 		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
