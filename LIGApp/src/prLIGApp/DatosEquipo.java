@@ -148,7 +148,7 @@ public class DatosEquipo extends JFrame {
 				setVisible(false);
 			}
 		});
-		volver.setBounds(352, 417, 130, 30);
+		volver.setBounds(580, 433, 63, 30);
 		panel_1.add(volver);
 		
 		nombre = new JTextField();
@@ -163,7 +163,7 @@ public class DatosEquipo extends JFrame {
 		listaJ = new DefaultListModel();
 		
 		JList list = new JList();
-		list.setBounds(125, 172, 357, 207);
+		list.setBounds(125, 172, 142, 207);
 		panel_1.add(list);
 		list.setModel(listaJ);
 		
@@ -179,11 +179,24 @@ public class DatosEquipo extends JFrame {
 		JButton button = new JButton("Eliminar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				accesoBD.eliminarJugadorEnEquipo(listae.get(list.getSelectedIndex()));
 			}
 		});
-		button.setBounds(513, 313, 130, 30);
+		button.setBounds(132, 390, 130, 30);
 		panel_1.add(button);
+		
+		JButton btnAadir = new JButton("A\u00F1adir");
+		btnAadir.setBounds(399, 397, 130, 30);
+		panel_1.add(btnAadir);
+		
+		JList list_1 = new JList();
+		list_1.setBounds(387, 172, 142, 207);
+		panel_1.add(list_1);
+		
+		JLabel lblJugadores = new JLabel("Jugadores:");
+		lblJugadores.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblJugadores.setBounds(298, 171, 79, 16);
+		panel_1.add(lblJugadores);
 		
 		
 		this.setLocationRelativeTo(null);
