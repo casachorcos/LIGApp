@@ -22,7 +22,9 @@ public class DatosEquipo extends JFrame {
 	private JPanel contentPane;
 	private JTextField nombre;
 	private List<Jugador> listae;
+	private List<Jugador> jugadores;
 	DefaultListModel listaJ;
+	DefaultListModel listaJUG;
 
 	/**
 	 * Launch the application.
@@ -162,6 +164,8 @@ public class DatosEquipo extends JFrame {
 		listae = accesoBD.plantilla(Equipos.seleccionado.getId());
 		listaJ = new DefaultListModel();
 		
+		jugadores = accesoBD.usuario_jugador(Inicio.nombreUsuario);
+		
 		JList list = new JList();
 		list.setBounds(125, 172, 142, 207);
 		panel_1.add(list);
@@ -185,18 +189,31 @@ public class DatosEquipo extends JFrame {
 		button.setBounds(132, 390, 130, 30);
 		panel_1.add(button);
 		
-		JButton btnAadir = new JButton("A\u00F1adir");
-		btnAadir.setBounds(399, 397, 130, 30);
-		panel_1.add(btnAadir);
-		
 		JList list_1 = new JList();
 		list_1.setBounds(387, 172, 142, 207);
 		panel_1.add(list_1);
+		
+		listaJUG = new DefaultListModel();
+		
+		list_1.setModel(listaJUG);
+		
+		for (Jugador jug : jugadores) {
+			listaJUG.addElement(jug.toString());
+		}
 		
 		JLabel lblJugadores = new JLabel("Jugadores:");
 		lblJugadores.setFont(new Font("Gadugi", Font.PLAIN, 12));
 		lblJugadores.setBounds(298, 171, 79, 16);
 		panel_1.add(lblJugadores);
+		
+		JButton btnAadir = new JButton("A\u00F1adir");
+		btnAadir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accesoBD.crearJugadorEnEquipo(jugadores.get(list_1.getSelectedIndex()), Equipos.seleccionado);
+			}
+		});
+		btnAadir.setBounds(399, 397, 130, 30);
+		panel_1.add(btnAadir);
 		
 		
 		this.setLocationRelativeTo(null);
