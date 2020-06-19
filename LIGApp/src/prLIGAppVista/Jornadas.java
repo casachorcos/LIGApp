@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -135,6 +136,11 @@ public class Jornadas extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("Jornadas");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -164,6 +170,10 @@ public class Jornadas extends JFrame {
 					Partidos match = new Partidos();
 					match.setVisible(true);
 					setVisible(false);
+				}
+				else {
+				
+					error.setText("Debes seleccionar primero una jornada");
 				}
 			}
 		});
@@ -228,6 +238,10 @@ public class Jornadas extends JFrame {
 					Jornadas jorna = new Jornadas();
 					jorna.setVisible(true);
 					setVisible(false);
+				}
+				else {
+					
+					error.setText("Debes seleccionar primero una jornada");
 				}
 			}
 		});

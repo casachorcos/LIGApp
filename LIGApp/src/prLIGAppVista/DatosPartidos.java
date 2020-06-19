@@ -188,6 +188,11 @@ public class DatosPartidos extends JFrame {
 						acceso.actualizarclasi(Ligas.seleccionado.getId(), Partidos.seleccionadoP.getIdLocal(), 0, loc, vis);
 						acceso.actualizarclasi(Ligas.seleccionado.getId(), Partidos.seleccionadoP.getIdVisitante(), 3, vis, loc);
 					}
+					Partidos.seleccionadoP.setGolesLocal(loc);;
+					Partidos.seleccionadoP.setGolesVisitante(vis);
+					Partidos.seleccionadoP.setJugado(true);
+					
+					acceso.actualizarPartido(Partidos.seleccionadoP);
 					
 					Partidos par = new Partidos();
 					par.setVisible(true);

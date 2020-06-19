@@ -21,7 +21,9 @@ import prLIGAppModelo.Jugador;
 import prLIGAppModelo.Liga;
 import prLIGAppModelo.Partido;
 import prLIGAppModelo.Usuario;
+import prLIGAppVista.Jornadas;
 import prLIGAppVista.Ligas;
+import prLIGAppVista.Partidos;
 
 public class ConexionJDBC extends Conexion {
 	private Connection con;
@@ -612,6 +614,30 @@ public class ConexionJDBC extends Conexion {
 		}
 	}
 	
+	public void actualizarPartido(Partido p) {
+			
+			String updateBody = "UPDATE Partido p SET codpartido = ?, local = ?, visitante = ?, jornada = ?, goleslocal = ?,"
+					+ " golesvisitante = ?, campo = ?, fecha = ?, jugado = ?, hora = ? WHERE p.codPartido = " + 
+					Partidos.seleccionadoP.getCodigoPartido();
+			try {
+				PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+					pS.setInt(1, p.getCodigoPartido());
+		            pS.setInt(2, p.getIdLocal());
+		            pS.setInt(3, p.getIdVisitante());
+		            pS.setInt(4, p.getCodigoJornada());
+		            pS.setInt(5, p.getGolesLocal());
+		            pS.setInt(6, p.getGolesVisitante());
+		            pS.setString(7, p.getCampo());
+		            pS.setDate(8, p.getFecha());
+		            pS.setBoolean(9, p.getJugado());
+		            pS.setString(10, p.getHora());
+		            int res = pS.executeUpdate();
+				} catch (SQLException e) {
+				e.printStackTrace();
+		}
+	}
+	
+	
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void cambiarContrasena(String idUsuario, String cont) {
@@ -635,7 +661,7 @@ public class ConexionJDBC extends Conexion {
         crearPartido(p);
         actualizarCodPartido(cod + 1);
     }
-	
+
 	public void emparejamientos(Jornada jor) {
         List<Equipo> equipos = equiposLiga(jor.getNombreLiga());
         listaEquipos();

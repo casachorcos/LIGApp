@@ -131,7 +131,7 @@ public class DatosJornadas extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Datos de Jornada " + Jornadas.seleccionado.getNumeroJornada());
+		JLabel lblNewLabel = new JLabel("Modificar Jornada " + Jornadas.seleccionado.getNumeroJornada());
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
 		panel_1.add(lblNewLabel);

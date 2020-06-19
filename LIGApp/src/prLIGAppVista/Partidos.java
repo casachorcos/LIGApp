@@ -17,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -31,6 +32,7 @@ public class Partidos extends JFrame {
 	private List<Partido> partidoslista;
 	private List<Equipo> equiposEnLaLiga;
 	DefaultListModel listaJ;
+	DefaultListModel listaRes;
 	public static Partido seleccionadoP;
 	public static String seleccionadoS;
 
@@ -153,14 +155,22 @@ public class Partidos extends JFrame {
 		equiposEnLaLiga = accesoBD.equiposLiga(Jornadas.seleccionado.getNombreLiga());
 		partidoslista = accesoBD.listaPartidos(Jornadas.seleccionado.getCodigoJornada());
 		listaJ = new DefaultListModel();
+		listaRes = new DefaultListModel();
 		
 		JList list = new JList();
-		list.setBounds(25, 81, 396, 382);
+		list.setBounds(25, 81, 232, 382);
 		panel_1.add(list);
 		list.setModel(listaJ);
 		
+		JList list_1 = new JList();
+		list_1.setBounds(257, 81, 166, 382);
+		panel_1.add(list_1);
+		list_1.setModel(listaRes);
+
+		
 		List<Equipo> teams = accesoBD.usuario_equipo(Inicio.nombreUsuario);
 		List<String> enfren = new ArrayList<String>();
+		List<String> resul = new ArrayList<String>();
 		
 		for (int i = 0; i < partidoslista.size(); i++)  {
 			String res = null;
@@ -189,26 +199,74 @@ public class Partidos extends JFrame {
 			listaJ.addElement(j);
 		}
 		
-		JButton ver = new JButton("Resultado");
+		for (int i = 0; i < listaJ.size(); i++)  {
+			
+			String n1 = null;
+			String n2 = null;
+			
+			Partido p = partidoslista.get(i);
+			
+			int id1 = p.getIdLocal();
+			Equipo e1 = new Equipo(id1, null);
+			int id2 = p.getIdVisitante();
+			Equipo e2 = new Equipo(id2, null);
+			
+			for (Equipo equi : teams) {
+				if (equi.equals(e1)) {
+					n1 = equi.getNombre();
+				}
+				
+				if (equi.equals(e2)) {
+					n2 = equi.getNombre();
+				}
+			}
+			
+			if (p.getJugado() == false) {
+				resul.add("No disputado");
+			}
+			else if (p.getGolesLocal() > p.getGolesVisitante()) {
+				resul.add("Gana  " + n1);
+			}
+			else if (p.getGolesLocal() < p.getGolesVisitante()){
+				resul.add("Gana  " + n2);
+			}
+			else resul.add("Empate");
+		}
+		
+		for (String j : resul) {
+			listaRes.addElement(j);
+		}
+		
+		JButton ver = new JButton("Anotar Resultado");
 		ver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!list.isSelectionEmpty()) {
 					seleccionadoP = partidoslista.get(list.getSelectedIndex());
 					seleccionadoS = (String) listaJ.get(list.getSelectedIndex());
-					DatosPartidos dat = new DatosPartidos();
-					dat.setVisible(true);
-					setVisible(false);
+					
+					if (seleccionadoP.getJugado() == false) {
+						DatosPartidos dat = new DatosPartidos();
+						dat.setVisible(true);
+						setVisible(false);
+					}
+					else {
+						error.setText("Debes seleccionar un partido no disputado");
+					}
 				}
+				
+				 else {
+						error.setText("Debes seleccionar primero un partido");
+					}
 			}
 		});
-		ver.setBounds(472, 362, 130, 30);
+		ver.setBounds(459, 272, 156, 30);
 		panel_1.add(ver);
 		
 		JButton anyadir = new JButton("A\u00F1adir Nuevo Partido");
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if (partidoslista.size()  <  (equiposEnLaLiga.size() / 2) ) {
+				if (partidoslista.size()  <  ((equiposEnLaLiga.size() - 1) / 2) ) {
 
 					FormularioPartido formu = new FormularioPartido();
 					formu.setVisible(true);
@@ -227,12 +285,12 @@ public class Partidos extends JFrame {
 		JButton button = new JButton("Modificar Jornada");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DatosJornadas j = new DatosJornadas();
+				/*DatosJornadas j = new DatosJornadas();
 				j.setVisible(true);
-				setVisible(false);
+				setVisible(false);*/
 			}
 		});
-		button.setBounds(459, 241, 156, 30);
+		button.setBounds(459, 364, 156, 30);
 		panel_1.add(button);
 		
 		JButton volver = new JButton("Volver");
@@ -258,9 +316,13 @@ public class Partidos extends JFrame {
 					jorna.setVisible(true);
 					setVisible(false);
 				}
+				else {
+					
+					error.setText("Debes seleccionar primero un partido");
+				}
 			}
 		});
-		eliminar.setBounds(459, 165, 156, 30);
+		eliminar.setBounds(459, 183, 156, 30);
 		panel_1.add(eliminar);
 		
 		this.setLocationRelativeTo(null);

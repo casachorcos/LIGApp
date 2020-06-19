@@ -31,7 +31,7 @@ public class Partido {
         golesLocal = 0;
         golesVisitante = 0;
         campo = null;
-        fecha = new Date(Calendar.getInstance().getTime().getTime());
+        fecha = null;
         jugado = false;
         hora = "00:00";
     }

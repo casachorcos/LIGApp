@@ -124,8 +124,6 @@ public class Inicio extends JFrame {
 		lblContasea.setBounds(19, 246, 68, 14);
 		panel.add(lblContasea);
 		
-		
-		
 		JButton acceder = new JButton("Acceder");
 		acceder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
