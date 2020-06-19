@@ -150,7 +150,7 @@ public class DatosEquipo extends JFrame {
 				setVisible(false);
 			}
 		});
-		volver.setBounds(580, 433, 63, 30);
+		volver.setBounds(564, 433, 79, 30);
 		panel_1.add(volver);
 		
 		nombre = new JTextField();
@@ -184,6 +184,9 @@ public class DatosEquipo extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				accesoBD.eliminarJugadorEnEquipo(listae.get(list.getSelectedIndex()));
+				DatosEquipo de = new DatosEquipo();
+				setVisible(false);
+				de.setVisible(true);
 			}
 		});
 		button.setBounds(132, 390, 130, 30);
@@ -210,6 +213,9 @@ public class DatosEquipo extends JFrame {
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				accesoBD.crearJugadorEnEquipo(jugadores.get(list_1.getSelectedIndex()), Equipos.seleccionado);
+				DatosEquipo de = new DatosEquipo();
+				setVisible(false);
+				de.setVisible(true);
 			}
 		});
 		btnAadir.setBounds(399, 397, 130, 30);
