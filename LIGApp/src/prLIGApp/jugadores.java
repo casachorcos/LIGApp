@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneLayout;
 
 public class jugadores extends JFrame {
 
@@ -196,8 +197,8 @@ public class jugadores extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 85, 365, 348);
-		scrollPane.setLayout(new BorderLayout());
-		scrollPane.add(list, BorderLayout.NORTH);
+		scrollPane.setLayout(new ScrollPaneLayout());
+		scrollPane.add(list);
 		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
