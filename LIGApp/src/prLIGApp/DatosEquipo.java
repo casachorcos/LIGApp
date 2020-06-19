@@ -148,7 +148,7 @@ public class DatosEquipo extends JFrame {
 				setVisible(false);
 			}
 		});
-		volver.setBounds(379, 404, 130, 30);
+		volver.setBounds(352, 417, 130, 30);
 		panel_1.add(volver);
 		
 		nombre = new JTextField();
@@ -176,8 +176,16 @@ public class DatosEquipo extends JFrame {
 			listaJ.addElement(j.toString());
 		}
 		
+		JButton button = new JButton("Eliminar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		button.setBounds(513, 313, 130, 30);
+		panel_1.add(button);
+		
 		
 		this.setLocationRelativeTo(null);
 	}
-
 }
