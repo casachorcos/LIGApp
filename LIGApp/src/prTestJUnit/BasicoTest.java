@@ -30,7 +30,6 @@ class BasicoTest {
 	
 	// Comenzamos con zzz para que quede el ultimo en la lista de usuarios
 	
-	// TODO: Cambiar contraseña cuando tenga un minimo de caracteres
 	private static Usuario usuario = new Usuario("zzzATest", "", "");
 	private static Usuario usuarioCreado = new Usuario("zzzBTest", "", "");
 
@@ -61,9 +60,12 @@ class BasicoTest {
 	void testCrearLiga() {
 		List<Liga> ligasAntes = conexion.listaLigas();
 		Liga ultimaAntes = ligasAntes.get(ligasAntes.size()-1);
+		
 		conexion.crearLiga(ligaCreada);
+		
 		List<Liga> ligasDespues = conexion.listaLigas();
 		Liga ultimaDespues = ligasDespues.get(ligasDespues.size()-1);
+		
 		assertAll("Crear Liga",
 				() -> assertNotEquals(ultimaAntes, ultimaDespues),
 				() -> assertEquals(ligaCreada, ultimaDespues));
