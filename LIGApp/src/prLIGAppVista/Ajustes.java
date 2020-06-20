@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -19,11 +20,12 @@ import prLIGAppControlador.ConexionJDBC;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 
 public class Ajustes extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField cont;
+	private JPasswordField cont;
 
 	/**
 	 * Launch the application.
@@ -132,11 +134,16 @@ public class Ajustes extends JFrame {
 		lblAjustes.setBounds(25, 21, 438, 53);
 		panel_1.add(lblAjustes);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setForeground(Color.RED);
+		error.setBounds(173, 246, 264, 14);
+		panel_1.add(error);
+		
 		JLabel lblNewLabel = new JLabel("Nueva contraseña:");
 		lblNewLabel.setBounds(57, 149, 140, 14);
 		panel_1.add(lblNewLabel);
 		
-		cont = new JTextField();
+		cont = new JPasswordField();
 		cont.setBounds(196, 146, 344, 20);
 		panel_1.add(cont);
 		cont.setColumns(10);
@@ -149,13 +156,17 @@ public class Ajustes extends JFrame {
 		JButton btnNewButton = new JButton("Guardar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Conexion acceso;
-				acceso = ConexionJDBC.getInstance();
-				acceso.cambiarContrasena(Inicio.nombreUsuario, cont.getText());
-				cont.setText("");
-				MenuPrincipal mp = new MenuPrincipal();
-				mp.setVisible(true);
-				setVisible(false);
+				if(String.valueOf(cont.getPassword()).length() >= 8) {
+					Conexion acceso;
+					acceso = ConexionJDBC.getInstance();
+					acceso.cambiarContrasena(Inicio.nombreUsuario, String.valueOf(cont.getPassword()));
+					cont.setText("");
+					MenuPrincipal mp = new MenuPrincipal();
+					mp.setVisible(true);
+					setVisible(false);
+				}else {
+					error.setText("Mínimo 8 caracteres para la contraseña");
+				}
 			}
 		});
 		btnNewButton.setBounds(260, 201, 89, 23);

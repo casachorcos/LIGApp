@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
 import prLIGAppModelo.Usuario;
+import java.awt.event.KeyAdapter;
 
 public class Registro extends JFrame {
 
@@ -86,12 +87,49 @@ public class Registro extends JFrame {
 		lblNewLabel.setBounds(54, 45, 210, 108);
 		panel.add(lblNewLabel);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setForeground(Color.RED);
+		error.setBounds(19, 350, 264, 14);
+		panel.add(error);
+		
 		JLabel lblNewLabel_1 = new JLabel("Usuario:");
 		lblNewLabel_1.setFont(new Font("Gadugi", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(41, 164, 46, 14);
 		panel.add(lblNewLabel_1);
 		
 		JTextField usuario = new JTextField();
+		usuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(String.valueOf(password.getPassword()).length() >= 8) {
+						Conexion accesoBD;
+						accesoBD = ConexionJDBC.getInstance();
+						String usuar = usuario.getText();
+						String cor = correo.getText();
+						String pass = String.valueOf(password.getPassword());
+						Usuario user = new Usuario(usuar, cor, pass);
+						List<Usuario> usuarios = accesoBD.listaUsuarios();
+						if (estaUsuario(usuarios, usuar) || usuar.isEmpty()) {
+							error.setText("Este usuario ya existe o no es válido");
+						} else {
+							accesoBD.crearUsuario(user);
+							Inicio i = new Inicio();
+							i.setVisible(true);
+							setVisible(false);
+						}
+						usuario.setText("");
+						correo.setText("");
+						password.setText("");
+					}else {
+						error.setText("Mínimo 8 caracteres para la contraseña");
+						usuario.setText("");
+						correo.setText("");
+						password.setText("");
+					}
+				}
+			}
+		});
 		usuario.setBounds(97, 162, 186, 20);
 		panel.add(usuario);
 		usuario.setColumns(10);
@@ -100,13 +138,6 @@ public class Registro extends JFrame {
 		lblContasea.setFont(new Font("Gadugi", Font.PLAIN, 12));
 		lblContasea.setBounds(19, 255, 68, 14);
 		panel.add(lblContasea);
-		
-		JLabel error = new JLabel("", SwingConstants.CENTER);
-		error.setForeground(Color.RED);
-		error.setBounds(19, 350, 264, 14);
-		panel.add(error);
-		
-		
 		
 		JButton cancelar = new JButton("Cancelar");
 		cancelar.addActionListener(new ActionListener() {
@@ -122,10 +153,74 @@ public class Registro extends JFrame {
 		
 		
 		password = new JPasswordField();
+		password.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(String.valueOf(password.getPassword()).length() >= 8) {
+						Conexion accesoBD;
+						accesoBD = ConexionJDBC.getInstance();
+						String usuar = usuario.getText();
+						String cor = correo.getText();
+						String pass = String.valueOf(password.getPassword());
+						Usuario user = new Usuario(usuar, cor, pass);
+						List<Usuario> usuarios = accesoBD.listaUsuarios();
+						if (estaUsuario(usuarios, usuar) || usuar.isEmpty()) {
+							error.setText("Este usuario ya existe o no es válido");
+						} else {
+							accesoBD.crearUsuario(user);
+							Inicio i = new Inicio();
+							i.setVisible(true);
+							setVisible(false);
+						}
+						usuario.setText("");
+						correo.setText("");
+						password.setText("");
+					}else {
+						error.setText("Mínimo 8 caracteres para la contraseña");
+						usuario.setText("");
+						correo.setText("");
+						password.setText("");
+					}
+				}
+			}
+		});
 		password.setBounds(97, 253, 186, 20);
 		panel.add(password);
 		
 		correo = new JTextField();
+		correo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(String.valueOf(password.getPassword()).length() >= 8) {
+						Conexion accesoBD;
+						accesoBD = ConexionJDBC.getInstance();
+						String usuar = usuario.getText();
+						String cor = correo.getText();
+						String pass = String.valueOf(password.getPassword());
+						Usuario user = new Usuario(usuar, cor, pass);
+						List<Usuario> usuarios = accesoBD.listaUsuarios();
+						if (estaUsuario(usuarios, usuar) || usuar.isEmpty()) {
+							error.setText("Este usuario ya existe o no es válido");
+						} else {
+							accesoBD.crearUsuario(user);
+							Inicio i = new Inicio();
+							i.setVisible(true);
+							setVisible(false);
+						}
+						usuario.setText("");
+						correo.setText("");
+						password.setText("");
+					}else {
+						error.setText("Mínimo 8 caracteres para la contraseña");
+						usuario.setText("");
+						correo.setText("");
+						password.setText("");
+					}
+				}
+			}
+		});
 		correo.setColumns(10);
 		correo.setBounds(97, 208, 186, 20);
 		panel.add(correo);
@@ -175,9 +270,6 @@ public class Registro extends JFrame {
 				}else {
 					error.setText("Mínimo 8 caracteres para la contraseña");
 				}
-				
-				
-				
 			}
 		});
 		aceptar.setBounds(109, 305, 89, 23);
