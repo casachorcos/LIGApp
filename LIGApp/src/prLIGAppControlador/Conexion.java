@@ -70,6 +70,7 @@ public abstract class Conexion {
 	public abstract void eliminarPartido(Partido p);
 	public abstract void crearPartido(Partido p);
 	public abstract void eliminarClasiDePartido(Partido p);
+	public abstract void eliminarPartidosDeEquipo(Equipo e);
 	
 	public abstract void crearJugadorEnEquipo(Jugador j, Equipo eq);
 	public abstract void crearEquipoEnLiga(Equipo eq, Liga a);
