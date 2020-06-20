@@ -56,4 +56,10 @@ public class Equipo {
 		return res;
 	}
 	
+	public String code(String user) {
+		String c1 = user;
+		int c2 = this.getId();
+		String c = "";
+		return c;
+	}
 }
