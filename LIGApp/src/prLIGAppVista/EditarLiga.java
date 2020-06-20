@@ -2,33 +2,37 @@ package prLIGAppVista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
+
 
 import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
+import prLIGAppModelo.Equipo;
+import prLIGAppModelo.Jugador;
 
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-
-public class DatosLiga extends JFrame {
-
+public class EditarLiga extends JFrame {
 	private JPanel contentPane;
-	private JTable table;
-	DefaultTableModel modeloTabla;
-	private List<Object[]> clasi;
+	private JTextField nombre;
+	private List<Equipo> listae;
+	private List<Equipo> jugadores = new ArrayList<Equipo>();
+	DefaultListModel listaJ;
+	DefaultListModel listaJUG;
+	private List<Equipo> aux;
 
 	/**
 	 * Launch the application.
@@ -37,7 +41,7 @@ public class DatosLiga extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DatosLiga frame = new DatosLiga();
+					EditarLiga frame = new EditarLiga();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +53,7 @@ public class DatosLiga extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DatosLiga() {
+	public EditarLiga() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 878, 513);
 		contentPane = new JPanel();
@@ -134,72 +138,112 @@ public class DatosLiga extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel(Ligas.seleccionado.getNombre());
+		JLabel lblNewLabel = new JLabel("Datos de " + Ligas.seleccionado.getNombre());
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
-		lblNewLabel.setBounds(25, 11, 564, 53);
+		lblNewLabel.setBounds(25, 11, 438, 53);
 		panel_1.add(lblNewLabel);
+		
+		JLabel lblNombre = new JLabel("Nombre:");
+		lblNombre.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblNombre.setBounds(47, 125, 95, 14);
+		panel_1.add(lblNombre);
 		
 		
 		
 		JButton volver = new JButton("Volver");
 		volver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Ligas j = new Ligas();
+				DatosLiga j = new DatosLiga();
 				j.setVisible(true);
 				setVisible(false);
 			}
 		});
-		volver.setBounds(513, 433, 130, 30);
+		volver.setBounds(564, 433, 79, 30);
 		panel_1.add(volver);
 		
-		modeloTabla = new DefaultTableModel();
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(35, 75, 530, 350);
-		panel_1.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		table.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setEnabled(false);
-		table.setRowSelectionAllowed(false);
-		table.setModel(modeloTabla);
-		
-		JButton btnJornadas = new JButton("Jornadas");
-		btnJornadas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Jornadas jor = new Jornadas();
-				jor.setVisible(true);
-				setVisible(false);
-			}
-		});
-		btnJornadas.setBounds(111, 433, 130, 30);
-		panel_1.add(btnJornadas);
-		
-		JButton button = new JButton("Editar");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EditarLiga a = new EditarLiga();
-				setVisible(false);
-				a.setVisible(true);
-			}
-		});
-		
-		button.setBounds(311, 433, 130, 30);
-		panel_1.add(button);
-		modeloTabla.setColumnIdentifiers(new String[] {"Equipo", "Puntos", "Goles Marcados", "Goles En Contra", "Partidos Jugados"});
+		nombre = new JTextField();
+		nombre.setBounds(125, 123, 357, 20);
+		panel_1.add(nombre);
+		nombre.setText(Ligas.seleccionado.getNombre());
 		
 		Conexion accesoBD;
 		accesoBD = ConexionJDBC.getInstance();
-		
-		clasi = accesoBD.clasif(Ligas.seleccionado.getId());
-		
-		for (Object[] c : clasi) {
-			modeloTabla.addRow(c);
+
+		listae = accesoBD.equiposLiga(Ligas.seleccionado.getId());
+		listaJ = new DefaultListModel();
+		aux = accesoBD.usuario_equipo(Inicio.nombreUsuario);
+		for(Equipo x : aux) {
+			if(!listae.contains(x)) {
+				jugadores.add(x);
+			}
 		}
 		
+		JList list = new JList();
+		list.setBounds(1, 1, 14, 205);
+		list.setModel(listaJ);
+		
+		JLabel lblPlantilla = new JLabel("Participantes:");
+		lblPlantilla.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblPlantilla.setBounds(25, 172, 95, 14);
+		panel_1.add(lblPlantilla);
+		
+		for (Equipo j : listae) {
+			listaJ.addElement(j.toString());
+		}
+		
+		JButton button = new JButton("Eliminar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				accesoBD.eliminarEquipoEnLiga(listae.get(list.getSelectedIndex()), Ligas.seleccionado);;
+				EditarLiga de = new EditarLiga();
+				setVisible(false);
+				de.setVisible(true);
+			}
+		});
+		button.setBounds(132, 390, 130, 30);
+		panel_1.add(button);
+		
+		JList list_1 = new JList();
+		list_1.setBounds(1, 1, 140, 205);
+		
+		listaJUG = new DefaultListModel();
+		
+		list_1.setModel(listaJUG);
+		
+		for (Equipo jug : jugadores) {
+			listaJUG.addElement(jug.toString());
+		}
+		
+		JLabel lblJugadores = new JLabel("Equipos:");
+		lblJugadores.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblJugadores.setBounds(307, 171, 79, 16);
+		panel_1.add(lblJugadores);
+		
+		JButton btnAadir = new JButton("A\u00F1adir");
+		btnAadir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accesoBD.crearEquipoEnLiga(jugadores.get(list_1.getSelectedIndex()), Ligas.seleccionado);
+				EditarLiga de = new EditarLiga();
+				setVisible(false);
+				de.setVisible(true);
+			}
+		});
+		btnAadir.setBounds(399, 397, 130, 30);
+		panel_1.add(btnAadir);
+		
+		JScrollPane scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(125, 172, 142, 207);
+		scrollPane1.setViewportView(list);
+		list.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane1);
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBounds(387, 172, 142, 207);
+		scrollPane2.setViewportView(list_1);
+		list_1.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane2);
 		
 		this.setLocationRelativeTo(null);
 	}
+
 }

@@ -75,6 +75,7 @@ public abstract class Conexion {
 	public abstract void eliminarJugadorEnEquipo(Jugador j, Equipo e);
 	public abstract void eliminarJugadorEnEquipo(Equipo j);
 	public abstract void eliminarEquipoEnLiga(Equipo eq);
+	public abstract void eliminarEquipoEnLiga(Equipo eq, Liga lig);
 	public abstract void eliminarEquipoEnLiga(Liga eq);
 	public abstract List<Jornada> listaJornadas(int idLiga);
 	public abstract List<Jornada> listaJornadas();
