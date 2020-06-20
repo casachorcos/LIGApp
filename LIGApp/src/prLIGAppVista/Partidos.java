@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -32,7 +33,6 @@ public class Partidos extends JFrame {
 	private List<Partido> partidoslista;
 	private List<Equipo> equiposEnLaLiga;
 	DefaultListModel listaJ;
-	DefaultListModel listaRes;
 	public static Partido seleccionadoP;
 	public static String seleccionadoS;
 
@@ -155,17 +155,11 @@ public class Partidos extends JFrame {
 		equiposEnLaLiga = accesoBD.equiposLiga(Jornadas.seleccionado.getNombreLiga());
 		partidoslista = accesoBD.listaPartidos(Jornadas.seleccionado.getCodigoJornada());
 		listaJ = new DefaultListModel();
-		listaRes = new DefaultListModel();
 		
 		JList list = new JList();
-		list.setBounds(25, 81, 232, 382);
-		panel_1.add(list);
+		list.setBounds(25, 81, 375, 382);
 		list.setModel(listaJ);
 		
-		JList list_1 = new JList();
-		list_1.setBounds(257, 81, 166, 382);
-		panel_1.add(list_1);
-		list_1.setModel(listaRes);
 
 		
 		List<Equipo> teams = accesoBD.usuario_equipo(Inicio.nombreUsuario);
@@ -195,11 +189,7 @@ public class Partidos extends JFrame {
 			}
 		}
 		
-		for (String j : enfren) {
-			listaJ.addElement(j);
-		}
-		
-		for (int i = 0; i < listaJ.size(); i++)  {
+		for (int i = 0; i < partidoslista.size(); i++)  {
 			
 			String n1 = null;
 			String n2 = null;
@@ -239,8 +229,9 @@ public class Partidos extends JFrame {
 			} else resul.add(p.getGolesLocal() + "  -  " + p.getGolesVisitante());
 		}
 		
-		for (String j : resul) {
-			listaRes.addElement(j);
+		
+		for (int j = 0; j<enfren.size(); j++) {
+			listaJ.addElement(enfren.get(j) + ": " + resul.get(j));
 		}
 		
 		JButton ver = new JButton("Anotar Resultado");
@@ -333,6 +324,12 @@ public class Partidos extends JFrame {
 		});
 		eliminar.setBounds(459, 183, 156, 30);
 		panel_1.add(eliminar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(25, 81, 375, 382);
+		scrollPane.setViewportView(list);
+		list.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane);
 		
 		this.setLocationRelativeTo(null);
 	}

@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -165,13 +166,10 @@ public class FormularioPartido extends JFrame {
 		
 		JList list = new JList();
 		list.setBounds(217, 75, 299, 144);
-		panel_1.add(list);
 		list.setModel(listaJ);
 		
 		JList list_1 = new JList();
 		list_1.setBounds(217, 230, 299, 144);
-		panel_1.add(list_1);
-		
 		list_1.setModel(listaJ);
 		
 		for (int i = 0; i < partidoslista.size(); i++) {
@@ -232,6 +230,18 @@ public class FormularioPartido extends JFrame {
 		lblSeleccinDeEquipo_1.setFont(new Font("Gadugi", Font.PLAIN, 12));
 		lblSeleccinDeEquipo_1.setBounds(25, 231, 176, 30);
 		panel_1.add(lblSeleccinDeEquipo_1);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(217, 75, 299, 144);
+		scrollPane.setViewportView(list);
+		list.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane);
+		
+		JScrollPane scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(217, 230, 299, 144);
+		scrollPane1.setViewportView(list_1);
+		list_1.setLayoutOrientation(JList.VERTICAL);
+		panel_1.add(scrollPane1);
 		
 		this.setLocationRelativeTo(null);
 	}
