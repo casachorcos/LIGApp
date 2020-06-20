@@ -24,7 +24,10 @@ import prLIGAppControlador.ConexionJDBC;
 public class DatosJornadas extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField localtxt;
+	private JTextField diatxt;
+	private JTextField mestxt;
+	private JTextField aniotxt;
+	private JTextField duraciontxt;
 	private JTextField visitantetxt;
 
 	/**
@@ -131,32 +134,45 @@ public class DatosJornadas extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Modificar Jornada " + Jornadas.seleccionado.getNumeroJornada());
+		JLabel lblNewLabel = new JLabel("Modificar Fecha de Jornada " + Jornadas.seleccionado.getNumeroJornada());
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
 		panel_1.add(lblNewLabel);
 		
-		JLabel lblNombre = new JLabel("Goles equipo local:");
+		JLabel lblNombre = new JLabel("Fecha de inicio de Jornada:");
 		lblNombre.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblNombre.setBounds(47, 125, 146, 21);
+		lblNombre.setBounds(103, 173, 146, 21);
 		panel_1.add(lblNombre);
 		
-		JLabel lblEdad = new JLabel("Goles equipo visitante:");
+		JLabel lblEdad = new JLabel("Días de duración:");
 		lblEdad.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblEdad.setBounds(47, 165, 140, 21);
+		lblEdad.setBounds(103, 227, 140, 21);
 		panel_1.add(lblEdad);
 		
-		localtxt = new JTextField();
-		localtxt.setBounds(203, 126, 86, 20);
-		panel_1.add(localtxt);
-		localtxt.setColumns(10);
-		localtxt.setText("");
+		diatxt = new JTextField();
+		diatxt.setBounds(259, 174, 40, 20);
+		panel_1.add(diatxt);
+		diatxt.setColumns(10);
+		diatxt.setText("");
 		
-		visitantetxt = new JTextField();
-		visitantetxt.setColumns(10);
-		visitantetxt.setBounds(203, 166, 86, 20);
-		panel_1.add(visitantetxt);
-		visitantetxt.setText("");
+		mestxt = new JTextField();
+		mestxt.setBounds(308, 174, 40, 20);
+		panel_1.add(mestxt);
+		mestxt.setColumns(10);
+		mestxt.setText("");
+		
+		aniotxt = new JTextField();
+		aniotxt.setBounds(370, 174, 45, 20);
+		panel_1.add(aniotxt);
+		aniotxt.setColumns(10);
+		aniotxt.setText("");
+		
+		duraciontxt = new JTextField();
+		duraciontxt.setBounds(329, 228, 86, 20);
+		panel_1.add(duraciontxt);
+		duraciontxt.setColumns(10);
+		duraciontxt.setText("");
+		
 		
 		JButton volver = new JButton("Volver");
 		volver.addActionListener(new ActionListener() {

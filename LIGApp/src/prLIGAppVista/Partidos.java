@@ -221,7 +221,7 @@ public class Partidos extends JFrame {
 				}
 			}
 			
-			if (p.getJugado() == false) {
+		/*	if (p.getJugado() == false) {
 				resul.add("No disputado");
 			}
 			else if (p.getGolesLocal() > p.getGolesVisitante()) {
@@ -231,6 +231,12 @@ public class Partidos extends JFrame {
 				resul.add("Gana  " + n2);
 			}
 			else resul.add("Empate");
+		}
+		*/
+			
+			if (p.getJugado() == false) {
+				resul.add("No disputado");
+			} else resul.add(p.getGolesLocal() + "  -  " + p.getGolesVisitante());
 		}
 		
 		for (String j : resul) {
