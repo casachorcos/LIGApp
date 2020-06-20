@@ -9,22 +9,28 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import prLIGAppControlador.*;
-import prLIGAppModelo.*;
+import prLIGAppControlador.Conexion;
+import prLIGAppControlador.ConexionJDBC;
+import prLIGAppModelo.Equipo;
+import prLIGAppModelo.Jornada;
+import prLIGAppModelo.Liga;
+import prLIGAppModelo.Partido;
 
-class JornadasTest {
+class JornadasEquiposParesTest {
+
+private static final Conexion conexion = ConexionJDBC.getInstance();
 	
-	private static final Conexion conexion = ConexionJDBC.getInstance();
+	
+	private static Liga liga = new Liga(conexion.generarID(), "JUnitTestJornada");
 	
 	private static Jornada jornada;
 	
 	private static List<Partido> partidos;
 	
-	private static Liga liga = new Liga(conexion.generarID(), "JUnitTestJornada");
-	
-	private final static int N = 7;
+	private final static int N = 6;
 	private static boolean[] emparejados = new boolean[N];
 	private static int numeroEquiposEmparejados = 0;
+	private static boolean noSeRepite = true;
 	
 	private static List<Integer> listaEquipos = new ArrayList<>();
 	
@@ -46,7 +52,6 @@ class JornadasTest {
 		conexion.crearJornada(jornada);
 		
 		
-		
 	}
 	
 	
@@ -55,22 +60,28 @@ class JornadasTest {
 		conexion.emparejamientos(jornada);
 		partidos = conexion.listaPartidos(jornada.getCodigoJornada());
 		
+		
 		for (Partido p : partidos) {
 			int indexLocal = listaEquipos.indexOf(p.getIdLocal());
 			if (!emparejados[indexLocal]) {
 				emparejados[indexLocal] = true;
 				numeroEquiposEmparejados++;
+			} else {
+				noSeRepite = false;
 			}
 			
 			int indexVisitante = listaEquipos.indexOf(p.getIdVisitante());
 			if (!emparejados[indexVisitante]) {
 				emparejados[indexVisitante] = true;
 				numeroEquiposEmparejados++;
+			} else {
+				noSeRepite = false;
 			}
 		}
 		
 		assertAll("Emparejar",
-				() -> assertEquals(N - 1, numeroEquiposEmparejados));
+				() -> assertEquals(N, numeroEquiposEmparejados),
+				() -> assertTrue(noSeRepite));
 	}
 	
 	
@@ -87,6 +98,5 @@ class JornadasTest {
 			conexion.eliminarPartido(p);
 		}
 	}
-	
 
 }
