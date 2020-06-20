@@ -234,7 +234,7 @@ public class Partidos extends JFrame {
 			listaJ.addElement(enfren.get(j) + ": " + resul.get(j));
 		}
 		
-		JButton ver = new JButton("Anotar Resultado");
+		JButton ver = new JButton("Anotar Resultado Partido");
 		ver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!list.isSelectionEmpty()) {
@@ -256,7 +256,7 @@ public class Partidos extends JFrame {
 					}
 			}
 		});
-		ver.setBounds(459, 272, 156, 30);
+		ver.setBounds(449, 274, 178, 30);
 		panel_1.add(ver);
 		
 		JButton anyadir = new JButton("A\u00F1adir Nuevo Partido");
@@ -278,18 +278,18 @@ public class Partidos extends JFrame {
 				}
 			}
 		});
-		anyadir.setBounds(459, 96, 156, 30);
+		anyadir.setBounds(449, 95, 178, 30);
 		panel_1.add(anyadir);
 
-		JButton button = new JButton("Modificar Jornada");
+		JButton button = new JButton("Modificar Fecha Jornada");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*DatosJornadas j = new DatosJornadas();
+				DatosJornadas j = new DatosJornadas();
 				j.setVisible(true);
-				setVisible(false);*/
+				setVisible(false);
 			}
 		});
-		button.setBounds(459, 364, 156, 30);
+		button.setBounds(449, 364, 178, 30);
 		panel_1.add(button);
 		
 		JButton volver = new JButton("Volver");
@@ -322,7 +322,7 @@ public class Partidos extends JFrame {
 				}
 			}
 		});
-		eliminar.setBounds(459, 183, 156, 30);
+		eliminar.setBounds(449, 185, 178, 30);
 		panel_1.add(eliminar);
 		
 		JScrollPane scrollPane = new JScrollPane();

@@ -994,6 +994,27 @@ public class ConexionJDBC extends Conexion {
         return jornadas;
     }
     
+    
+    public void actualizarFechaJornada(Jornada jor, int dia, int mes, int anio, int dur) {
+    	
+    	@SuppressWarnings("deprecation")
+		Date inicio = new Date(anio, mes - 1 , dia);
+    	Date fin = new Date(inicio.getTime() + (dur - 1) * 24 * 60 * 60 * 1000);
+    	
+		@SuppressWarnings("deprecation")
+		String query = "UPDATE Jornada j SET iniciojornada = '" + inicio.getYear() + "-" + (inicio.getMonth() + 1) + "-" + inicio.getDate() + "',"
+    			+ " finjornada = '" + fin.getYear() + "-" + (fin.getMonth() + 1) + "-" + fin.getDate() + "' WHERE j.codjornada = " + jor.getCodigoJornada();
+    	
+    	  try {
+          	PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+          	int res = pS.executeUpdate();
+    	  
+          } catch (SQLException e) {
+              e.printStackTrace();
+          }
+    	
+    }
+    
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public Clasificacion equipoclasificacion(int codLiga, int codEquipo) {
     	Clasificacion clasi = null;
