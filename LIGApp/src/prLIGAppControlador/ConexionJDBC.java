@@ -741,6 +741,68 @@ public class ConexionJDBC extends Conexion {
         }
     }
 	
+	public void eliminarPartidosDeEquipo(Equipo e) {
+		
+		 ArrayList<Partido> partidosDeEquipo = new ArrayList<>();
+		String querylocal = "SELECT * FROM Partido WHERE local = " + e.getId();
+		String queryvisitante = "SELECT * FROM Partido WHERE local = " + e.getId();
+		
+		 Statement querySt1;
+	        try {
+	            querySt1 = con.createStatement();
+	            ResultSet rs = querySt1.executeQuery(querylocal);
+	            if (rs.isBeforeFirst()) {
+	                while (rs.next()) {
+	                    int cod = rs.getInt(1);
+	                    int idL = rs.getInt(2);
+	                    int idV = rs.getInt(3);
+	                    int codJor = rs.getInt(4);
+	                    int gL = rs.getInt(5);
+	                    int gV = rs.getInt(6);
+	                    String ca = rs.getString(7);
+	                    Date f = rs.getDate(8);
+	                    boolean ju = rs.getBoolean(9);
+	                    String h = rs.getString(10);
+	                    partidosDeEquipo.add(new Partido(cod, idL, idV, codJor, gL, gV, ca, f, ju, h));
+	                }
+	            }
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	        
+	     Statement querySt2;
+	        try {
+	            querySt2 = con.createStatement();
+	            ResultSet rs = querySt2.executeQuery(querylocal);
+	            if (rs.isBeforeFirst()) {
+	                while (rs.next()) {
+	                    int cod = rs.getInt(1);
+	                    int idL = rs.getInt(2);
+	                    int idV = rs.getInt(3);
+	                    int codJor = rs.getInt(4);
+	                    int gL = rs.getInt(5);
+	                    int gV = rs.getInt(6);
+	                    String ca = rs.getString(7);
+	                    Date f = rs.getDate(8);
+	                    boolean ju = rs.getBoolean(9);
+	                    String h = rs.getString(10);
+	                    partidosDeEquipo.add(new Partido(cod, idL, idV, codJor, gL, gV, ca, f, ju, h));
+	                }
+	            }
+	        } catch (SQLException e2) {
+	            e2.printStackTrace();
+	        }
+		
+		for (Partido p : partidosDeEquipo) {
+			
+			eliminarPartido(p);
+			eliminarClasiDePartido(p);
+		}
+		
+		
+		
+	}
+	
 	public void eliminarClasiDePartido(Partido p) {
 		
 		String updateBodyLoc = "UPDATE Clasificacion c SET puntos = puntos + ?, golesMarcados = golesMarcados + ?, golesEnContra = golesEnContra + ?,"
