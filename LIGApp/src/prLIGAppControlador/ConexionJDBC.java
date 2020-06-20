@@ -741,6 +741,54 @@ public class ConexionJDBC extends Conexion {
         }
     }
 	
+	public void eliminarClasiDePartido(Partido p) {
+		
+		String updateBodyLoc = "UPDATE Clasificacion c SET puntos = puntos + ?, golesMarcados = golesMarcados + ?, golesEnContra = golesEnContra + ?,"
+				+ " partidosJugados = partidosJugados + ? WHERE c.idEquipoClasificacion = " + p.getIdLocal();
+		
+		String updateBodyVis = "UPDATE Clasificacion c SET puntos = puntos + ?, golesMarcados = golesMarcados + ?, golesEnContra = golesEnContra + ?,"
+				+ " partidosJugados = partidosJugados + ? WHERE c.idEquipoClasificacion = " + p.getIdVisitante();
+		
+		if (p.getJugado() == true) {
+			
+			int l;
+			int v;
+			
+			if (p.getGolesLocal() > p.getGolesVisitante()) {
+				l = - 3;
+				v = 0;
+			} else if (p.getGolesLocal() == p.getGolesVisitante()) {
+				l = - 1;
+				v = - 1;
+			}
+			else {
+				l = 0;
+				v = - 3;
+			}
+			try {
+				PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBodyLoc);
+					pS.setInt(1, l);
+					pS.setInt(2, - p.getGolesLocal());
+					pS.setInt(3, - p.getGolesVisitante());
+					pS.setInt(4, -1);
+					int res = pS.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+			}
+			
+			try {
+				PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBodyVis);
+					pS.setInt(1, v);
+					pS.setInt(2, - p.getGolesVisitante());
+					pS.setInt(3, - p.getGolesLocal());
+					pS.setInt(4, -1);
+					int res = pS.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+			}
+		}
+	}
+	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void crearJugadorEnEquipo(Jugador j, Equipo eq) {
         String query = "INSERT INTO Plantilla (idJugador, idEquipo) VALUES (?, ?)";
@@ -936,10 +984,5 @@ public class ConexionJDBC extends Conexion {
 
 		return equipos;
 	}
-
-
-
-
-
 
 }

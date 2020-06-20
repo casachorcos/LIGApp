@@ -266,7 +266,9 @@ public class Partidos extends JFrame {
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if (partidoslista.size()  <  ((equiposEnLaLiga.size() - 1) / 2) ) {
+				double d = equiposEnLaLiga.size() - 1;
+				
+				if (partidoslista.size()  <  (d / 2) ) {
 
 					FormularioPartido formu = new FormularioPartido();
 					formu.setVisible(true);
@@ -311,6 +313,7 @@ public class Partidos extends JFrame {
 					int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea borrar el partido?");
 					if (res == 0) {
 						accesoBD.eliminarPartido(partidoslista.get(list.getSelectedIndex()));
+						accesoBD.eliminarClasiDePartido(partidoslista.get(list.getSelectedIndex()));
 					}
 					Partidos jorna = new Partidos();
 					jorna.setVisible(true);
