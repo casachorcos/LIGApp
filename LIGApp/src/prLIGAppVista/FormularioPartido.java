@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -27,7 +29,10 @@ public class FormularioPartido extends JFrame {
 
 	private JPanel contentPane;
 	private List<Equipo> listae;
+	private List<Equipo> copia;
+	private List<Equipo> listajor;
 	DefaultListModel listaJ;
+	private List<Partido> partidoslista;
 
 	/**
 	 * Launch the application.
@@ -154,6 +159,9 @@ public class FormularioPartido extends JFrame {
 
 		listae = accesoBD.equiposLiga(Ligas.seleccionado.getId());
 		listaJ = new DefaultListModel();
+		partidoslista = accesoBD.listaPartidos(Jornadas.seleccionado.getCodigoJornada());
+		listajor = new ArrayList<Equipo> (listae.size());
+		copia = accesoBD.equiposLiga(Ligas.seleccionado.getId());
 		
 		JList list = new JList();
 		list.setBounds(217, 75, 299, 144);
@@ -166,9 +174,32 @@ public class FormularioPartido extends JFrame {
 		
 		list_1.setModel(listaJ);
 		
+		for (int i = 0; i < partidoslista.size(); i++) {
+			
+			int id1 = partidoslista.get(i).getIdLocal();
+			Equipo e1 = new Equipo(id1, null);
+			int id2 = partidoslista.get(i).getIdVisitante();
+			Equipo e2 = new Equipo(id2, null);
+			
+			listajor.add(e1);
+			listajor.add(e2);
+		}
+		
 		for (Equipo e : listae) {
+			
+			for (int i = 0; i < listajor.size(); i++) {
+				
+				if ( e.equals(listajor.get(i))) {
+					copia.remove(e);
+				}	
+			}
+		}
+		
+		for (Equipo e : copia) {
+			
 			listaJ.addElement(e.toString());
 		}
+		
 		
 		JLabel lblSeleccinDeEquipo = new JLabel("Selecci\u00F3n de equipo local:");
 		lblSeleccinDeEquipo.setFont(new Font("Gadugi", Font.PLAIN, 12));
@@ -184,7 +215,7 @@ public class FormularioPartido extends JFrame {
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!list.isSelectionEmpty() && !list_1.isSelectionEmpty() && list.getSelectedIndex() != list_1.getSelectedIndex()) {
-					accesoBD.crearPartido(new Partido(accesoBD.generarCodPartido(), listae.get(list.getSelectedIndex()).getId(), listae.get(list_1.getSelectedIndex()).getId(), Jornadas.seleccionado.getCodigoJornada()));
+					accesoBD.crearPartido(new Partido(accesoBD.generarCodPartido(), copia.get(list.getSelectedIndex()).getId(), copia.get(list_1.getSelectedIndex()).getId(), Jornadas.seleccionado.getCodigoJornada()));
 					accesoBD.actualizarCodPartido(accesoBD.generarCodPartido() + 1);
 					Partidos j = new Partidos();
 					j.setVisible(true);

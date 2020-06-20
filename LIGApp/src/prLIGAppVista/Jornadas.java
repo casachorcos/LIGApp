@@ -229,6 +229,7 @@ public class Jornadas extends JFrame {
 						List<Partido> partidos = accesoBD.listaPartidos(listae.get(list.getSelectedIndex()).getCodigoJornada());
 						for (Partido p : partidos) {
 							accesoBD.eliminarPartido(p);
+							accesoBD.eliminarClasiDePartido(p);
 						}
 					}
 					int numJor = listae.get(list.getSelectedIndex()).getNumeroJornada();
