@@ -31,6 +31,7 @@ public class FormularioEquipo extends JFrame {
 	private List<Liga> listae;
 	private JTextField nombre;
 	private JTextField nombreequipo;
+	private JTextField textoCodigo;
 
 	/**
 	 * Launch the application.
@@ -140,6 +141,11 @@ public class FormularioEquipo extends JFrame {
 		panel_1.add(error);
 		error.setForeground(Color.RED);
 		
+		JLabel errorCod = new JLabel("", SwingConstants.CENTER);
+		errorCod.setBounds(199, 376, 297, 20);
+		panel_1.add(errorCod);
+		errorCod.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("A\u00F1adir Equipo");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -178,7 +184,7 @@ public class FormularioEquipo extends JFrame {
 		
 		JLabel lblSeleccinDeEquipo = new JLabel("Selecci\u00F3n de liga:");
 		lblSeleccinDeEquipo.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblSeleccinDeEquipo.setBounds(43, 217, 154, 30);
+		lblSeleccinDeEquipo.setBounds(43, 158, 164, 30);
 		panel_1.add(lblSeleccinDeEquipo);
 		
 		nombreequipo = new JTextField();
@@ -215,9 +221,71 @@ public class FormularioEquipo extends JFrame {
 		panel_1.add(aceptar);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(207, 188, 289, 186);
+		scrollPane.setBounds(200, 160, 295, 170);
 		scrollPane.setViewportView(list);
 		panel_1.add(scrollPane);
+		
+		JButton btnAadirConCdigo = new JButton("A\u00F1adir con c\u00F3digo");
+		btnAadirConCdigo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String codtext = textoCodigo.getText();
+				if(!codtext.isEmpty()) {
+					
+					//Decodifica el codigo y lo guarda en userid
+					int i = 0;
+					boolean cero = false, valido = false;
+					String user = "", aux;
+					int id;
+					char letra;
+					while(i < codtext.length() && !cero) {
+						aux = codtext.substring(i,i+2);
+						if(aux.equalsIgnoreCase("00")) {
+							cero = true;
+							valido = true;
+						}else {
+							letra = (char) (Integer.parseInt(aux) + 30);
+							user += letra;
+							i += 2;
+						}
+						
+					}
+					id = (Integer.parseInt(codtext.substring(i, codtext.length())) - 4)/3;
+
+					if(valido) {
+						Conexion accesoBD;
+						accesoBD = ConexionJDBC.getInstance();
+	
+						boolean anadido = false;
+						for(Equipo x : accesoBD.usuario_equipo(user)) {
+							if(x.getId() == id) {
+								accesoBD.crearEquipo_Usuario(x, Inicio.nombreUsuario);
+								anadido = true;
+							}
+						}
+						if(!anadido) {
+							errorCod.setText("Código inválido");
+						} else {
+							Equipos teams = new Equipos();
+							setVisible(false);
+							teams.setVisible(true);
+							
+						}
+					}else {
+						errorCod.setText("Código inválido");
+					}
+				}else {
+					errorCod.setText("Código inválido");
+				}
+				
+			}
+		});
+		btnAadirConCdigo.setBounds(42, 341, 147, 30);
+		panel_1.add(btnAadirConCdigo);
+		
+		textoCodigo = new JTextField();
+		textoCodigo.setBounds(199, 347, 297, 19);
+		panel_1.add(textoCodigo);
+		textoCodigo.setColumns(10);
 		
 		this.setLocationRelativeTo(null);
 	}
