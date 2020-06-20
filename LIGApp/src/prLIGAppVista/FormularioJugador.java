@@ -70,7 +70,7 @@ public class FormularioJugador extends JFrame {
 		JButton players = new JButton("Mis Jugadores");
 		players.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}
@@ -168,7 +168,7 @@ public class FormularioJugador extends JFrame {
 		JButton cancelar = new JButton("Cancelar");
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}
@@ -206,7 +206,7 @@ public class FormularioJugador extends JFrame {
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
 					accesoBD.crearJugador_Usuario(new Jugador(accesoBD.generarID(), nombre.getText(), Integer.parseInt(edad.getText())), Inicio.nombreUsuario);
-					jugadores j = new jugadores();
+					Jugadores j = new Jugadores();
 					j.setVisible(true);
 					setVisible(false);
 				} else if (!list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()){
@@ -216,7 +216,7 @@ public class FormularioJugador extends JFrame {
 					accesoBD.crearJugador_Usuario(new Jugador(id, nombre.getText(), Integer.parseInt(edad.getText())), Inicio.nombreUsuario);
 					Equipo equipo = listae.get(list.getSelectedIndex());
 					accesoBD.crearJugadorEnEquipo(new Jugador(id, nombre.getText(), Integer.parseInt(edad.getText())), equipo);
-					jugadores j = new jugadores();
+					Jugadores j = new Jugadores();
 					j.setVisible(true);
 					setVisible(false);
 				} else {

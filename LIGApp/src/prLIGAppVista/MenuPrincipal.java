@@ -55,7 +55,7 @@ public class MenuPrincipal extends JFrame {
 		JButton jugadores = new JButton("Mis Jugadores");
 		jugadores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}

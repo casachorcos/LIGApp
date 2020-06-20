@@ -72,7 +72,7 @@ public class Jornadas extends JFrame {
 		JButton players = new JButton("Mis Jugadores");
 		players.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}

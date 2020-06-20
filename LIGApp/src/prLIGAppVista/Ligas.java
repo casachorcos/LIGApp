@@ -69,7 +69,7 @@ public class Ligas extends JFrame {
 		JButton players = new JButton("Mis Jugadores");
 		players.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}
@@ -147,7 +147,7 @@ public class Ligas extends JFrame {
 				setVisible(false);
 			}
 		});
-		anyadir.setBounds(472, 132, 130, 30);
+		anyadir.setBounds(450, 85, 152, 30);
 		panel_1.add(anyadir);
 		
 		JLabel lblNewLabel = new JLabel("Mis Ligas");
@@ -187,7 +187,7 @@ public class Ligas extends JFrame {
 
 			}
 		});
-		eliminar.setBounds(472, 252, 130, 30);
+		eliminar.setBounds(450, 191, 152, 30);
 		panel_1.add(eliminar);
 		
 		JButton ver = new JButton("Ver Liga");
@@ -203,7 +203,7 @@ public class Ligas extends JFrame {
 				}
 			}
 		});
-		ver.setBounds(472, 362, 130, 30);
+		ver.setBounds(450, 297, 152, 30);
 		panel_1.add(ver);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -211,6 +211,22 @@ public class Ligas extends JFrame {
 		scrollPane.setViewportView(list);
 		list.setLayoutOrientation(JList.VERTICAL);
 		panel_1.add(scrollPane);
+		
+		JButton btnCompartirLiga = new JButton("Compartir Liga");
+		btnCompartirLiga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!list.isSelectionEmpty()) {
+					seleccionado = listae.get(list.getSelectedIndex());
+					Inicio.codigo = seleccionado.code(Inicio.nombreUsuario);
+					Codigo cod = new Codigo();
+					cod.setVisible(true);
+				}else {
+					error.setText("Debes seleccionar primero una liga");
+				}
+			}
+		});
+		btnCompartirLiga.setBounds(450, 403, 152, 30);
+		panel_1.add(btnCompartirLiga);
 		
 		this.setLocationRelativeTo(null);
 	}

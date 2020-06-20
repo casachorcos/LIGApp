@@ -70,7 +70,7 @@ public class DatosJugadores extends JFrame {
 		JButton players = new JButton("Mis Jugadores");
 		players.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}
@@ -156,7 +156,7 @@ public class DatosJugadores extends JFrame {
 		JButton volver = new JButton("Volver");
 		volver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}
@@ -174,8 +174,8 @@ public class DatosJugadores extends JFrame {
 		edad.setBounds(125, 163, 357, 20);
 		panel_1.add(edad);
 		
-		nombre.setText(jugadores.seleccionado.getNombre());
-		edad.setText(String.valueOf(jugadores.seleccionado.getEdad()));
+		nombre.setText(Jugadores.seleccionado.getNombre());
+		edad.setText(String.valueOf(Jugadores.seleccionado.getEdad()));
 		
 		Conexion acceso;
 		acceso = ConexionJDBC.getInstance();
@@ -185,7 +185,7 @@ public class DatosJugadores extends JFrame {
 		
 		for (Equipo equi : listaequipos) {
 			List<Jugador> juga = acceso.plantilla(equi.getId());
-			if (juga.contains(jugadores.seleccionado)) {
+			if (juga.contains(Jugadores.seleccionado)) {
 				listadelosequipos.add(equi);
 			}
 		}

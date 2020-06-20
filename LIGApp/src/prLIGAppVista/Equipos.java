@@ -30,6 +30,7 @@ public class Equipos extends JFrame {
 	private List<Equipo> listae;
 	public static Equipo seleccionado;
 	
+	
 	DefaultListModel listaJ;
 
 	/**
@@ -70,7 +71,7 @@ public class Equipos extends JFrame {
 		JButton players = new JButton("Mis Jugadores");
 		players.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}
@@ -216,6 +217,19 @@ public class Equipos extends JFrame {
 		panel_1.add(scrollPane);
 		
 		JButton btnCompartirEquipo = new JButton("Compartir Equipo");
+		btnCompartirEquipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!listaJ.isEmpty() && !list.isSelectionEmpty()) {
+					int pos = list.getSelectedIndex();
+					Equipo j = listae.get(pos);
+					Inicio.codigo = j.code(Inicio.nombreUsuario);
+					Codigo cod = new Codigo();
+					cod.setVisible(true);
+				}else {
+					error.setText("Debes seleccionar primero un equipo");
+				}
+			}
+		});
 		btnCompartirEquipo.setBounds(450, 403, 152, 30);
 		panel_1.add(btnCompartirEquipo);
 		

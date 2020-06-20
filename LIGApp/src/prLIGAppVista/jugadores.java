@@ -25,7 +25,7 @@ import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
 import prLIGAppModelo.Jugador;
 
-public class jugadores extends JFrame {
+public class Jugadores extends JFrame {
 
 	private JPanel contentPane;
 	public static Jugador seleccionado;
@@ -40,7 +40,7 @@ public class jugadores extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					jugadores frame = new jugadores();
+					Jugadores frame = new Jugadores();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class jugadores extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public jugadores() {
+	public Jugadores() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 878, 513);
 		contentPane = new JPanel();
@@ -71,7 +71,7 @@ public class jugadores extends JFrame {
 		JButton players = new JButton("Mis Jugadores");
 		players.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jugadores j = new jugadores();
+				Jugadores j = new Jugadores();
 				j.setVisible(true);
 				setVisible(false);
 			}
@@ -154,7 +154,7 @@ public class jugadores extends JFrame {
 				setVisible(false);
 			}
 		});
-		anyadir.setBounds(472, 132, 130, 30);
+		anyadir.setBounds(450, 85, 152, 30);
 		panel_1.add(anyadir);
 		
 		JLabel lblNewLabel = new JLabel("Mis Jugadores");
@@ -189,7 +189,7 @@ public class jugadores extends JFrame {
 
 			}
 		});
-		eliminar.setBounds(472, 252, 130, 30);
+		eliminar.setBounds(450, 191, 152, 30);
 		panel_1.add(eliminar);
 		
 		JButton ver = new JButton("Ver Jugador");
@@ -206,7 +206,7 @@ public class jugadores extends JFrame {
 				}
 			}
 		});
-		ver.setBounds(472, 362, 130, 30);
+		ver.setBounds(450, 297, 152, 30);
 		panel_1.add(ver);
 		
 		
@@ -215,6 +215,23 @@ public class jugadores extends JFrame {
 		scrollPane.setViewportView(list);
 		list.setLayoutOrientation(JList.VERTICAL);
 		panel_1.add(scrollPane);
+		
+		JButton btnCompartirJugador = new JButton("Compartir Jugador");
+		btnCompartirJugador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!list.isSelectionEmpty()) {
+					int pos = list.getSelectedIndex();
+					seleccionado = bdlista.get(pos);
+					Inicio.codigo = seleccionado.code(Inicio.nombreUsuario);
+					Codigo cod = new Codigo();
+					cod.setVisible(true);
+				}else {
+					error.setText("Debes seleccionar primero un jugador");
+				}
+			}
+		});
+		btnCompartirJugador.setBounds(450, 403, 152, 30);
+		panel_1.add(btnCompartirJugador);
 		
 		this.setLocationRelativeTo(null);
 	}

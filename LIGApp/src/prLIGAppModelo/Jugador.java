@@ -62,4 +62,18 @@ public class Jugador {
 		
 		return res;
 	}
+    public String code(String user) {
+		String c = user, cadena = "";
+		for (int i = 0; i < c.length(); i++) {
+			char a = c.charAt(i);
+			int x = a;
+			x -= 30;
+			cadena += x;
+		}
+		cadena = cadena.concat("00");
+		int id = this.getId();
+		cadena += ((id*3)+4);
+		return cadena;
+	}
+    
 }
