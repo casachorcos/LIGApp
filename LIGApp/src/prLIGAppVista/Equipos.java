@@ -17,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -134,7 +135,12 @@ public class Equipos extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JButton anyadir = new JButton("A\u00F1adir");
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
+		JButton anyadir = new JButton("A\u00F1adir Equipo");
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FormularioEquipo fj = new FormularioEquipo();
@@ -147,7 +153,7 @@ public class Equipos extends JFrame {
 		
 		
 		
-		JLabel lblNewLabel = new JLabel("Mis equipos");
+		JLabel lblNewLabel = new JLabel("Mis Equipos");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
 		panel_1.add(lblNewLabel);
@@ -166,7 +172,7 @@ public class Equipos extends JFrame {
 			listaJ.addElement(j.toString());
 		}
 		
-		JButton ver = new JButton("Ver");
+		JButton ver = new JButton("Ver Equipo");
 		ver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!list.isSelectionEmpty()) {
@@ -174,13 +180,15 @@ public class Equipos extends JFrame {
 					DatosEquipo deq = new DatosEquipo();
 					deq.setVisible(true);
 					setVisible(false);
+				}else {
+					error.setText("Debes seleccionar primero un equipo");
 				}
 			}
 		});
 		ver.setBounds(472, 362, 130, 30);
 		panel_1.add(ver);
 		
-		JButton eliminar = new JButton("Eliminar");
+		JButton eliminar = new JButton("Eliminar Equipo");
 		eliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				if (!listaJ.isEmpty() && !list.isSelectionEmpty()) {
@@ -193,6 +201,8 @@ public class Equipos extends JFrame {
 						accesoBD.eliminarEquipo_Us(j, Inicio.nombreUsuario);
 						listaJ.remove(pos);
 					}
+				}else {
+					error.setText("Debes seleccionar primero un equipo");
 				}
 			}
 		});

@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -128,6 +129,11 @@ public class FormularioLiga extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("A\u00F1adir Liga");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -152,12 +158,16 @@ public class FormularioLiga extends JFrame {
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Conexion accesoBD;
-				accesoBD = ConexionJDBC.getInstance();
-				accesoBD.crearLiga_Usuario(new Liga(accesoBD.generarID(), nombre.getText()), Inicio.nombreUsuario);
-				Ligas ligas = new Ligas();
-				ligas.setVisible(true);
-				setVisible(false);
+				if (!nombre.getText().isEmpty()) {
+					Conexion accesoBD;
+					accesoBD = ConexionJDBC.getInstance();
+					accesoBD.crearLiga_Usuario(new Liga(accesoBD.generarID(), nombre.getText()), Inicio.nombreUsuario);
+					Ligas ligas = new Ligas();
+					ligas.setVisible(true);
+					setVisible(false);
+				}else {
+					error.setText("Debes rellenar el campo");
+				}
 			}
 		});
 		aceptar.setBounds(111, 414, 130, 30);

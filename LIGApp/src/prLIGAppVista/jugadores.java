@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneLayout;
+import javax.swing.SwingConstants;
 
 import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
@@ -140,7 +141,12 @@ public class jugadores extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JButton anyadir = new JButton("A\u00F1adir");
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
+		JButton anyadir = new JButton("A\u00F1adir Jugador");
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FormularioJugador fj = new FormularioJugador();
@@ -151,7 +157,7 @@ public class jugadores extends JFrame {
 		anyadir.setBounds(472, 132, 130, 30);
 		panel_1.add(anyadir);
 		
-		JLabel lblNewLabel = new JLabel("Mis jugadores");
+		JLabel lblNewLabel = new JLabel("Mis Jugadores");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
 		panel_1.add(lblNewLabel);
@@ -165,7 +171,7 @@ public class jugadores extends JFrame {
 			listaJ.addElement(j.toString());
 		}
 		
-		JButton eliminar = new JButton("Eliminar");
+		JButton eliminar = new JButton("Eliminar Jugador");
 		eliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!listaJ.isEmpty() && !list.isSelectionEmpty()) {
@@ -177,6 +183,8 @@ public class jugadores extends JFrame {
 						accesoBD.eliminarJugador_Us(j, Inicio.nombreUsuario);
 						listaJ.remove(pos);
 					}
+				}else {
+					error.setText("Debes seleccionar primero un jugador");
 				}
 
 			}
@@ -184,7 +192,7 @@ public class jugadores extends JFrame {
 		eliminar.setBounds(472, 252, 130, 30);
 		panel_1.add(eliminar);
 		
-		JButton ver = new JButton("Ver");
+		JButton ver = new JButton("Ver Jugador");
 		ver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!list.isSelectionEmpty()) {
@@ -193,6 +201,8 @@ public class jugadores extends JFrame {
 					DatosJugadores dj = new DatosJugadores();
 					dj.setVisible(true);
 					setVisible(false);
+				}else {
+					error.setText("Debes seleccionar primero un jugador");
 				}
 			}
 		});

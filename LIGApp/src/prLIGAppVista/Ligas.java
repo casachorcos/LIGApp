@@ -17,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -133,7 +134,12 @@ public class Ligas extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JButton anyadir = new JButton("A\u00F1adir");
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
+		JButton anyadir = new JButton("A\u00F1adir Liga");
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FormularioLiga formu = new FormularioLiga();
@@ -144,7 +150,7 @@ public class Ligas extends JFrame {
 		anyadir.setBounds(472, 132, 130, 30);
 		panel_1.add(anyadir);
 		
-		JLabel lblNewLabel = new JLabel("Mis ligas");
+		JLabel lblNewLabel = new JLabel("Mis Ligas");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
 		panel_1.add(lblNewLabel);
@@ -163,7 +169,7 @@ public class Ligas extends JFrame {
 			listaJ.addElement(j.toString());
 		}
 		
-		JButton eliminar = new JButton("Eliminar");
+		JButton eliminar = new JButton("Eliminar Liga");
 		eliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!listaJ.isEmpty() && !list.isSelectionEmpty()) {
@@ -175,6 +181,8 @@ public class Ligas extends JFrame {
 						accesoBD.eliminarLiga_Us(j, Inicio.nombreUsuario);
 						listaJ.remove(pos);
 					}
+				}else {
+					error.setText("Debes seleccionar primero una liga");
 				}
 
 			}
@@ -182,7 +190,7 @@ public class Ligas extends JFrame {
 		eliminar.setBounds(472, 252, 130, 30);
 		panel_1.add(eliminar);
 		
-		JButton ver = new JButton("Ver");
+		JButton ver = new JButton("Ver Liga");
 		ver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!list.isSelectionEmpty()) {
@@ -190,6 +198,8 @@ public class Ligas extends JFrame {
 					DatosLiga datos = new DatosLiga();
 					datos.setVisible(true);
 					setVisible(false);
+				}else {
+					error.setText("Debes seleccionar primero una liga");
 				}
 			}
 		});

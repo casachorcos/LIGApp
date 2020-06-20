@@ -17,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -136,6 +137,11 @@ public class DatosEquipo extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("Datos Equipo");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -192,13 +198,17 @@ public class DatosEquipo extends JFrame {
 		JButton button = new JButton("Eliminar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				accesoBD.eliminarJugadorEnEquipo(listae.get(list.getSelectedIndex()), Equipos.seleccionado);
-				DatosEquipo de = new DatosEquipo();
-				setVisible(false);
-				de.setVisible(true);
+				if(!list.isSelectionEmpty()) {
+					accesoBD.eliminarJugadorEnEquipo(listae.get(list.getSelectedIndex()), Equipos.seleccionado);
+					DatosEquipo de = new DatosEquipo();
+					setVisible(false);
+					de.setVisible(true);
+				}else {
+					error.setText("Debes seleccionar primero un jugador");
+				}
 			}
 		});
-		button.setBounds(132, 390, 130, 30);
+		button.setBounds(131, 390, 130, 30);
 		panel_1.add(button);
 		
 		JList list_1 = new JList();
@@ -220,13 +230,17 @@ public class DatosEquipo extends JFrame {
 		JButton btnAadir = new JButton("A\u00F1adir");
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accesoBD.crearJugadorEnEquipo(jugadores.get(list_1.getSelectedIndex()), Equipos.seleccionado);
-				DatosEquipo de = new DatosEquipo();
-				setVisible(false);
-				de.setVisible(true);
+				if(!list_1.isSelectionEmpty()) {
+					accesoBD.crearJugadorEnEquipo(jugadores.get(list_1.getSelectedIndex()), Equipos.seleccionado);
+					DatosEquipo de = new DatosEquipo();
+					setVisible(false);
+					de.setVisible(true);
+				}else {
+					error.setText("Debes seleccionar primero un jugador");
+				}
 			}
 		});
-		btnAadir.setBounds(399, 397, 130, 30);
+		btnAadir.setBounds(393, 390, 130, 30);
 		panel_1.add(btnAadir);
 		
 		JScrollPane scrollPane1 = new JScrollPane();

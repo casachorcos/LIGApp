@@ -17,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 
@@ -138,6 +139,11 @@ public class EditarLiga extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("Datos de " + Ligas.seleccionado.getNombre());
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -200,8 +206,9 @@ public class EditarLiga extends JFrame {
 					EditarLiga de = new EditarLiga();
 					setVisible(false);
 					de.setVisible(true);
+				}else {
+					error.setText("Debes seleccionar primero un equipo");
 				}
-				
 			}
 		});
 		button.setBounds(132, 390, 130, 30);
@@ -231,6 +238,8 @@ public class EditarLiga extends JFrame {
 					EditarLiga de = new EditarLiga();
 					setVisible(false);
 					de.setVisible(true);
+				}else {
+					error.setText("Debes seleccionar primero un equipo");
 				}
 				
 			}

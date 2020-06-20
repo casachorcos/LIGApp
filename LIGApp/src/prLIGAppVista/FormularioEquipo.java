@@ -16,6 +16,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
@@ -134,6 +135,11 @@ public class FormularioEquipo extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("A\u00F1adir Equipo");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -184,14 +190,14 @@ public class FormularioEquipo extends JFrame {
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nom = nombreequipo.getText();
-				if (list.isSelectionEmpty()) {
+				if (list.isSelectionEmpty() && !nom.isEmpty()) {
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
 					accesoBD.crearEquipo_Usuario(new Equipo(accesoBD.generarID(), nom), Inicio.nombreUsuario);
 					Equipos j = new Equipos();
 					j.setVisible(true);
 					setVisible(false);
-				} else {
+				} else if (!list.isSelectionEmpty() && !nom.isEmpty()) {
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
 					int id = accesoBD.generarID();
@@ -200,6 +206,8 @@ public class FormularioEquipo extends JFrame {
 					Equipos j = new Equipos();
 					j.setVisible(true);
 					setVisible(false);
+				}else {
+					error.setText("Debes rellenar los campos");
 				}
 			}
 		});

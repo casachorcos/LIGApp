@@ -22,6 +22,7 @@ import prLIGAppModelo.Equipo;
 import prLIGAppModelo.Jugador;
 
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 
@@ -134,6 +135,11 @@ public class FormularioJugador extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
+		JLabel error = new JLabel("", SwingConstants.CENTER);
+		error.setBounds(282, 25, 333, 30);
+		panel_1.add(error);
+		error.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("Añadir Jugador");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -196,14 +202,14 @@ public class FormularioJugador extends JFrame {
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (list.isSelectionEmpty()) {
+				if (list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()) {
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
 					accesoBD.crearJugador_Usuario(new Jugador(accesoBD.generarID(), nombre.getText(), Integer.parseInt(edad.getText())), Inicio.nombreUsuario);
 					jugadores j = new jugadores();
 					j.setVisible(true);
 					setVisible(false);
-				} else {
+				} else if (!list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()){
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
 					int id = accesoBD.generarID();
@@ -213,6 +219,8 @@ public class FormularioJugador extends JFrame {
 					jugadores j = new jugadores();
 					j.setVisible(true);
 					setVisible(false);
+				} else {
+					error.setText("Debes rellenar los campos");
 				}
 			}
 		});
