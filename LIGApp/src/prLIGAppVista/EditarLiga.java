@@ -194,11 +194,14 @@ public class EditarLiga extends JFrame {
 		JButton button = new JButton("Eliminar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				accesoBD.eliminarEquipoEnLiga(listae.get(list.getSelectedIndex()), Ligas.seleccionado);
-				accesoBD.eliminarPartidosDeEquipo(listae.get(list.getSelectedIndex()));
-				EditarLiga de = new EditarLiga();
-				setVisible(false);
-				de.setVisible(true);
+				if(!list.isSelectionEmpty()) {
+					accesoBD.eliminarEquipoEnLiga(listae.get(list.getSelectedIndex()), Ligas.seleccionado);
+					accesoBD.eliminarPartidosDeEquipo(listae.get(list.getSelectedIndex()));
+					EditarLiga de = new EditarLiga();
+					setVisible(false);
+					de.setVisible(true);
+				}
+				
 			}
 		});
 		button.setBounds(132, 390, 130, 30);
@@ -223,10 +226,13 @@ public class EditarLiga extends JFrame {
 		JButton btnAadir = new JButton("A\u00F1adir");
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accesoBD.crearEquipoEnLiga(jugadores.get(list_1.getSelectedIndex()), Ligas.seleccionado);
-				EditarLiga de = new EditarLiga();
-				setVisible(false);
-				de.setVisible(true);
+				if(!list_1.isSelectionEmpty()) {
+					accesoBD.crearEquipoEnLiga(jugadores.get(list_1.getSelectedIndex()), Ligas.seleccionado);
+					EditarLiga de = new EditarLiga();
+					setVisible(false);
+					de.setVisible(true);
+				}
+				
 			}
 		});
 		btnAadir.setBounds(399, 397, 130, 30);

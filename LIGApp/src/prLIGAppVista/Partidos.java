@@ -226,7 +226,7 @@ public class Partidos extends JFrame {
 			
 			if (p.getJugado() == false) {
 				resul.add("No disputado");
-			} else resul.add(p.getGolesLocal() + "  -  " + p.getGolesVisitante());
+			} else resul.add(p.getGolesLocal() + " - " + p.getGolesVisitante());
 		}
 		
 		
