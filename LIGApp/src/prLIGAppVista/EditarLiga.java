@@ -194,7 +194,8 @@ public class EditarLiga extends JFrame {
 		JButton button = new JButton("Eliminar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				accesoBD.eliminarEquipoEnLiga(listae.get(list.getSelectedIndex()), Ligas.seleccionado);;
+				accesoBD.eliminarEquipoEnLiga(listae.get(list.getSelectedIndex()), Ligas.seleccionado);
+				accesoBD.eliminarPartidosDeEquipo(listae.get(list.getSelectedIndex()));
 				EditarLiga de = new EditarLiga();
 				setVisible(false);
 				de.setVisible(true);

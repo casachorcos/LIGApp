@@ -58,7 +58,9 @@ public abstract class Conexion {
 	public abstract int generarCodJornada();
 	public abstract int generarCodPartido();
 	public abstract void ajustarNumerosJornada(int numJor);
+	public abstract void eliminarPartidosDeEquipo(Equipo e);
 	public abstract void actualizarPartido(Partido p);
+	
 	
 	public abstract void cambiarContrasena(String idUsuario, String cont);
 	
