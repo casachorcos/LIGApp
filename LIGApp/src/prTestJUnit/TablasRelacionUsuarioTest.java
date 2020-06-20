@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,8 +16,6 @@ import prLIGAppModelo.Liga;
 import prLIGAppModelo.Usuario;
 
 class TablasRelacionUsuarioTest {
-	
-	//TODO: Drops de foreign key en Partido y Clasificacion
 	
 	
 	private static final Conexion conexion = ConexionJDBC.getInstance();
@@ -33,7 +30,6 @@ class TablasRelacionUsuarioTest {
 	private static Jugador jugadorCreado = new Jugador(conexion.generarID(), "JUnitTestCrear", 0);
 	
 	
-	// TODO: Cambiar contraseña cuando tenga un minimo de caracteres
 	private static Usuario usuarioAux = new Usuario("JUnitTestUserAux", "", "");
 	
 	
@@ -44,20 +40,27 @@ class TablasRelacionUsuarioTest {
 		
 		conexion.crearLiga(liga);
 		conexion.crearLiga_Usuario(liga, usuarioAux.getNombre());
-		//conexion.crearEquipo_Usuario(equipo, usuarioAux.getNombre());
-		//conexion.crearJugador_Usuario(jugador, usuarioAux.getNombre());
+		conexion.crearEquipo(equipo);
+		conexion.crearEquipo_Usuario(equipo, usuarioAux.getNombre());
+		conexion.crearJugador(jugador);
+		conexion.crearJugador_Usuario(jugador, usuarioAux.getNombre());
 		
 	}
 	
 
 	@Test
 	void testCrearLigaParaUsuario() {
+		List<Liga> ligasAntes = conexion.usuario_liga(usuarioAux.getNombre());
+		Liga ultimaAntes = ligasAntes.get(ligasAntes.size()-1);
+		
 		conexion.crearLiga(ligaCreada);
 		conexion.crearLiga_Usuario(ligaCreada, usuarioAux.getNombre());
 		
 		List<Liga> ligasDespues = conexion.usuario_liga(usuarioAux.getNombre());
 		Liga ultimaDespues = ligasDespues.get(ligasDespues.size()-1);
+		
 		assertAll("Crear Liga para Usuario",
+				() -> assertNotEquals(ultimaAntes, ultimaDespues),
 				() -> assertEquals(ligaCreada, ultimaDespues));
 	}
 	
@@ -80,6 +83,79 @@ class TablasRelacionUsuarioTest {
 				() -> assertNotEquals(ultimaDespues, ligaBorrada),
 				() -> assertEquals(ultimaAntes, ultimaDespues));
 	}
+	
+	
+	@Test
+	void testCrearEquipoParaUsuario() {
+		List<Equipo> equiposAntes = conexion.usuario_equipo(usuarioAux.getNombre());
+		Equipo ultimoAntes = equiposAntes.get(equiposAntes.size()-1);
+		
+		conexion.crearEquipo(equipoCreado);
+		conexion.crearEquipo_Usuario(equipoCreado, usuarioAux.getNombre());
+		
+		List<Equipo> equiposDespues = conexion.usuario_equipo(usuarioAux.getNombre());
+		Equipo ultimoDespues = equiposDespues.get(equiposDespues.size()-1);
+		
+		assertAll("Crear Equipo para Usuario",
+				() -> assertNotEquals(ultimoAntes, ultimoDespues),
+				() -> assertEquals(equipoCreado, ultimoDespues));
+	}
+	
+	
+	@Test
+	void testEliminarEquipoParaUsuario() {
+		List<Equipo> equiposAntes = conexion.usuario_equipo(usuarioAux.getNombre());
+		Equipo ultimoAntes = equiposAntes.get(equiposAntes.size()-1);
+		
+		Equipo equipoBorrado = new Equipo(conexion.generarID(), "JUnitTestBorrar");
+		conexion.crearEquipo_Usuario(equipoBorrado, usuarioAux.getNombre());
+		conexion.crearEquipo(equipoBorrado);
+		conexion.eliminarEquipo_Us(equipoBorrado, usuarioAux.getNombre());
+		conexion.eliminarEquipo(equipoBorrado);
+		
+		List<Equipo> equiposDespues = conexion.usuario_equipo(usuarioAux.getNombre());
+		Equipo ultimoDespues = equiposDespues.get(equiposDespues.size()-1);
+		
+		assertAll("Eliminar Equipo para Usuario",
+				() -> assertNotEquals(ultimoDespues, equipoBorrado),
+				() -> assertEquals(ultimoAntes, ultimoDespues));
+	}
+	
+	@Test
+	void testCrearJugadorParaUsuario() {
+		List<Jugador> jugadoresAntes = conexion.usuario_jugador(usuarioAux.getNombre());
+		Jugador ultimoAntes = jugadoresAntes.get(jugadoresAntes.size()-1);
+		
+		conexion.crearJugador(jugadorCreado);
+		conexion.crearJugador_Usuario(jugadorCreado, usuarioAux.getNombre());
+		
+		List<Jugador> jugadoresDespues = conexion.usuario_jugador(usuarioAux.getNombre());
+		Jugador ultimoDespues = jugadoresDespues.get(jugadoresDespues.size()-1);
+		
+		assertAll("Crear Jugador para Usuario",
+				() -> assertNotEquals(ultimoAntes, ultimoDespues),
+				() -> assertEquals(jugadorCreado, ultimoDespues));
+	}
+	
+	
+	@Test
+	void testEliminarJugadorParaUsuario() {
+		List<Jugador> jugadoresAntes = conexion.usuario_jugador(usuarioAux.getNombre());
+		Jugador ultimoAntes = jugadoresAntes.get(jugadoresAntes.size()-1);
+		
+		Jugador jugadorBorrado = new Jugador(conexion.generarID(), "JUnitTestBorrar", 0);
+		conexion.crearJugador_Usuario(jugadorBorrado, usuarioAux.getNombre());
+		conexion.crearJugador(jugadorBorrado);
+		conexion.eliminarJugador_Us(jugadorBorrado, usuarioAux.getNombre());
+		conexion.eliminarJugador(jugadorBorrado);
+		
+		List<Jugador> jugadoresDespues = conexion.usuario_jugador(usuarioAux.getNombre());
+		Jugador ultimoDespues = jugadoresDespues.get(jugadoresDespues.size()-1);
+		
+		assertAll("Eliminar Jugador para Usuario",
+				() -> assertNotEquals(ultimoDespues, jugadorBorrado),
+				() -> assertEquals(ultimoAntes, ultimoDespues));
+	}
 
 	
 	@AfterAll
@@ -88,8 +164,16 @@ class TablasRelacionUsuarioTest {
 		conexion.eliminarLiga_Us(liga, usuarioAux.getNombre());
 		conexion.eliminarLiga(ligaCreada);
 		conexion.eliminarLiga_Us(ligaCreada, usuarioAux.getNombre());
-		//conexion.eliminarEquipo_Us(equipo, usuarioAux.getNombre());
-		//conexion.eliminarJugador_Us(jugador, usuarioAux.getNombre());
+		
+		conexion.eliminarEquipo(equipo);
+		conexion.eliminarEquipo_Us(equipo, usuarioAux.getNombre());
+		conexion.eliminarEquipo(equipoCreado);
+		conexion.eliminarEquipo_Us(equipoCreado, usuarioAux.getNombre());
+		
+		conexion.eliminarJugador(jugador);
+		conexion.eliminarJugador_Us(jugador, usuarioAux.getNombre());
+		conexion.eliminarJugador(jugadorCreado);
+		conexion.eliminarJugador_Us(jugadorCreado, usuarioAux.getNombre());
 		
 		
 		conexion.eliminarUsuario(usuarioAux);
