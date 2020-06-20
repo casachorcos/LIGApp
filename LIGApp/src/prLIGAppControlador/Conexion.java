@@ -89,4 +89,5 @@ public abstract class Conexion {
 	public abstract Clasificacion equipoclasificacion(int codLiga, int codEquipo);
 
 	public abstract List<Equipo> equiposLiga(int codLiga);
+	public abstract void actualizarFechaJornada(Jornada seleccionado, int dia, int mes, int anio, int dur);
 }

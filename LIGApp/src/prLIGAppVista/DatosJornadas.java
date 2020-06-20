@@ -136,39 +136,39 @@ public class DatosJornadas extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Modificar Fecha de Jornada " + Jornadas.seleccionado.getNumeroJornada());
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
-		lblNewLabel.setBounds(25, 11, 438, 53);
+		lblNewLabel.setBounds(72, 31, 571, 53);
 		panel_1.add(lblNewLabel);
 		
 		JLabel lblNombre = new JLabel("Fecha de inicio de Jornada:");
 		lblNombre.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblNombre.setBounds(103, 173, 146, 21);
+		lblNombre.setBounds(122, 199, 146, 21);
 		panel_1.add(lblNombre);
 		
 		JLabel lblEdad = new JLabel("Días de duración:");
 		lblEdad.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblEdad.setBounds(103, 227, 140, 21);
+		lblEdad.setBounds(153, 275, 140, 21);
 		panel_1.add(lblEdad);
 		
 		diatxt = new JTextField();
-		diatxt.setBounds(259, 174, 40, 20);
+		diatxt.setBounds(278, 200, 40, 20);
 		panel_1.add(diatxt);
 		diatxt.setColumns(10);
 		diatxt.setText("");
 		
 		mestxt = new JTextField();
-		mestxt.setBounds(309, 174, 40, 20);
+		mestxt.setBounds(340, 200, 40, 20);
 		panel_1.add(mestxt);
 		mestxt.setColumns(10);
 		mestxt.setText("");
 		
 		aniotxt = new JTextField();
-		aniotxt.setBounds(359, 174, 56, 20);
+		aniotxt.setBounds(403, 200, 56, 20);
 		panel_1.add(aniotxt);
 		aniotxt.setColumns(10);
 		aniotxt.setText("");
 		
 		duraciontxt = new JTextField();
-		duraciontxt.setBounds(329, 228, 86, 20);
+		duraciontxt.setBounds(340, 276, 86, 20);
 		panel_1.add(duraciontxt);
 		duraciontxt.setColumns(10);
 		duraciontxt.setText("");
@@ -191,19 +191,14 @@ public class DatosJornadas extends JFrame {
 		JButton eliminar = new JButton("Aceptar");
 		eliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (localtxt.getText() != "" && visitantetxt.getText() != "") {
-					int loc = Integer.parseInt(localtxt.getText());
-					int vis = Integer.parseInt(visitantetxt.getText());
-					if (loc > vis) {
-						acceso.actualizarclasi(Ligas.seleccionado.getId(), Partidos.seleccionadoP.getIdLocal(), 3, loc, vis);
-						acceso.actualizarclasi(Ligas.seleccionado.getId(), Partidos.seleccionadoP.getIdVisitante(), 0, vis, loc);
-					} else if (loc == vis) {
-						acceso.actualizarclasi(Ligas.seleccionado.getId(), Partidos.seleccionadoP.getIdLocal(), 1, loc, vis);
-						acceso.actualizarclasi(Ligas.seleccionado.getId(), Partidos.seleccionadoP.getIdVisitante(), 1, vis, loc);
-					} else {
-						acceso.actualizarclasi(Ligas.seleccionado.getId(), Partidos.seleccionadoP.getIdLocal(), 0, loc, vis);
-						acceso.actualizarclasi(Ligas.seleccionado.getId(), Partidos.seleccionadoP.getIdVisitante(), 3, vis, loc);
-					}
+				if (diatxt.getText() != "" && mestxt.getText() != "" && aniotxt.getText() != "" && duraciontxt.getText() != "") {
+					
+					int dia = Integer.parseInt(diatxt.getText());
+					int mes = Integer.parseInt(mestxt.getText());
+					int anio = Integer.parseInt(aniotxt.getText());
+					int dur = Integer.parseInt(duraciontxt.getText());
+					
+					acceso.actualizarFechaJornada(Jornadas.seleccionado, dia, mes, anio, dur);
 					
 					Partidos par = new Partidos();
 					par.setVisible(true);
@@ -211,22 +206,22 @@ public class DatosJornadas extends JFrame {
 				}
 			}
 		});
-		eliminar.setBounds(159, 433, 130, 30);
+		eliminar.setBounds(260, 346, 130, 30);
 		panel_1.add(eliminar);
 		
 		JLabel lblDia = new JLabel("Dia");
 		lblDia.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblDia.setBounds(259, 142, 29, 21);
+		lblDia.setBounds(278, 168, 29, 21);
 		panel_1.add(lblDia);
 		
-		JLabel label_1 = new JLabel("Fecha de inicio de Jornada:");
-		label_1.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		label_1.setBounds(186, 97, 146, 21);
-		panel_1.add(label_1);
+		JLabel lblMes = new JLabel("Mes");
+		lblMes.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblMes.setBounds(340, 168, 29, 21);
+		panel_1.add(lblMes);
 		
 		JLabel lblAo = new JLabel("A\u00F1o");
 		lblAo.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblAo.setBounds(372, 142, 29, 21);
+		lblAo.setBounds(403, 168, 29, 21);
 		panel_1.add(lblAo);
 		
 		this.setLocationRelativeTo(null);
