@@ -225,20 +225,20 @@ public class Jornadas extends JFrame {
 				if (!listaJ.isEmpty() && !list.isSelectionEmpty()) {
 					int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea borrar la jornada?");
 					if (res == 0) {
-						
 						List<Partido> partidos = accesoBD.listaPartidos(listae.get(list.getSelectedIndex()).getCodigoJornada());
 						for (Partido p : partidos) {
 							accesoBD.eliminarPartido(p);
 							accesoBD.eliminarClasiDePartido(p);
 						}
+						int numJor = listae.get(list.getSelectedIndex()).getNumeroJornada();
+						accesoBD.eliminarJornada(listae.get(list.getSelectedIndex()));
+						accesoBD.ajustarNumerosJornada(numJor);
+						
+						Jornadas jorna = new Jornadas();
+						jorna.setVisible(true);
+						setVisible(false);
 					}
-					int numJor = listae.get(list.getSelectedIndex()).getNumeroJornada();
-					accesoBD.eliminarJornada(listae.get(list.getSelectedIndex()));
-					accesoBD.ajustarNumerosJornada(numJor);
 					
-					Jornadas jorna = new Jornadas();
-					jorna.setVisible(true);
-					setVisible(false);
 				}
 				else {
 					
