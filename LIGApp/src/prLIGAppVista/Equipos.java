@@ -148,7 +148,7 @@ public class Equipos extends JFrame {
 				setVisible(false);
 			}
 		});
-		anyadir.setBounds(472, 132, 130, 30);
+		anyadir.setBounds(450, 78, 152, 30);
 		panel_1.add(anyadir);
 		
 		
@@ -185,7 +185,7 @@ public class Equipos extends JFrame {
 				}
 			}
 		});
-		ver.setBounds(472, 362, 130, 30);
+		ver.setBounds(450, 297, 152, 30);
 		panel_1.add(ver);
 		
 		JButton eliminar = new JButton("Eliminar Equipo");
@@ -206,7 +206,7 @@ public class Equipos extends JFrame {
 				}
 			}
 		});
-		eliminar.setBounds(472, 252, 130, 30);
+		eliminar.setBounds(450, 191, 152, 30);
 		panel_1.add(eliminar);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -215,7 +215,10 @@ public class Equipos extends JFrame {
 		list.setLayoutOrientation(JList.VERTICAL);
 		panel_1.add(scrollPane);
 		
+		JButton btnCompartirEquipo = new JButton("Compartir Equipo");
+		btnCompartirEquipo.setBounds(450, 403, 152, 30);
+		panel_1.add(btnCompartirEquipo);
+		
 		this.setLocationRelativeTo(null);
 	}
-
 }
