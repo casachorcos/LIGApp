@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -27,10 +28,10 @@ public class DatosEquipo extends JFrame {
 	private JPanel contentPane;
 	private JTextField nombre;
 	private List<Jugador> listae;
-	private List<Jugador> jugadores;
+	private List<Jugador> jugadores = new ArrayList<Jugador>();
 	DefaultListModel listaJ;
 	DefaultListModel listaJUG;
-
+	private List<Jugador> aux;
 	/**
 	 * Launch the application.
 	 */
@@ -168,8 +169,12 @@ public class DatosEquipo extends JFrame {
 
 		listae = accesoBD.plantilla(Equipos.seleccionado.getId());
 		listaJ = new DefaultListModel();
-		
-		jugadores = accesoBD.usuario_jugador(Inicio.nombreUsuario);
+		aux = accesoBD.usuario_jugador(Inicio.nombreUsuario);
+		for(Jugador x : aux) {
+			if(!listae.contains(x)) {
+				jugadores.add(x);
+			}
+		}
 		
 		JList list = new JList();
 		list.setBounds(1, 1, 14, 205);
