@@ -156,13 +156,13 @@ public class DatosJornadas extends JFrame {
 		diatxt.setText("");
 		
 		mestxt = new JTextField();
-		mestxt.setBounds(308, 174, 40, 20);
+		mestxt.setBounds(309, 174, 40, 20);
 		panel_1.add(mestxt);
 		mestxt.setColumns(10);
 		mestxt.setText("");
 		
 		aniotxt = new JTextField();
-		aniotxt.setBounds(370, 174, 45, 20);
+		aniotxt.setBounds(359, 174, 56, 20);
 		panel_1.add(aniotxt);
 		aniotxt.setColumns(10);
 		aniotxt.setText("");
@@ -213,6 +213,21 @@ public class DatosJornadas extends JFrame {
 		});
 		eliminar.setBounds(159, 433, 130, 30);
 		panel_1.add(eliminar);
+		
+		JLabel lblDia = new JLabel("Dia");
+		lblDia.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblDia.setBounds(259, 142, 29, 21);
+		panel_1.add(lblDia);
+		
+		JLabel label_1 = new JLabel("Fecha de inicio de Jornada:");
+		label_1.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		label_1.setBounds(186, 97, 146, 21);
+		panel_1.add(label_1);
+		
+		JLabel lblAo = new JLabel("A\u00F1o");
+		lblAo.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblAo.setBounds(372, 142, 29, 21);
+		panel_1.add(lblAo);
 		
 		this.setLocationRelativeTo(null);
 	}

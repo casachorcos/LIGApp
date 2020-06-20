@@ -796,7 +796,6 @@ public class ConexionJDBC extends Conexion {
 		for (Partido p : partidosDeEquipo) {
 			
 			eliminarPartido(p);
-			eliminarClasiDePartido(p);
 		}
 		
 		
