@@ -743,14 +743,15 @@ public class ConexionJDBC extends Conexion {
 	
 	public void eliminarPartidosDeEquipo(Equipo e) {
 		
-		 ArrayList<Partido> partidosDeEquipo = new ArrayList<>();
-		String querylocal = "SELECT * FROM Partido WHERE local = " + e.getId();
-		String queryvisitante = "SELECT * FROM Partido WHERE local = " + e.getId();
+		ArrayList<Partido> partidosDeEquipo = new ArrayList<>();
+		
+		String queryLocal = "SELECT * FROM Partido WHERE local = " + e.getId();
+		String queryVisitante = "SELECT * FROM Partido WHERE visitante = " + e.getId();
 		
 		 Statement querySt1;
 	        try {
 	            querySt1 = con.createStatement();
-	            ResultSet rs = querySt1.executeQuery(querylocal);
+	            ResultSet rs = querySt1.executeQuery(queryLocal);
 	            if (rs.isBeforeFirst()) {
 	                while (rs.next()) {
 	                    int cod = rs.getInt(1);
@@ -773,7 +774,7 @@ public class ConexionJDBC extends Conexion {
 	     Statement querySt2;
 	        try {
 	            querySt2 = con.createStatement();
-	            ResultSet rs = querySt2.executeQuery(querylocal);
+	            ResultSet rs = querySt2.executeQuery(queryVisitante);
 	            if (rs.isBeforeFirst()) {
 	                while (rs.next()) {
 	                    int cod = rs.getInt(1);
@@ -795,8 +796,8 @@ public class ConexionJDBC extends Conexion {
 		
 		for (Partido p : partidosDeEquipo) {
 			
-			eliminarPartido(p);
 			eliminarClasiDePartido(p);
+			eliminarPartido(p);
 		}
 		
 		
