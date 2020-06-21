@@ -42,10 +42,12 @@ public abstract class Conexion {
 	public abstract List<Equipo> usuario_equipo(String idUsuario);
 
 	public abstract void crearJugador_Usuario(Jugador j, String usuario);
+	public abstract void crearJugador_Usuario2(Jugador j, String usuario);
     public abstract void crearEquipo_Usuario(Equipo e, String usuario);
     public abstract void crearEquipo_Usuario2(Equipo e, String usuario);
     public abstract void crearLiga_Usuario(Liga i, String usuario);
-	
+    public abstract void crearLiga_Usuario2(Liga i, String usuario);
+    
 	public abstract List<Object[]> clasif(int idLiga);
 	public abstract List<Jugador> plantilla(int idEquipo);
 	

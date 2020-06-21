@@ -365,6 +365,19 @@ public class ConexionJDBC extends Conexion {
         }
     }
 	
+	public void crearJugador_Usuario2(Jugador e, String usuario) {
+        String privado = "INSERT INTO Us_Jug (idUsuarioUs_Jug, idJugadorUs_Jug) VALUES (?, ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado, PreparedStatement.RETURN_GENERATED_KEYS);
+            pS.setString(1, usuario);
+            pS.setInt(2, e.getId());
+            int res = pS.executeUpdate();
+            ResultSet rs = pS.getGeneratedKeys();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+	
 	public void crearEquipo_Usuario2(Equipo e, String usuario) {
         String privado = "INSERT INTO Us_Eq (idUsuarioUs_Eq, idEquipoUs_Eq) VALUES (?, ?)";
         try {
@@ -407,6 +420,19 @@ public class ConexionJDBC extends Conexion {
             e.printStackTrace();
         }
 
+    }
+	
+	public void crearLiga_Usuario2(Liga e, String usuario) {
+        String privado = "INSERT INTO Us_Lig (idUsuarioUs_Lig, idLigaUs_Lig) VALUES (?, ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado, PreparedStatement.RETURN_GENERATED_KEYS);
+            pS.setString(1, usuario);
+            pS.setInt(2, e.getId());
+            int res = pS.executeUpdate();
+            ResultSet rs = pS.getGeneratedKeys();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
     }
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------

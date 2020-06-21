@@ -33,6 +33,7 @@ public class FormularioJugador extends JFrame {
 	private JTextField edad;
 	DefaultListModel listaJ;
 	private List<Equipo> listae;
+	private JTextField textoCodigo;
 
 	/**
 	 * Launch the application.
@@ -131,7 +132,7 @@ public class FormularioJugador extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(204, 255, 204));
-		panel_1.setBounds(209, 0, 653, 474);
+		panel_1.setBounds(206, 0, 653, 474);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -140,6 +141,11 @@ public class FormularioJugador extends JFrame {
 		panel_1.add(error);
 		error.setForeground(Color.RED);
 		
+		JLabel errorCod = new JLabel("", SwingConstants.CENTER);
+		errorCod.setBounds(206, 383, 289, 20);
+		panel_1.add(errorCod);
+		errorCod.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("Añadir Jugador");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -147,22 +153,22 @@ public class FormularioJugador extends JFrame {
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblNombre.setBounds(47, 125, 95, 14);
+		lblNombre.setBounds(47, 100, 95, 14);
 		panel_1.add(lblNombre);
 		
 		nombre = new JTextField();
 		nombre.setColumns(10);
-		nombre.setBounds(199, 123, 299, 20);
+		nombre.setBounds(207, 98, 288, 20);
 		panel_1.add(nombre);
 		
 		JLabel lblEdad = new JLabel("Edad:");
 		lblEdad.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblEdad.setBounds(47, 165, 107, 14);
+		lblEdad.setBounds(47, 131, 107, 14);
 		panel_1.add(lblEdad);
 		
 		edad = new JTextField();
 		edad.setColumns(10);
-		edad.setBounds(199, 163, 299, 20);
+		edad.setBounds(208, 129, 288, 20);
 		panel_1.add(edad);
 		
 		JButton cancelar = new JButton("Cancelar");
@@ -177,11 +183,6 @@ public class FormularioJugador extends JFrame {
 		panel_1.add(cancelar);
 		
 		listaJ = new DefaultListModel();
-		
-		JList list = new JList();
-		list.setBounds(209, 216, 289, 167);
-		list.setModel(listaJ);
-		list.setLayoutOrientation(JList.VERTICAL);
 		
 		
 		Conexion accesoBD;
@@ -198,6 +199,15 @@ public class FormularioJugador extends JFrame {
 		lblSeleccinDeEquipo.setFont(new Font("Gadugi", Font.PLAIN, 12));
 		lblSeleccinDeEquipo.setBounds(35, 230, 154, 14);
 		panel_1.add(lblSeleccinDeEquipo);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(207, 166, 289, 167);
+		panel_1.add(scrollPane);
+		
+		JList list = new JList();
+		scrollPane.setViewportView(list);
+		list.setModel(listaJ);
+		list.setLayoutOrientation(JList.VERTICAL);
 		
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.addActionListener(new ActionListener() {
@@ -227,10 +237,82 @@ public class FormularioJugador extends JFrame {
 		aceptar.setBounds(111, 414, 130, 30);
 		panel_1.add(aceptar);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(209, 216, 289, 167);
-		scrollPane.setViewportView(list);
-		panel_1.add(scrollPane);
+		
+		
+		JButton btnAadirConCdigo = new JButton("A\u00F1adir con c\u00F3digo");
+		btnAadirConCdigo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String codtext = textoCodigo.getText();
+					if(!codtext.isEmpty()) {
+						
+						//Decodifica el codigo y lo guarda en userid
+						int i = 0;
+						boolean cero = false, valido = false;
+						String user = "", aux;
+						int id;
+						char letra;
+						while(i < codtext.length() && !cero) {
+							aux = codtext.substring(i,i+2);
+							if(aux.equalsIgnoreCase("00")) {
+								cero = true;
+								valido = true;
+							}else {
+								letra = (char) (Integer.parseInt(aux) + 30);
+								user += letra;
+								i += 2;
+							}
+							
+						}
+						id = (Integer.parseInt(codtext.substring(i, codtext.length())) - 4)/3;
+
+						if(valido) {
+							Conexion accesoBD;
+							accesoBD = ConexionJDBC.getInstance();
+							boolean noesta = true;
+							boolean anadido = false;
+							for(Jugador x : accesoBD.usuario_jugador(Inicio.nombreUsuario)) {
+								if(x.getId() == id) {
+									noesta = false;
+								}
+							}
+							if(noesta) {
+								for(Jugador x : accesoBD.usuario_jugador(user)) {
+									if(x.getId() == id) {
+										accesoBD.crearJugador_Usuario2(x, Inicio.nombreUsuario);
+										anadido = true;
+									}
+								}
+								if(!anadido) {
+									errorCod.setText("Código inválido");
+								} else {
+									Jugadores teams = new Jugadores();
+									setVisible(false);
+									teams.setVisible(true);
+									
+								}
+							}else {
+								errorCod.setText("Ese jugador ya ha sido añadido");
+							}
+						
+						}else {
+							errorCod.setText("Código inválido");
+						}
+					}else {
+						errorCod.setText("Código inválido");
+					}
+				} catch (NumberFormatException excp) {
+					errorCod.setText("Código inválido");
+				}
+			}
+		});
+		btnAadirConCdigo.setBounds(42, 355, 147, 30);
+		panel_1.add(btnAadirConCdigo);
+		
+		textoCodigo = new JTextField();
+		textoCodigo.setBounds(206, 360, 288, 19);
+		panel_1.add(textoCodigo);
+		textoCodigo.setColumns(10);
 		
 		this.setLocationRelativeTo(null);
 	}

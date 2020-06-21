@@ -19,13 +19,14 @@ import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
+import prLIGAppModelo.Jugador;
 import prLIGAppModelo.Liga;
 
 public class FormularioLiga extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField nombre;
-
+	private JTextField textoCodigo;
 	/**
 	 * Launch the application.
 	 */
@@ -134,6 +135,11 @@ public class FormularioLiga extends JFrame {
 		panel_1.add(error);
 		error.setForeground(Color.RED);
 		
+		JLabel errorCod = new JLabel("", SwingConstants.CENTER);
+		errorCod.setBounds(205, 345, 289, 20);
+		panel_1.add(errorCod);
+		errorCod.setForeground(Color.RED);
+		
 		JLabel lblNewLabel = new JLabel("A\u00F1adir Liga");
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
 		lblNewLabel.setBounds(25, 11, 438, 53);
@@ -172,6 +178,81 @@ public class FormularioLiga extends JFrame {
 		});
 		aceptar.setBounds(111, 414, 130, 30);
 		panel_1.add(aceptar);
+		
+		JButton btnAadirConCdigo = new JButton("A\u00F1adir con c\u00F3digo");
+		btnAadirConCdigo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String codtext = textoCodigo.getText();
+					if(!codtext.isEmpty()) {
+						
+						//Decodifica el codigo y lo guarda en userid
+						int i = 0;
+						boolean cero = false, valido = false;
+						String user = "", aux;
+						int id;
+						char letra;
+						while(i < codtext.length() && !cero) {
+							aux = codtext.substring(i,i+2);
+							if(aux.equalsIgnoreCase("00")) {
+								cero = true;
+								valido = true;
+							}else {
+								letra = (char) (Integer.parseInt(aux) + 30);
+								user += letra;
+								i += 2;
+							}
+							
+						}
+						id = (Integer.parseInt(codtext.substring(i, codtext.length())) - 4)/3;
+
+						if(valido) {
+							Conexion accesoBD;
+							accesoBD = ConexionJDBC.getInstance();
+							boolean noesta = true;
+							boolean anadido = false;
+							for(Liga x : accesoBD.usuario_liga(Inicio.nombreUsuario)) {
+								if(x.getId() == id) {
+									noesta = false;
+								}
+							}
+							if(noesta) {
+								for(Liga x : accesoBD.usuario_liga(user)) {
+									if(x.getId() == id) {
+										accesoBD.crearLiga_Usuario2(x, Inicio.nombreUsuario);
+										anadido = true;
+									}
+								}
+								if(!anadido) {
+									errorCod.setText("Código inválido");
+								} else {
+									Ligas teams = new Ligas();
+									setVisible(false);
+									teams.setVisible(true);
+									
+								}
+							}else {
+								errorCod.setText("Esa liga ya ha sido añadida");
+							}
+						
+						}else {
+							errorCod.setText("Código inválido");
+						}
+					}else {
+						errorCod.setText("Código inválido");
+					}
+				} catch (NumberFormatException excp) {
+					errorCod.setText("Código inválido");
+				}
+			}
+		});
+		btnAadirConCdigo.setBounds(40, 293, 147, 30);
+		panel_1.add(btnAadirConCdigo);
+		
+		textoCodigo = new JTextField();
+		textoCodigo.setBounds(206, 298, 288, 19);
+		panel_1.add(textoCodigo);
+		textoCodigo.setColumns(10);
 		
 		nombre = new JTextField();
 		nombre.setBounds(123, 123, 339, 20);
