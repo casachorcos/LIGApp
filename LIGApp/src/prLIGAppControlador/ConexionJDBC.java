@@ -170,6 +170,19 @@ public class ConexionJDBC extends Conexion {
 		}
 	}
 	
+	public void actualizarJugador(Jugador j) {
+		String updateBody = "UPDATE Jugador p SET goles = ?, amarillas = ?, rojas = ? WHERE id = " + 
+				Jugadores.seleccionado.getId();
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+				pS.setInt(1, j.getGoles());
+				pS.setInt(2, j.getAmarillas());
+				pS.setInt(3, j.getRojas());
+	            int res = pS.executeUpdate();
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void crearEquipo(Equipo eq) {
 		String query = "INSERT INTO Equipo (id, nombre) VALUES (?, ?)";
@@ -318,8 +331,14 @@ public class ConexionJDBC extends Conexion {
 					int id = rs.getInt(3);
 					int edad = rs.getInt(4);
 					String pos = rs.getString(5);
+					int goles = rs.getInt(6);
+					int amarillas = rs.getInt(7);
+					int rojas = rs.getInt(8);
 					Jugador jug = new Jugador(id, nombre, edad);
 					jug.setRol(pos);
+					jug.setGoles(goles);
+					jug.setAmarillas(amarillas);
+					jug.setRojas(rojas);
 					jugadores.add(jug);
 				}
 			}
