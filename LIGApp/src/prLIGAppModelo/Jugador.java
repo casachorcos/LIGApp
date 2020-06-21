@@ -24,6 +24,10 @@ public class Jugador {
             this.rol = rol;
         }
     }
+    
+    public String getRol() {
+    	return rol;
+    }
 
     public void incGoles(int g){
         goles = goles + g;

@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
 
 public class FormularioJugador extends JFrame {
 
@@ -53,6 +54,7 @@ public class FormularioJugador extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public FormularioJugador() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 878, 513);
@@ -147,22 +149,22 @@ public class FormularioJugador extends JFrame {
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblNombre.setBounds(47, 125, 95, 14);
+		lblNombre.setBounds(47, 63, 95, 14);
 		panel_1.add(lblNombre);
 		
 		nombre = new JTextField();
 		nombre.setColumns(10);
-		nombre.setBounds(199, 123, 299, 20);
+		nombre.setBounds(199, 61, 299, 20);
 		panel_1.add(nombre);
 		
 		JLabel lblEdad = new JLabel("Edad:");
 		lblEdad.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblEdad.setBounds(47, 165, 107, 14);
+		lblEdad.setBounds(47, 88, 107, 14);
 		panel_1.add(lblEdad);
 		
 		edad = new JTextField();
 		edad.setColumns(10);
-		edad.setBounds(199, 163, 299, 20);
+		edad.setBounds(199, 86, 299, 20);
 		panel_1.add(edad);
 		
 		JButton cancelar = new JButton("Cancelar");
@@ -194,6 +196,18 @@ public class FormularioJugador extends JFrame {
 			listaJ.addElement(e.toString());
 		}
 		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(199, 117, 299, 20);
+		panel_1.add(comboBox);
+		comboBox.addItem("Portero/a");
+		comboBox.addItem("Defensa");
+		comboBox.addItem("Centrocampista");
+		comboBox.addItem("Delantero/a");
+		
+		JLabel lblPosicin = new JLabel("Posici\u00F3n:");
+		lblPosicin.setBounds(47, 120, 95, 14);
+		panel_1.add(lblPosicin);
+		
 		JLabel lblSeleccinDeEquipo = new JLabel("Selecci\u00F3n de equipo:");
 		lblSeleccinDeEquipo.setFont(new Font("Gadugi", Font.PLAIN, 12));
 		lblSeleccinDeEquipo.setBounds(35, 230, 154, 14);
@@ -205,7 +219,11 @@ public class FormularioJugador extends JFrame {
 				if (list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()) {
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
-					accesoBD.crearJugador_Usuario(new Jugador(accesoBD.generarID(), nombre.getText(), Integer.parseInt(edad.getText())), Inicio.nombreUsuario);
+					Jugador jugador = new Jugador(accesoBD.generarID(), nombre.getText(), Integer.parseInt(edad.getText()));
+					if (comboBox.getSelectedItem().toString() != null) {
+						jugador.setRol(comboBox.getSelectedItem().toString());
+					}
+					accesoBD.crearJugador_Usuario(jugador, Inicio.nombreUsuario);
 					Jugadores j = new Jugadores();
 					j.setVisible(true);
 					setVisible(false);
@@ -231,6 +249,8 @@ public class FormularioJugador extends JFrame {
 		scrollPane.setBounds(209, 216, 289, 167);
 		scrollPane.setViewportView(list);
 		panel_1.add(scrollPane);
+		
+		
 		
 		this.setLocationRelativeTo(null);
 	}
