@@ -27,7 +27,6 @@ public abstract class Conexion {
 	public abstract void crearUsuario(Usuario u);
 	
 	public abstract void crearJugador(Jugador j);
-	public abstract void actualizarJugador(Jugador j);
 	public abstract void crearEquipo(Equipo eq);
 	public abstract void crearLiga(Liga a);
 	
