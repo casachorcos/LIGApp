@@ -49,12 +49,19 @@ public class ConexionJDBC extends Conexion {
 	}
 	
 	
+	
+	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	
 	
 	
 	// MÉTODOS CREAR BÁSICOS (CREAN EN BASE DE DATOS EL OBJETO CORRESPONDIENTE) 
+	
+	
+	
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	
 	
@@ -164,278 +171,16 @@ public class ConexionJDBC extends Conexion {
 
 	
 	
+	
 	// MÉTODOS CREAR AVANZADOS (CREAN EN BASE DE DATOS LA RELACION CORRESPONDIENTE) 
 	
 	
 	
 	
-	public List<Usuario> listaUsuarios() {
-		ArrayList<Usuario> usuarios = new ArrayList<>();
-		String query = "SELECT * FROM Usuario";
-		Statement querySt;
-		try {
-			querySt = con.createStatement();
-			ResultSet rs = querySt.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					String nombre = rs.getString(1);
-					String correo = rs.getString(2);
-					String password = rs.getString(3);
-					
-					usuarios.add(new Usuario(nombre, correo, password));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return usuarios;
-	}
-	
-	public List<Jugador> listaJugadores() {
-		ArrayList<Jugador> jugadores = new ArrayList<>();
-		String query = "SELECT * FROM Jugador";
-		Statement querySt;
-		try {
-			querySt = con.createStatement();
-			ResultSet rs = querySt.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					String nombre = rs.getString(1);
-					int id = rs.getInt(3);
-					int edad = rs.getInt(4);
-					
-					jugadores.add(new Jugador(id, nombre, edad));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return jugadores;
-	}
-	
-
-	public List<Equipo> listaEquipos() {
-		ArrayList<Equipo> equipos = new ArrayList<>();
-		String query = "SELECT * FROM Equipo";
-		Statement querySt;
-		try {
-			querySt = con.createStatement();
-			ResultSet rs = querySt.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					int id = rs.getInt(1);
-					String nombre = rs.getString(2);	
-					equipos.add(new Equipo(id, nombre));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return equipos;
-	}	
-	
-	public List<Liga> listaLigas() {
-		ArrayList<Liga> ligas = new ArrayList<>();
-		String query = "SELECT * FROM Liga";
-		Statement querySt;
-		try {
-			querySt = con.createStatement();
-			ResultSet rs = querySt.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					int id = rs.getInt(1);
-					String nombre = rs.getString(2);	
-					ligas.add(new Liga(id, nombre));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return ligas;
-	}		
-	
-	public void actualizarJugador(Jugador j) {
-		String updateBody = "UPDATE Jugador p SET goles = ?, amarillas = ?, rojas = ? WHERE id = " + 
-				Jugadores.seleccionado.getId();
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
-				pS.setInt(1, j.getGoles());
-				pS.setInt(2, j.getAmarillas());
-				pS.setInt(3, j.getRojas());
-	            int res = pS.executeUpdate();
-			} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-
-	
-	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-	@Override
-	public void eliminarUsuario(Usuario u) {
-		String deleteBody = "DELETE FROM Usuario WHERE (nombre = ? && correo = ? && password = ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-			pS.setString(1, u.getNombre());
-			pS.setString(2, u.getCorreo());
-			pS.setString(3, u.getPassword());
-			int res = pS.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void eliminarJugador(Jugador j) {
-		String deleteBody = "DELETE FROM Jugador WHERE (id = ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-			pS.setInt(1, j.getId());
-			int res = pS.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void eliminarEquipo(Equipo eq) {
-		String deleteBody = "DELETE FROM Equipo WHERE (id = ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-			pS.setInt(1, eq.getId());
-			int res = pS.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}	
-	
-	@Override
-	public void eliminarLiga(Liga a) {
-		String deleteBody = "DELETE FROM Liga WHERE (id = ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-			pS.setInt(1, a.getId());
-			int res = pS.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	private void actualizarID(int id) {
-		String updateBody = "UPDATE IncrementaId SET iteradorId = ?";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
-			pS.setInt(1, id);
-			int res = pS.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
-	public int generarID() {
-		int id = 0;
-		String query = "SELECT * FROM IncrementaId";
-		Statement querySt;
-		try {
-			querySt = con.createStatement();
-			ResultSet rs = querySt.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					id = rs.getInt(1);	
-				}
-			}
-			actualizarID(id+1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return id;
-	}
 	
-	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
-	public List<Equipo> usuario_equipo(String idUsuario) {
-        ArrayList<Equipo> equipos = new ArrayList<>();
-        String query = "SELECT * FROM Equipo WHERE id IN (SELECT idEquipoUs_Eq FROM Us_Eq where idUsuarioUs_Eq = ?)" ;
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-            pS.setString(1, idUsuario);
-            ResultSet rs = pS.executeQuery();
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    int id = rs.getInt(1);
-                    String nombre = rs.getString(2);
-
-                    equipos.add(new Equipo(id, nombre));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return equipos;
-    }
-	
-	public List<Jugador> usuario_jugador(String idUsuario) {
-		ArrayList<Jugador> jugadores = new ArrayList<>();
-		String query = "SELECT * FROM Jugador WHERE id IN (SELECT idJugadorUs_Jug FROM Us_Jug where idUsuarioUs_Jug = ?)" ;
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-			pS.setString(1, idUsuario);
-			ResultSet rs = pS.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					String nombre = rs.getString(1);
-					int id = rs.getInt(3);
-					int edad = rs.getInt(4);
-					String pos = rs.getString(5);
-					int goles = rs.getInt(6);
-					int amarillas = rs.getInt(7);
-					int rojas = rs.getInt(8);
-					Jugador jug = new Jugador(id, nombre, edad);
-					jug.setRol(pos);
-					jug.setGoles(goles);
-					jug.setAmarillas(amarillas);
-					jug.setRojas(rojas);
-					jugadores.add(jug);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return jugadores;
-	}
-	
-	public List<Liga> usuario_liga(String idUsuario) {
-        ArrayList<Liga> ligas = new ArrayList<>();
-        String query = "SELECT * FROM Liga WHERE id IN (SELECT idLigaUs_Lig FROM Us_Lig where idUsuarioUs_Lig = ?)" ;
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-            pS.setString(1, idUsuario);
-            ResultSet rs = pS.executeQuery();
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    int id = rs.getInt(1);
-                    String nombre = rs.getString(2);
-
-                    ligas.add(new Liga(id, nombre));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return ligas;
-    }
-	
-	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	public void crearJugador_Usuario(Jugador j, String usuario) {
         crearJugador(j);
@@ -453,6 +198,7 @@ public class ConexionJDBC extends Conexion {
         }
     }
 	
+	
 	public void crearJugador_Usuario2(Jugador e, String usuario) {
         String privado = "INSERT INTO Us_Jug (idUsuarioUs_Jug, idJugadorUs_Jug) VALUES (?, ?)";
         try {
@@ -466,18 +212,6 @@ public class ConexionJDBC extends Conexion {
         }
     }
 	
-	public void crearEquipo_Usuario2(Equipo e, String usuario) {
-        String privado = "INSERT INTO Us_Eq (idUsuarioUs_Eq, idEquipoUs_Eq) VALUES (?, ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado, PreparedStatement.RETURN_GENERATED_KEYS);
-            pS.setString(1, usuario);
-            pS.setInt(2, e.getId());
-            int res = pS.executeUpdate();
-            ResultSet rs = pS.getGeneratedKeys();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-    }
 	
 	public void crearEquipo_Usuario(Equipo e, String usuario) {
         crearEquipo(e);
@@ -494,6 +228,21 @@ public class ConexionJDBC extends Conexion {
         }
     }
 	
+	
+	public void crearEquipo_Usuario2(Equipo e, String usuario) {
+        String privado = "INSERT INTO Us_Eq (idUsuarioUs_Eq, idEquipoUs_Eq) VALUES (?, ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado, PreparedStatement.RETURN_GENERATED_KEYS);
+            pS.setString(1, usuario);
+            pS.setInt(2, e.getId());
+            int res = pS.executeUpdate();
+            ResultSet rs = pS.getGeneratedKeys();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+	
+
 	public void crearLiga_Usuario(Liga l, String usuario) {
         crearLiga(l);
 
@@ -510,6 +259,7 @@ public class ConexionJDBC extends Conexion {
 
     }
 	
+	
 	public void crearLiga_Usuario2(Liga e, String usuario) {
         String privado = "INSERT INTO Us_Lig (idUsuarioUs_Lig, idLigaUs_Lig) VALUES (?, ?)";
         try {
@@ -523,71 +273,163 @@ public class ConexionJDBC extends Conexion {
         }
     }
 	
+	
+	public void crearJugadorEnEquipo(Jugador j, Equipo eq) {
+        String query = "INSERT INTO Plantilla (idJugador, idEquipo) VALUES (?, ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            pS.setInt(1, j.getId());
+            pS.setInt(2, eq.getId());
+            int res = pS.executeUpdate();
+            ResultSet rs = pS.getGeneratedKeys();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+	
+    public void crearEquipoEnLiga(Equipo eq, Liga a) {
+        String query = "INSERT INTO Clasificacion (idEquipoClasificacion, idLigaClasificacion) VALUES (?, ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            pS.setInt(1, eq.getId());
+            pS.setInt(2, a.getId());
+            int res = pS.executeUpdate();
+            ResultSet rs = pS.getGeneratedKeys();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	
+	
+	// MÉTODOS ELIMINAR BÁSICOS (ELIMINAN EN BASE DE DATOS EL OBJETO CORRESPONDIENTE) 
+		
+		
+		
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+	
+	
+	
+	@Override
+	public void eliminarUsuario(Usuario u) {
+		String deleteBody = "DELETE FROM Usuario WHERE (nombre = ? && correo = ? && password = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+			pS.setString(1, u.getNombre());
+			pS.setString(2, u.getCorreo());
+			pS.setString(3, u.getPassword());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	@Override
+	public void eliminarJugador(Jugador j) {
+		String deleteBody = "DELETE FROM Jugador WHERE (id = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+			pS.setInt(1, j.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	@Override
+	public void eliminarEquipo(Equipo eq) {
+		String deleteBody = "DELETE FROM Equipo WHERE (id = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+			pS.setInt(1, eq.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}	
+	
+	
+	@Override
+	public void eliminarLiga(Liga a) {
+		String deleteBody = "DELETE FROM Liga WHERE (id = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+			pS.setInt(1, a.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Override
+	public void eliminarJornada(Jornada jor) {
+		String deleteBody = "DELETE FROM Jornada WHERE (codjornada = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+			pS.setInt(1, jor.getCodigoJornada());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Override
+	public void eliminarPartido(Partido p) {
+        String deleteBody = "DELETE FROM Partido WHERE (codpartido = ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+            pS.setInt(1, p.getCodigoPartido());
+            int res = pS.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+	
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	
+	
+	// MÉTODOS ELIMINAR AVANZADOS (ELIMINAN EN BASE DE DATOS LA RELACION CORRESPONDIENTE) 
+		
+		
+		
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public List<Object[]> clasif(int idLiga) {
-		List<Object[]> equipos = new ArrayList<Object[]>();
-
-		String query = "SELECT e.nombre, c.puntos, c.golesMarcados, c.golesEnContra, c.partidosJugados FROM Clasificacion c, Equipo e WHERE c.idEquipoClasificacion = e.id AND c.idLigaClasificacion = ? ORDER BY puntos DESC, (golesMarcados - golesEnContra) DESC";
+	
+	
+	
+	public void eliminarJugador_Us(Jugador j,String usuario) {
 		
+		String privado = "DELETE FROM Us_Jug WHERE (idUsuarioUs_Jug = ? && idJugadorUs_Jug = ?)";
 		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-			pS.setInt(1, idLiga);
-			ResultSet rs = pS.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					String nombreequipo = rs.getString(1);
-					int puntos = rs.getInt(2);
-					int golesmarcados = rs.getInt(3);	
-					int golesencontra = rs.getInt(4);
-					int partidosjugados = rs.getInt(5);
-					
-					Object[] o = new Object[5];
-					o[0] = nombreequipo;
-					o[1] = puntos;
-					o[2] = golesmarcados;
-					o[3] = golesencontra;
-					o[4] = partidosjugados;
-					
-					equipos.add(o);
-				}
-			}
-			pS.close();
-			rs.close();
-		} catch (SQLException e) {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
+			pS.setString(1, usuario);
+			pS.setInt(2, j.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return equipos;
+		eliminarJugador(j);
 	}
 	
-	public List<Jugador> plantilla(int idEquipo) {
-		ArrayList<Jugador> jugadores = new ArrayList<>();
-
-		String query = "SELECT e.nombre, e.id, e.edad FROM Plantilla c, Jugador e WHERE c.idJugador = e.id AND c.idEquipo = ?";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-			pS.setInt(1, idEquipo);
-			ResultSet rs = pS.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					String nombrejugador = rs.getString(1);
-					int id = rs.getInt(2);
-					int edad = rs.getInt(3);	
-					jugadores.add(new Jugador(id,nombrejugador,edad));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return jugadores;
-	}
 	
-	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
-	public void eliminarLiga_Us2(Liga eq,String usuario) {	
-		String privado = "DELETE FROM Us_Lig WHERE (idUsuarioUs_Lig = ? && idLigaUs_Lig = ?)";
+	public void eliminarJugador_Us2(Jugador eq,String usuario) {	
+		String privado = "DELETE FROM Us_Jug WHERE (idUsuarioUs_Jug = ? && idJugadorUs_Jug = ?)";
 		try {
 			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
 			pS.setString(1, usuario);
@@ -598,33 +440,6 @@ public class ConexionJDBC extends Conexion {
 		}	
 	}
 	
-	public void eliminarLiga_Us(Liga a, String usuario) {
-		
-		
-		String privado = "DELETE FROM Us_Lig WHERE (idUsuarioUs_Lig = ? && idLigaUs_Lig = ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
-			pS.setString(1, usuario);
-			pS.setInt(2, a.getId());
-			int res = pS.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		eliminarLiga(a);
-	}
-	
-	public void eliminarEquipo_Us2(Equipo eq,String usuario) {	
-		String privado = "DELETE FROM Us_Eq WHERE (idUsuarioUs_Eq = ? && idEquipoUs_Eq = ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
-			pS.setString(1, usuario);
-			pS.setInt(2, eq.getId());
-			int res = pS.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}	
-	}
 	
 	public void eliminarEquipo_Us(Equipo eq,String usuario) {
 		
@@ -643,77 +458,9 @@ public class ConexionJDBC extends Conexion {
 		
 	}
 	
-	public int contarJugador_Us(Jugador eq) {
-		String query = "SELECT count(idUsuarioUs_Jug) FROM Us_Jug WHERE idJugadorUs_Jug = ?";
-		int res = 0;
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-			pS.setInt(1, eq.getId());
-			ResultSet rs = pS.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					res = rs.getInt(1);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return res;
-	}
 	
-	public int contarEquipo_Us(Equipo eq) {
-		String query = "SELECT count(idUsuarioUs_Eq) FROM Us_Eq WHERE idEquipoUs_Eq = ?";
-		int res = 0;
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-			pS.setInt(1, eq.getId());
-			ResultSet rs = pS.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					res = rs.getInt(1);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return res;
-	}
-	
-	public int contarLiga_Us(Liga eq) {
-		String query = "SELECT count(idUsuarioUs_Lig) FROM Us_Lig WHERE idLigaUs_Lig = ?";
-		int res = 0;
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-			pS.setInt(1, eq.getId());
-			ResultSet rs = pS.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					res = rs.getInt(1);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return res;
-	}
-	
-	public void eliminarJugador_Us(Jugador j,String usuario) {
-		
-		String privado = "DELETE FROM Us_Jug WHERE (idUsuarioUs_Jug = ? && idJugadorUs_Jug = ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
-			pS.setString(1, usuario);
-			pS.setInt(2, j.getId());
-			int res = pS.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		eliminarJugador(j);
-	}
-	
-	public void eliminarJugador_Us2(Jugador eq,String usuario) {	
-		String privado = "DELETE FROM Us_Jug WHERE (idUsuarioUs_Jug = ? && idJugadorUs_Jug = ?)";
+	public void eliminarEquipo_Us2(Equipo eq,String usuario) {	
+		String privado = "DELETE FROM Us_Eq WHERE (idUsuarioUs_Eq = ? && idEquipoUs_Eq = ?)";
 		try {
 			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
 			pS.setString(1, usuario);
@@ -724,203 +471,110 @@ public class ConexionJDBC extends Conexion {
 		}	
 	}
 	
-	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	
-	@Override
-	public void eliminarJornada(Jornada jor) {
-		String deleteBody = "DELETE FROM Jornada WHERE (codjornada = ?)";
+	public void eliminarLiga_Us(Liga a, String usuario) {
+		
+		
+		String privado = "DELETE FROM Us_Lig WHERE (idUsuarioUs_Lig = ? && idLigaUs_Lig = ?)";
 		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-			pS.setInt(1, jor.getCodigoJornada());
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
+			pS.setString(1, usuario);
+			pS.setInt(2, a.getId());
 			int res = pS.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void actualizarCodJornada(int cod) {
-		String updateBody = "UPDATE IncrementaCodJornada SET iteradorJornada = ?";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
-			pS.setInt(1, cod);
-			int res = pS.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void actualizarCodPartido(int cod) {
-		String updateBody = "UPDATE IncrementaCodPartido SET iteradorPartido = ?";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
-			pS.setInt(1, cod);
-			int res = pS.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public int generarCodJornada() {
-		int cod = 0;
-		String query = "SELECT * FROM IncrementaCodJornada";
-		Statement querySt;
-		try {
-			querySt = con.createStatement();
-			ResultSet rs = querySt.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					cod = rs.getInt(1);	
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return cod;
-	}
-	
-	public int generarCodPartido() {
-		int cod = 0;
-		String query = "SELECT * FROM IncrementaCodPartido";
-		Statement querySt;
-		try {
-			querySt = con.createStatement();
-			ResultSet rs = querySt.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					cod = rs.getInt(1);	
-				}
-			}
-			actualizarCodPartido(cod+1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return cod;
-	}
-	
-	public void ajustarNumerosJornada(int numJor) {
-		int n = numJor;
-		List<Jornada> lista = listaJornadas(Ligas.seleccionado.getId());
 		
-		for(int i = n ; i <= lista.size(); i++) {
-			
-			String updateBody = "UPDATE Jornada j SET numjornada = ? WHERE j.liga = " + 
-					Ligas.seleccionado.getId() + " AND j.numJornada = " + (i + 1);
-			try {
-				PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
-				pS.setInt(1, i);
-				int res = pS.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public void actualizarPartido(Partido p) {
-			
-			String updateBody = "UPDATE Partido p SET codpartido = ?, local = ?, visitante = ?, jornada = ?, goleslocal = ?,"
-					+ " golesvisitante = ?, campo = ?, fecha = ?, jugado = ?, hora = ? WHERE p.codPartido = " + 
-					Partidos.seleccionadoP.getCodigoPartido();
-			try {
-				PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
-					pS.setInt(1, p.getCodigoPartido());
-		            pS.setInt(2, p.getIdLocal());
-		            pS.setInt(3, p.getIdVisitante());
-		            pS.setInt(4, p.getCodigoJornada());
-		            pS.setInt(5, p.getGolesLocal());
-		            pS.setInt(6, p.getGolesVisitante());
-		            pS.setString(7, p.getCampo());
-		            pS.setDate(8, p.getFecha());
-		            pS.setBoolean(9, p.getJugado());
-		            pS.setString(10, p.getHora());
-		            int res = pS.executeUpdate();
-				} catch (SQLException e) {
-				e.printStackTrace();
-		}
+		eliminarLiga(a);
 	}
 	
 	
-	
-	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public void cambiarContrasena(String idUsuario, String cont) {
-		PreparedStatement ps = null;
-		String query;
+	public void eliminarLiga_Us2(Liga eq,String usuario) {	
+		String privado = "DELETE FROM Us_Lig WHERE (idUsuarioUs_Lig = ? && idLigaUs_Lig = ?)";
 		try {
-			query = "UPDATE Usuario SET password = ? WHERE nombre = ?";
-			ps = (PreparedStatement) con.prepareStatement(query);
-			ps.setString(1, cont);
-			ps.setString(2, idUsuario);
-			int res = ps.executeUpdate();
-		} catch (SQLException e) {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
+			pS.setString(1, usuario);
+			pS.setInt(2, eq.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
 			e.printStackTrace();
-		}
+		}	
 	}
 	
-	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public void parEnfrentado(Equipo l, Equipo v, Jornada jor) {
-        int cod = generarCodPartido();
-        Partido p = new Partido(cod, l.getId(),v.getId(), jor.getCodigoJornada());
-        crearPartido(p);
-        actualizarCodPartido(cod + 1);
-    }
-
-	public void emparejamientos(Jornada jor) {
-		List<Equipo> equipos = equiposLiga(jor.getNombreLiga());
-		listaEquipos();
-		do {
-			int i, j;
-			Random r = new Random();
-			
-			i = Math.abs(r.nextInt() % equipos.size());
-			Equipo eq1 = equipos.get(i);
-			equipos.remove(i);
-			j = Math.abs(r.nextInt() % equipos.size());
-			Equipo eq2 = equipos.get(j);
-			equipos.remove(j);
-			parEnfrentado(eq1, eq2, jor);
-		} while (equipos.size() > 1);
-	}
-
-	public List<Partido> listaPartidos(int codJornada) {
-        ArrayList<Partido> partidos = new ArrayList<>();
-        String query = "SELECT * FROM Partido WHERE jornada = " + codJornada;
-        Statement querySt;
-        try {
-            querySt = con.createStatement();
-            ResultSet rs = querySt.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    int cod = rs.getInt(1);
-                    int idL = rs.getInt(2);
-                    int idV = rs.getInt(3);
-                    int codJor = rs.getInt(4);
-                    int gL = rs.getInt(5);
-                    int gV = rs.getInt(6);
-                    String ca = rs.getString(7);
-                    Date f = rs.getDate(8);
-                    boolean ju = rs.getBoolean(9);
-                    String h = rs.getString(10);
-                    partidos.add(new Partido(cod, idL, idV, codJor, gL, gV, ca, f, ju, h));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return partidos;
-    }
-	
-	
-	public void eliminarPartido(Partido p) {
-        String deleteBody = "DELETE FROM Partido WHERE (codpartido = ?)";
+    
+    public void eliminarJugadorEnEquipo(Jugador j) {
+        String deleteBody = "DELETE FROM Plantilla WHERE (idJugador = ?)";
         try {
             PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-            pS.setInt(1, p.getCodigoPartido());
+            pS.setInt(1, j.getId());
             int res = pS.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
         }
     }
+    
+    
+    public void eliminarJugadorEnEquipo(Jugador j, Equipo eq) {
+        String deleteBody = "DELETE FROM Plantilla WHERE (idJugador = ?) AND (idEquipo = ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+            pS.setInt(1, j.getId());
+            pS.setInt(2, eq.getId());
+            int res = pS.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void eliminarJugadorEnEquipo(Equipo j) {
+        String deleteBody = "DELETE FROM Plantilla WHERE (idEquipo = ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+            pS.setInt(1, j.getId());
+            int res = pS.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    public void eliminarEquipoEnLiga(Equipo eq) {
+        String deleteBody = "DELETE FROM Clasificacion WHERE (idEquipoClasificacion = ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+            pS.setInt(1, eq.getId());
+            int res = pS.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void eliminarEquipoEnLiga(Equipo eq, Liga lig) {
+        String deleteBody = "DELETE FROM Clasificacion WHERE (idEquipoClasificacion = ?) AND (idLigaClasificacion = ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+            pS.setInt(1, eq.getId());
+            pS.setInt(2, lig.getId());
+            int res = pS.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void eliminarEquipoEnLiga(Liga eq) {
+        String deleteBody = "DELETE FROM Clasificacion WHERE (idLigaClasificacion = ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
+            pS.setInt(1, eq.getId());
+            int res = pS.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 	
 	public void eliminarPartidosDeEquipo(Equipo e) {
 		
@@ -980,10 +634,8 @@ public class ConexionJDBC extends Conexion {
 			eliminarClasiDePartido(p);
 			eliminarPartido(p);
 		}
-		
-		
-		
 	}
+	
 	
 	public void eliminarClasiDePartido(Partido p) {
 		
@@ -1033,102 +685,139 @@ public class ConexionJDBC extends Conexion {
 		}
 	}
 	
-	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public void crearJugadorEnEquipo(Jugador j, Equipo eq) {
-        String query = "INSERT INTO Plantilla (idJugador, idEquipo) VALUES (?, ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            pS.setInt(1, j.getId());
-            pS.setInt(2, eq.getId());
-            int res = pS.executeUpdate();
-            ResultSet rs = pS.getGeneratedKeys();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void crearEquipoEnLiga(Equipo eq, Liga a) {
-        String query = "INSERT INTO Clasificacion (idEquipoClasificacion, idLigaClasificacion) VALUES (?, ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            pS.setInt(1, eq.getId());
-            pS.setInt(2, a.getId());
-            int res = pS.executeUpdate();
-            ResultSet rs = pS.getGeneratedKeys();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void eliminarJugadorEnEquipo(Jugador j) {
-        String deleteBody = "DELETE FROM Plantilla WHERE (idJugador = ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-            pS.setInt(1, j.getId());
-            int res = pS.executeUpdate();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void eliminarJugadorEnEquipo(Jugador j, Equipo eq) {
-        String deleteBody = "DELETE FROM Plantilla WHERE (idJugador = ?) AND (idEquipo = ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-            pS.setInt(1, j.getId());
-            pS.setInt(2, eq.getId());
-            int res = pS.executeUpdate();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void eliminarJugadorEnEquipo(Equipo j) {
-        String deleteBody = "DELETE FROM Plantilla WHERE (idEquipo = ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-            pS.setInt(1, j.getId());
-            int res = pS.executeUpdate();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public void eliminarEquipoEnLiga(Equipo eq) {
-        String deleteBody = "DELETE FROM Clasificacion WHERE (idEquipoClasificacion = ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-            pS.setInt(1, eq.getId());
-            int res = pS.executeUpdate();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void eliminarEquipoEnLiga(Equipo eq, Liga lig) {
-        String deleteBody = "DELETE FROM Clasificacion WHERE (idEquipoClasificacion = ?) AND (idLigaClasificacion = ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-            pS.setInt(1, eq.getId());
-            pS.setInt(2, lig.getId());
-            int res = pS.executeUpdate();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void eliminarEquipoEnLiga(Liga eq) {
-        String deleteBody = "DELETE FROM Clasificacion WHERE (idLigaClasificacion = ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(deleteBody);
-            pS.setInt(1, eq.getId());
-            int res = pS.executeUpdate();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public List<Jornada> listaJornadas(int idLiga) {
+	
+	
+	// MÉTODOS LISTA BÁSICOS (CREAN UNA LISTA DE LOS OBJETOS CORRESPONDIENTES) 
+		
+		
+		
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
+	public List<Usuario> listaUsuarios() {
+		ArrayList<Usuario> usuarios = new ArrayList<>();
+		String query = "SELECT * FROM Usuario";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					String nombre = rs.getString(1);
+					String correo = rs.getString(2);
+					String password = rs.getString(3);
+					
+					usuarios.add(new Usuario(nombre, correo, password));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return usuarios;
+	}
+	
+	
+	public List<Jugador> listaJugadores() {
+		ArrayList<Jugador> jugadores = new ArrayList<>();
+		String query = "SELECT * FROM Jugador";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					String nombre = rs.getString(1);
+					int id = rs.getInt(3);
+					int edad = rs.getInt(4);
+					
+					jugadores.add(new Jugador(id, nombre, edad));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return jugadores;
+	}
+	
+
+	public List<Equipo> listaEquipos() {
+		ArrayList<Equipo> equipos = new ArrayList<>();
+		String query = "SELECT * FROM Equipo";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					int id = rs.getInt(1);
+					String nombre = rs.getString(2);	
+					equipos.add(new Equipo(id, nombre));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return equipos;
+	}	
+	
+	
+	public List<Liga> listaLigas() {
+		ArrayList<Liga> ligas = new ArrayList<>();
+		String query = "SELECT * FROM Liga";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					int id = rs.getInt(1);
+					String nombre = rs.getString(2);	
+					ligas.add(new Liga(id, nombre));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return ligas;
+	}		
+	
+	
+	public List<Jornada> listaJornadas() {
+	        ArrayList<Jornada> jornadas = new ArrayList<>();
+	        String query = "SELECT * FROM Jornada";
+	        try {
+	        	PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+	            ResultSet rs = pS.executeQuery(query);
+	            if (rs.isBeforeFirst()) {
+	                while (rs.next()) {
+	                    int cod = rs.getInt(1);
+	                    int numJor = rs.getInt(2);
+	                    int id = rs.getInt(3);
+	                    Date fIni = rs.getDate(4);
+	                    Date fFin = rs.getDate(5);
+	                    jornadas.add(new Jornada(cod, numJor, id, fIni, fFin));
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return jornadas;
+	    }
+	
+	
+	public List<Jornada> listaJornadas(int idLiga) {
         ArrayList<Jornada> jornadas = new ArrayList<>();
         String query = "SELECT * FROM Jornada WHERE liga = " + idLiga;
         try {
@@ -1151,94 +840,193 @@ public class ConexionJDBC extends Conexion {
 
         return jornadas;
     }
-    
-    public List<Jornada> listaJornadas() {
-        ArrayList<Jornada> jornadas = new ArrayList<>();
-        String query = "SELECT * FROM Jornada";
+	
+	
+	public List<Partido> listaPartidos(int codJornada) {
+        ArrayList<Partido> partidos = new ArrayList<>();
+        String query = "SELECT * FROM Partido WHERE jornada = " + codJornada;
+        Statement querySt;
         try {
-        	PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-            ResultSet rs = pS.executeQuery(query);
+            querySt = con.createStatement();
+            ResultSet rs = querySt.executeQuery(query);
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     int cod = rs.getInt(1);
-                    int numJor = rs.getInt(2);
-                    int id = rs.getInt(3);
-                    Date fIni = rs.getDate(4);
-                    Date fFin = rs.getDate(5);
-                    jornadas.add(new Jornada(cod, numJor, id, fIni, fFin));
+                    int idL = rs.getInt(2);
+                    int idV = rs.getInt(3);
+                    int codJor = rs.getInt(4);
+                    int gL = rs.getInt(5);
+                    int gV = rs.getInt(6);
+                    String ca = rs.getString(7);
+                    Date f = rs.getDate(8);
+                    boolean ju = rs.getBoolean(9);
+                    String h = rs.getString(10);
+                    partidos.add(new Partido(cod, idL, idV, codJor, gL, gV, ca, f, ju, h));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return jornadas;
+        return partidos;
     }
+	
+	
+		
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
     
     
-    public void actualizarFechaJornada(Jornada jor, int dia, int mes, int anio, int dur) {
-    	
-    	@SuppressWarnings("deprecation")
-		Date inicio = new Date(anio, mes - 1 , dia);
-    	Date fin = new Date(inicio.getTime() + (dur - 1) * 24 * 60 * 60 * 1000);
-    	
-		@SuppressWarnings("deprecation")
-		String query = "UPDATE Jornada j SET iniciojornada = '" + inicio.getYear() + "-" + (inicio.getMonth() + 1) + "-" + inicio.getDate() + "',"
-    			+ " finjornada = '" + fin.getYear() + "-" + (fin.getMonth() + 1) + "-" + fin.getDate() + "' WHERE j.codjornada = " + jor.getCodigoJornada();
-    	
-    	  try {
-          	PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-          	int res = pS.executeUpdate();
-    	  
-          } catch (SQLException e) {
-              e.printStackTrace();
-          }
-    	
-    }
+	
+	// OTROS METODOS LISTA (CREAN UNA LISTA DE LOS OBJETOS RELACIONADOS CORRESPONDIENTES) 
+	
+	
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		
     
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public Clasificacion equipoclasificacion(int codLiga, int codEquipo) {
-    	Clasificacion clasi = null;
-        String query = "SELECT * FROM Clasificacion WHERE idLigaClasificacion = " + codLiga + " AND idEquipoClasificacion = " + codEquipo;
-        try {
-        	PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
-            ResultSet rs = pS.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    int puntos = rs.getInt(3);
-                    int gM = rs.getInt(4);
-                    int gec = rs.getInt(5);
-                    int pj = rs.getInt(6);
-                    clasi = new Clasificacion("", puntos, gM, gec, pj);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return clasi;
-    }
-    
-    public void actualizarclasi(int codLiga, int codEquipo, int punt, int goMar, int goCont) {
-    	Clasificacion cla = equipoclasificacion(codLiga, codEquipo);
-		PreparedStatement ps = null;
-		String query;
+   
+	
+	public List<Jugador> usuario_jugador(String idUsuario) {
+		ArrayList<Jugador> jugadores = new ArrayList<>();
+		String query = "SELECT * FROM Jugador WHERE id IN (SELECT idJugadorUs_Jug FROM Us_Jug where idUsuarioUs_Jug = ?)" ;
 		try {
-			query = "UPDATE Clasificacion SET puntos = ?, golesMarcados = ?, golesEnContra = ?, partidosJugados = ? WHERE idLigaClasificacion = ? AND idEquipoClasificacion = ?";
-			ps = (PreparedStatement) con.prepareStatement(query);
-			ps.setInt(1, punt + cla.getPuntos());
-			ps.setInt(2, goMar + cla.getGolesmarcados());
-			ps.setInt(3, goCont + cla.getGolesencontra());
-			ps.setInt(4, cla.getPartidosjugados() + 1);
-			ps.setInt(5, codLiga);
-			ps.setInt(6, codEquipo);
-			int res = ps.executeUpdate();
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setString(1, idUsuario);
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					String nombre = rs.getString(1);
+					int id = rs.getInt(3);
+					int edad = rs.getInt(4);
+					String pos = rs.getString(5);
+					int goles = rs.getInt(6);
+					int amarillas = rs.getInt(7);
+					int rojas = rs.getInt(8);
+					Jugador jug = new Jugador(id, nombre, edad);
+					jug.setRol(pos);
+					jug.setGoles(goles);
+					jug.setAmarillas(amarillas);
+					jug.setRojas(rojas);
+					jugadores.add(jug);
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return jugadores;
 	}
-    
-    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	public List<Equipo> usuario_equipo(String idUsuario) {
+        ArrayList<Equipo> equipos = new ArrayList<>();
+        String query = "SELECT * FROM Equipo WHERE id IN (SELECT idEquipoUs_Eq FROM Us_Eq where idUsuarioUs_Eq = ?)" ;
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+            pS.setString(1, idUsuario);
+            ResultSet rs = pS.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    String nombre = rs.getString(2);
+
+                    equipos.add(new Equipo(id, nombre));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return equipos;
+    }
+	
+	
+	
+	public List<Liga> usuario_liga(String idUsuario) {
+        ArrayList<Liga> ligas = new ArrayList<>();
+        String query = "SELECT * FROM Liga WHERE id IN (SELECT idLigaUs_Lig FROM Us_Lig where idUsuarioUs_Lig = ?)" ;
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+            pS.setString(1, idUsuario);
+            ResultSet rs = pS.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    String nombre = rs.getString(2);
+
+                    ligas.add(new Liga(id, nombre));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ligas;
+    }
+	
+	
+	public List<Object[]> clasif(int idLiga) {
+		List<Object[]> equipos = new ArrayList<Object[]>();
+
+		String query = "SELECT e.nombre, c.puntos, c.golesMarcados, c.golesEnContra, c.partidosJugados FROM Clasificacion c, Equipo e WHERE c.idEquipoClasificacion = e.id AND c.idLigaClasificacion = ? ORDER BY puntos DESC, (golesMarcados - golesEnContra) DESC";
+		
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setInt(1, idLiga);
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					String nombreequipo = rs.getString(1);
+					int puntos = rs.getInt(2);
+					int golesmarcados = rs.getInt(3);	
+					int golesencontra = rs.getInt(4);
+					int partidosjugados = rs.getInt(5);
+					
+					Object[] o = new Object[5];
+					o[0] = nombreequipo;
+					o[1] = puntos;
+					o[2] = golesmarcados;
+					o[3] = golesencontra;
+					o[4] = partidosjugados;
+					
+					equipos.add(o);
+				}
+			}
+			pS.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return equipos;
+	}
+	
+	
+	public List<Jugador> plantilla(int idEquipo) {
+		ArrayList<Jugador> jugadores = new ArrayList<>();
+
+		String query = "SELECT e.nombre, e.id, e.edad FROM Plantilla c, Jugador e WHERE c.idJugador = e.id AND c.idEquipo = ?";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setInt(1, idEquipo);
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					String nombrejugador = rs.getString(1);
+					int id = rs.getInt(2);
+					int edad = rs.getInt(3);	
+					jugadores.add(new Jugador(id,nombrejugador,edad));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return jugadores;
+	}
+	
 	
 	public List<Equipo> equiposLiga(int codLiga){
 		List<Equipo> equipos = new ArrayList<>();
@@ -1262,8 +1050,352 @@ public class ConexionJDBC extends Conexion {
 		return equipos;
 	}
 	
-	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public void setCapi(Equipo equipo, Jugador jug) {
+	
+	
+		
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+    
+    
+	
+	// MÉTODOS ACTUALIZAR Y GENERAR (MODIFICAN Y GENERAN LOS DISTINTOS OBJETOS DE LA APLICACIÓN) 
+	
+	
+	
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+    
+   
+	public void actualizarID(int id) {
+		String updateBody = "UPDATE IncrementaId SET iteradorId = ?";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+			pS.setInt(1, id);
+			int res = pS.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public int generarID() {
+		int id = 0;
+		String query = "SELECT * FROM IncrementaId";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					id = rs.getInt(1);	
+				}
+			}
+			actualizarID(id+1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+	
+	
+	public void actualizarCodJornada(int cod) {
+		String updateBody = "UPDATE IncrementaCodJornada SET iteradorJornada = ?";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+			pS.setInt(1, cod);
+			int res = pS.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public int generarCodJornada() {
+		int cod = 0;
+		String query = "SELECT * FROM IncrementaCodJornada";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					cod = rs.getInt(1);	
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cod;
+	}
+	
+	
+	public void actualizarCodPartido(int cod) {
+		String updateBody = "UPDATE IncrementaCodPartido SET iteradorPartido = ?";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+			pS.setInt(1, cod);
+			int res = pS.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	public int generarCodPartido() {
+		int cod = 0;
+		String query = "SELECT * FROM IncrementaCodPartido";
+		Statement querySt;
+		try {
+			querySt = con.createStatement();
+			ResultSet rs = querySt.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					cod = rs.getInt(1);	
+				}
+			}
+			actualizarCodPartido(cod+1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cod;
+	}
+	
+	
+	public void actualizarJugador(Jugador j) {
+		String updateBody = "UPDATE Jugador p SET goles = ?, amarillas = ?, rojas = ? WHERE id = " + 
+				Jugadores.seleccionado.getId();
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+				pS.setInt(1, j.getGoles());
+				pS.setInt(2, j.getAmarillas());
+				pS.setInt(3, j.getRojas());
+	            int res = pS.executeUpdate();
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	 public void actualizarFechaJornada(Jornada jor, int dia, int mes, int anio, int dur) {
+	    	
+	    	@SuppressWarnings("deprecation")
+			Date inicio = new Date(anio, mes - 1 , dia);
+	    	Date fin = new Date(inicio.getTime() + (dur - 1) * 24 * 60 * 60 * 1000);
+	    	
+			@SuppressWarnings("deprecation")
+			String query = "UPDATE Jornada j SET iniciojornada = '" + inicio.getYear() + "-" + (inicio.getMonth() + 1) + "-" + inicio.getDate() + "',"
+	    			+ " finjornada = '" + fin.getYear() + "-" + (fin.getMonth() + 1) + "-" + fin.getDate() + "' WHERE j.codjornada = " + jor.getCodigoJornada();
+	    	
+	    	  try {
+	          	PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+	          	int res = pS.executeUpdate();
+	    	  
+	          } catch (SQLException e) {
+	              e.printStackTrace();
+	     }
+	    	
+	}
+	 
+	 
+	public void actualizarPartido(Partido p) {
+		
+		String updateBody = "UPDATE Partido p SET codpartido = ?, local = ?, visitante = ?, jornada = ?, goleslocal = ?,"
+				+ " golesvisitante = ?, campo = ?, fecha = ?, jugado = ?, hora = ? WHERE p.codPartido = " + 
+				Partidos.seleccionadoP.getCodigoPartido();
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+				pS.setInt(1, p.getCodigoPartido());
+	            pS.setInt(2, p.getIdLocal());
+	            pS.setInt(3, p.getIdVisitante());
+	            pS.setInt(4, p.getCodigoJornada());
+	            pS.setInt(5, p.getGolesLocal());
+	            pS.setInt(6, p.getGolesVisitante());
+	            pS.setString(7, p.getCampo());
+	            pS.setDate(8, p.getFecha());
+	            pS.setBoolean(9, p.getJugado());
+	            pS.setString(10, p.getHora());
+	            int res = pS.executeUpdate();
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void actualizarclasi(int codLiga, int codEquipo, int punt, int goMar, int goCont) {
+	    	Clasificacion cla = equipoclasificacion(codLiga, codEquipo);
+			PreparedStatement ps = null;
+			String query;
+			try {
+				query = "UPDATE Clasificacion SET puntos = ?, golesMarcados = ?, golesEnContra = ?, partidosJugados = ? WHERE idLigaClasificacion = ? AND idEquipoClasificacion = ?";
+				ps = (PreparedStatement) con.prepareStatement(query);
+				ps.setInt(1, punt + cla.getPuntos());
+				ps.setInt(2, goMar + cla.getGolesmarcados());
+				ps.setInt(3, goCont + cla.getGolesencontra());
+				ps.setInt(4, cla.getPartidosjugados() + 1);
+				ps.setInt(5, codLiga);
+				ps.setInt(6, codEquipo);
+				int res = ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+		}
+	}
+	    
+	
+	
+	
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+    
+    
+	
+	// OTROS MÉTODOS DE LA APLICACIÓN
+		
+		
+		
+		
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			
+	public int contarJugador_Us(Jugador eq) {
+		String query = "SELECT count(idUsuarioUs_Jug) FROM Us_Jug WHERE idJugadorUs_Jug = ?";
+		int res = 0;
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setInt(1, eq.getId());
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					res = rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public int contarEquipo_Us(Equipo eq) {
+		String query = "SELECT count(idUsuarioUs_Eq) FROM Us_Eq WHERE idEquipoUs_Eq = ?";
+		int res = 0;
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setInt(1, eq.getId());
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					res = rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public int contarLiga_Us(Liga eq) {
+		String query = "SELECT count(idUsuarioUs_Lig) FROM Us_Lig WHERE idLigaUs_Lig = ?";
+		int res = 0;
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setInt(1, eq.getId());
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					res = rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	
+	public void cambiarContrasena(String idUsuario, String cont) {
+		PreparedStatement ps = null;
+		String query;
+		try {
+			query = "UPDATE Usuario SET password = ? WHERE nombre = ?";
+			ps = (PreparedStatement) con.prepareStatement(query);
+			ps.setString(1, cont);
+			ps.setString(2, idUsuario);
+			int res = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void ajustarNumerosJornada(int numJor) {
+		int n = numJor;
+		List<Jornada> lista = listaJornadas(Ligas.seleccionado.getId());
+		
+		for(int i = n ; i <= lista.size(); i++) {
+			
+			String updateBody = "UPDATE Jornada j SET numjornada = ? WHERE j.liga = " + 
+					Ligas.seleccionado.getId() + " AND j.numJornada = " + (i + 1);
+			try {
+				PreparedStatement pS = (PreparedStatement) con.prepareStatement(updateBody);
+				pS.setInt(1, i);
+				int res = pS.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+
+	public void parEnfrentado(Equipo l, Equipo v, Jornada jor) {
+        int cod = generarCodPartido();
+        Partido p = new Partido(cod, l.getId(),v.getId(), jor.getCodigoJornada());
+        crearPartido(p);
+        actualizarCodPartido(cod + 1);
+    }
+
+	
+	public void emparejamientos(Jornada jor) {
+		List<Equipo> equipos = equiposLiga(jor.getNombreLiga());
+		listaEquipos();
+		do {
+			int i, j;
+			Random r = new Random();
+			
+			i = Math.abs(r.nextInt() % equipos.size());
+			Equipo eq1 = equipos.get(i);
+			equipos.remove(i);
+			j = Math.abs(r.nextInt() % equipos.size());
+			Equipo eq2 = equipos.get(j);
+			equipos.remove(j);
+			parEnfrentado(eq1, eq2, jor);
+		} while (equipos.size() > 1);
+	}
+
+	public Clasificacion equipoclasificacion(int codLiga, int codEquipo) {
+    	Clasificacion clasi = null;
+        String query = "SELECT * FROM Clasificacion WHERE idLigaClasificacion = " + codLiga + " AND idEquipoClasificacion = " + codEquipo;
+        try {
+        	PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+            ResultSet rs = pS.executeQuery(query);
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    int puntos = rs.getInt(3);
+                    int gM = rs.getInt(4);
+                    int gec = rs.getInt(5);
+                    int pj = rs.getInt(6);
+                    clasi = new Clasificacion("", puntos, gM, gec, pj);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return clasi;
+    }
+	
+    
+  	public void setCapi(Equipo equipo, Jugador jug) {
 		PreparedStatement ps = null;
 		String query;
 		try {
