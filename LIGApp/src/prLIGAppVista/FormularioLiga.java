@@ -147,7 +147,7 @@ public class FormularioLiga extends JFrame {
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblNombre.setBounds(47, 125, 95, 14);
+		lblNombre.setBounds(92, 124, 95, 14);
 		panel_1.add(lblNombre);
 		
 		JButton cancelar = new JButton("Cancelar");
@@ -255,7 +255,7 @@ public class FormularioLiga extends JFrame {
 		textoCodigo.setColumns(10);
 		
 		nombre = new JTextField();
-		nombre.setBounds(123, 123, 339, 20);
+		nombre.setBounds(205, 123, 289, 20);
 		panel_1.add(nombre);
 		nombre.setColumns(10);
 		
