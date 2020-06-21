@@ -17,6 +17,9 @@ public class Jugador {
     	this.nombre = nombre;
     	this.edad = edad;
     	this.id = id;
+    	goles = 0;
+    	amarillas = 0;
+    	rojas = 0;
     }
 
     public void setRol(String rol){
@@ -33,8 +36,28 @@ public class Jugador {
     	}
     }
 
-    public void incGoles(int g){
-        goles = goles + g;
+    public void setGoles(int g){
+        goles = g;
+    }
+    
+    public int getGoles() {
+    	return goles;
+    }
+    
+    public void setAmarillas(int a){
+        amarillas = a;
+    }
+    
+    public int getAmarillas() {
+    	return amarillas;
+    }
+
+    public void setRojas(int r){
+        rojas = r;
+    }
+    
+    public int getRojas() {
+    	return rojas;
     }
 
     public String getNombre() {
@@ -49,13 +72,7 @@ public class Jugador {
     	return id;
     }    
    
-    public void incAmarillas(int a){
-        amarillas = amarillas + a;
-    }
-
-    public void incRojas(int r){
-        rojas = rojas + r;
-    }
+    
 
     public String toString() {
 		return nombre;
