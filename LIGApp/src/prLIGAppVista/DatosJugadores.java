@@ -2,6 +2,7 @@ package prLIGAppVista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,9 @@ import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
 import prLIGAppModelo.Equipo;
 import prLIGAppModelo.Jugador;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 
 public class DatosJugadores extends JFrame {
 
@@ -221,6 +225,71 @@ public class DatosJugadores extends JFrame {
 		lblPosicin.setFont(new Font("Gadugi", Font.PLAIN, 12));
 		lblPosicin.setBounds(47, 165, 95, 14);
 		panel_1.add(lblPosicin);
+		
+		JSpinner campoGoles = new JSpinner();
+		campoGoles.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		campoGoles.setBounds(553, 73, 74, 20);
+		panel_1.add(campoGoles);
+		
+		JSpinner campoAmarillas = new JSpinner();
+		campoAmarillas.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		campoAmarillas.setBounds(553, 119, 74, 20);
+		panel_1.add(campoAmarillas);
+		
+		JSpinner campoRojas = new JSpinner();
+		campoRojas.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		campoRojas.setBounds(553, 162, 74, 20);
+		panel_1.add(campoRojas);
+		
+		JLabel lblGoles = new JLabel("Goles:");
+		lblGoles.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblGoles.setBounds(492, 76, 74, 14);
+		panel_1.add(lblGoles);
+		
+		JLabel lblAmarillas = new JLabel("Amarillas:");
+		lblAmarillas.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblAmarillas.setBounds(492, 122, 74, 14);
+		panel_1.add(lblAmarillas);
+		
+		JLabel lblRojas = new JLabel("Rojas:");
+		lblRojas.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblRojas.setBounds(492, 165, 74, 14);
+		panel_1.add(lblRojas);
+		
+		
+		
+		campoGoles.setValue(Jugadores.seleccionado.getGoles());
+		campoAmarillas.setValue(Jugadores.seleccionado.getAmarillas());
+		campoRojas.setValue(Jugadores.seleccionado.getRojas());
+		
+		Conexion accesoBD;
+		accesoBD = ConexionJDBC.getInstance();
+		
+		JLabel lblGuardado = new JLabel("", SwingConstants.CENTER);
+		lblGuardado.setForeground(Color.BLUE);
+		lblGuardado.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblGuardado.setBounds(513, 247, 140, 14);
+		panel_1.add(lblGuardado);
+		
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Jugador j = new Jugador(0, null, 0);
+				j.setGoles((Integer)campoGoles.getValue());
+				j.setAmarillas((Integer)campoAmarillas.getValue());
+				j.setRojas((Integer)campoRojas.getValue());
+				accesoBD.actualizarJugador(j);
+				lblGuardado.setText("Guardado");
+			}
+		});
+		btnGuardar.setBounds(538, 213, 89, 23);
+		panel_1.add(btnGuardar);
+		
+		
+		
+		
+		
 		
 		for (Equipo j : listadelosequipos) {
 			listaJ.addElement(j.toString());

@@ -38,11 +38,8 @@ class TablasRelacionUsuarioTest {
 		
 		conexion.crearUsuario(usuarioAux);
 		
-		conexion.crearLiga(liga);
 		conexion.crearLiga_Usuario(liga, usuarioAux.getNombre());
-		conexion.crearEquipo(equipo);
 		conexion.crearEquipo_Usuario(equipo, usuarioAux.getNombre());
-		conexion.crearJugador(jugador);
 		conexion.crearJugador_Usuario(jugador, usuarioAux.getNombre());
 		
 	}
@@ -53,7 +50,6 @@ class TablasRelacionUsuarioTest {
 		List<Liga> ligasAntes = conexion.usuario_liga(usuarioAux.getNombre());
 		Liga ultimaAntes = ligasAntes.get(ligasAntes.size()-1);
 		
-		conexion.crearLiga(ligaCreada);
 		conexion.crearLiga_Usuario(ligaCreada, usuarioAux.getNombre());
 		
 		List<Liga> ligasDespues = conexion.usuario_liga(usuarioAux.getNombre());
@@ -72,9 +68,7 @@ class TablasRelacionUsuarioTest {
 		
 		Liga ligaBorrada = new Liga(conexion.generarID(), "JUnitTestBorrar");
 		conexion.crearLiga_Usuario(ligaBorrada, usuarioAux.getNombre());
-		conexion.crearLiga(ligaBorrada);
 		conexion.eliminarLiga_Us(ligaBorrada, usuarioAux.getNombre());
-		conexion.eliminarLiga(ligaBorrada);
 		
 		List<Liga> ligasDespues = conexion.usuario_liga(usuarioAux.getNombre());
 		Liga ultimaDespues = ligasDespues.get(ligasDespues.size()-1);
@@ -90,7 +84,6 @@ class TablasRelacionUsuarioTest {
 		List<Equipo> equiposAntes = conexion.usuario_equipo(usuarioAux.getNombre());
 		Equipo ultimoAntes = equiposAntes.get(equiposAntes.size()-1);
 		
-		conexion.crearEquipo(equipoCreado);
 		conexion.crearEquipo_Usuario(equipoCreado, usuarioAux.getNombre());
 		
 		List<Equipo> equiposDespues = conexion.usuario_equipo(usuarioAux.getNombre());
@@ -109,9 +102,7 @@ class TablasRelacionUsuarioTest {
 		
 		Equipo equipoBorrado = new Equipo(conexion.generarID(), "JUnitTestBorrar");
 		conexion.crearEquipo_Usuario(equipoBorrado, usuarioAux.getNombre());
-		conexion.crearEquipo(equipoBorrado);
 		conexion.eliminarEquipo_Us(equipoBorrado, usuarioAux.getNombre());
-		conexion.eliminarEquipo(equipoBorrado);
 		
 		List<Equipo> equiposDespues = conexion.usuario_equipo(usuarioAux.getNombre());
 		Equipo ultimoDespues = equiposDespues.get(equiposDespues.size()-1);
@@ -126,7 +117,6 @@ class TablasRelacionUsuarioTest {
 		List<Jugador> jugadoresAntes = conexion.usuario_jugador(usuarioAux.getNombre());
 		Jugador ultimoAntes = jugadoresAntes.get(jugadoresAntes.size()-1);
 		
-		conexion.crearJugador(jugadorCreado);
 		conexion.crearJugador_Usuario(jugadorCreado, usuarioAux.getNombre());
 		
 		List<Jugador> jugadoresDespues = conexion.usuario_jugador(usuarioAux.getNombre());
@@ -145,9 +135,7 @@ class TablasRelacionUsuarioTest {
 		
 		Jugador jugadorBorrado = new Jugador(conexion.generarID(), "JUnitTestBorrar", 0);
 		conexion.crearJugador_Usuario(jugadorBorrado, usuarioAux.getNombre());
-		conexion.crearJugador(jugadorBorrado);
 		conexion.eliminarJugador_Us(jugadorBorrado, usuarioAux.getNombre());
-		conexion.eliminarJugador(jugadorBorrado);
 		
 		List<Jugador> jugadoresDespues = conexion.usuario_jugador(usuarioAux.getNombre());
 		Jugador ultimoDespues = jugadoresDespues.get(jugadoresDespues.size()-1);
