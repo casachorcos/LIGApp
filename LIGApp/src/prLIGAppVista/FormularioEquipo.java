@@ -228,55 +228,58 @@ public class FormularioEquipo extends JFrame {
 		JButton btnAadirConCdigo = new JButton("A\u00F1adir con c\u00F3digo");
 		btnAadirConCdigo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String codtext = textoCodigo.getText();
-				if(!codtext.isEmpty()) {
-					
-					//Decodifica el codigo y lo guarda en userid
-					int i = 0;
-					boolean cero = false, valido = false;
-					String user = "", aux;
-					int id;
-					char letra;
-					while(i < codtext.length() && !cero) {
-						aux = codtext.substring(i,i+2);
-						if(aux.equalsIgnoreCase("00")) {
-							cero = true;
-							valido = true;
-						}else {
-							letra = (char) (Integer.parseInt(aux) + 30);
-							user += letra;
-							i += 2;
-						}
+				try {
+					String codtext = textoCodigo.getText();
+					if(!codtext.isEmpty()) {
 						
-					}
-					id = (Integer.parseInt(codtext.substring(i, codtext.length())) - 4)/3;
-
-					if(valido) {
-						Conexion accesoBD;
-						accesoBD = ConexionJDBC.getInstance();
-	
-						boolean anadido = false;
-						for(Equipo x : accesoBD.usuario_equipo(user)) {
-							if(x.getId() == id) {
-								accesoBD.crearEquipo_Usuario(x, Inicio.nombreUsuario);
-								anadido = true;
+						//Decodifica el codigo y lo guarda en userid
+						int i = 0;
+						boolean cero = false, valido = false;
+						String user = "", aux;
+						int id;
+						char letra;
+						while(i < codtext.length() && !cero) {
+							aux = codtext.substring(i,i+2);
+							if(aux.equalsIgnoreCase("00")) {
+								cero = true;
+								valido = true;
+							}else {
+								letra = (char) (Integer.parseInt(aux) + 30);
+								user += letra;
+								i += 2;
 							}
-						}
-						if(!anadido) {
-							errorCod.setText("Código inválido");
-						} else {
-							Equipos teams = new Equipos();
-							setVisible(false);
-							teams.setVisible(true);
 							
+						}
+						id = (Integer.parseInt(codtext.substring(i, codtext.length())) - 4)/3;
+
+						if(valido) {
+							Conexion accesoBD;
+							accesoBD = ConexionJDBC.getInstance();
+		
+							boolean anadido = false;
+							for(Equipo x : accesoBD.usuario_equipo(user)) {
+								if(x.getId() == id) {
+									accesoBD.crearEquipo_Usuario(x, Inicio.nombreUsuario);
+									anadido = true;
+								}
+							}
+							if(!anadido) {
+								errorCod.setText("Código inválido");
+							} else {
+								Equipos teams = new Equipos();
+								setVisible(false);
+								teams.setVisible(true);
+								
+							}
+						}else {
+							errorCod.setText("Código inválido");
 						}
 					}else {
 						errorCod.setText("Código inválido");
 					}
-				}else {
+				} catch (NumberFormatException excp) {
 					errorCod.setText("Código inválido");
 				}
-				
 			}
 		});
 		btnAadirConCdigo.setBounds(42, 341, 147, 30);
