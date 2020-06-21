@@ -43,6 +43,7 @@ public abstract class Conexion {
 
 	public abstract void crearJugador_Usuario(Jugador j, String usuario);
     public abstract void crearEquipo_Usuario(Equipo e, String usuario);
+    public abstract void crearEquipo_Usuario2(Equipo e, String usuario);
     public abstract void crearLiga_Usuario(Liga i, String usuario);
 	
 	public abstract List<Object[]> clasif(int idLiga);
@@ -50,8 +51,9 @@ public abstract class Conexion {
 	
 	public abstract void eliminarLiga_Us(Liga a, String usuario);
 	public abstract void eliminarEquipo_Us(Equipo eq,String usuario);
+	public abstract void eliminarEquipo_Us2(Equipo eq,String usuario);
 	public abstract void eliminarJugador_Us(Jugador j,String usuario);
-	
+	public abstract int contarEquipo_Us(Equipo eq);
 	
 	public abstract void crearJornada(Jornada jor);
 	public abstract void eliminarJornada(Jornada jor);

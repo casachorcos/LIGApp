@@ -255,22 +255,32 @@ public class FormularioEquipo extends JFrame {
 						if(valido) {
 							Conexion accesoBD;
 							accesoBD = ConexionJDBC.getInstance();
-		
+							boolean noesta = true;
 							boolean anadido = false;
-							for(Equipo x : accesoBD.usuario_equipo(user)) {
+							for(Equipo x : accesoBD.usuario_equipo(Inicio.nombreUsuario)) {
 								if(x.getId() == id) {
-									accesoBD.crearEquipo_Usuario(x, Inicio.nombreUsuario);
-									anadido = true;
+									noesta = false;
 								}
 							}
-							if(!anadido) {
-								errorCod.setText("Código inválido");
-							} else {
-								Equipos teams = new Equipos();
-								setVisible(false);
-								teams.setVisible(true);
-								
+							if(noesta) {
+								for(Equipo x : accesoBD.usuario_equipo(user)) {
+									if(x.getId() == id) {
+										accesoBD.crearEquipo_Usuario2(x, Inicio.nombreUsuario);
+										anadido = true;
+									}
+								}
+								if(!anadido) {
+									errorCod.setText("Código inválido");
+								} else {
+									Equipos teams = new Equipos();
+									setVisible(false);
+									teams.setVisible(true);
+									
+								}
+							}else {
+								errorCod.setText("Ese equipo ya ha sido añadido");
 							}
+						
 						}else {
 							errorCod.setText("Código inválido");
 						}

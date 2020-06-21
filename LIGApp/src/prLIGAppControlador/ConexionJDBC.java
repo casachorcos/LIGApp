@@ -365,6 +365,19 @@ public class ConexionJDBC extends Conexion {
         }
     }
 	
+	public void crearEquipo_Usuario2(Equipo e, String usuario) {
+        String privado = "INSERT INTO Us_Eq (idUsuarioUs_Eq, idEquipoUs_Eq) VALUES (?, ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado, PreparedStatement.RETURN_GENERATED_KEYS);
+            pS.setString(1, usuario);
+            pS.setInt(2, e.getId());
+            int res = pS.executeUpdate();
+            ResultSet rs = pS.getGeneratedKeys();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+	
 	public void crearEquipo_Usuario(Equipo e, String usuario) {
         crearEquipo(e);
 
@@ -475,6 +488,19 @@ public class ConexionJDBC extends Conexion {
 		eliminarLiga(a);
 	}
 	
+	public void eliminarEquipo_Us2(Equipo eq,String usuario) {	
+		String privado = "DELETE FROM Us_Eq WHERE (idUsuarioUs_Eq = ? && idEquipoUs_Eq = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
+			pS.setString(1, usuario);
+			pS.setInt(2, eq.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void eliminarEquipo_Us(Equipo eq,String usuario) {
 		
 		
@@ -490,6 +516,24 @@ public class ConexionJDBC extends Conexion {
 		
 		eliminarEquipo(eq);
 		
+	}
+	
+	public int contarEquipo_Us(Equipo eq) {
+		String query = "SELECT count(idUsuarioUs_Eq) FROM Us_Eq WHERE idEquipoUs_Eq = ?";
+		int res = 0;
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setInt(1, eq.getId());
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					res = rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 	
 	public void eliminarJugador_Us(Jugador j,String usuario) {

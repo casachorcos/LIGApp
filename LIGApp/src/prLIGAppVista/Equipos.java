@@ -195,6 +195,7 @@ public class Equipos extends JFrame {
 				if (!listaJ.isEmpty() && !list.isSelectionEmpty()) {
 					int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea borrar el equipo?");
 					if (res == 0) {
+						
 						int pos = list.getSelectedIndex();
 						Equipo j = listae.get(pos);
 						accesoBD.eliminarEquipoEnLiga(j);
