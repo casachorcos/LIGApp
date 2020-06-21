@@ -179,9 +179,15 @@ public class Jugadores extends JFrame {
 					if (res == 0) {
 						int pos = list.getSelectedIndex();
 						Jugador j = bdlista.get(pos);
-						accesoBD.eliminarJugadorEnEquipo(j);
-						accesoBD.eliminarJugador_Us(j, Inicio.nombreUsuario);
-						listaJ.remove(pos);
+						if(accesoBD.contarJugador_Us(j) == 1) {
+							accesoBD.eliminarJugadorEnEquipo(j);
+							accesoBD.eliminarJugador_Us(j, Inicio.nombreUsuario);
+							listaJ.remove(pos);
+						}else {
+							accesoBD.eliminarJugador_Us2(j, Inicio.nombreUsuario);
+							listaJ.remove(pos);
+						}
+						
 					}
 				}else {
 					error.setText("Debes seleccionar primero un jugador");

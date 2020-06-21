@@ -501,6 +501,18 @@ public class ConexionJDBC extends Conexion {
 	
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
+	public void eliminarLiga_Us2(Liga eq,String usuario) {	
+		String privado = "DELETE FROM Us_Lig WHERE (idUsuarioUs_Lig = ? && idLigaUs_Lig = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
+			pS.setString(1, usuario);
+			pS.setInt(2, eq.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}	
+	}
+	
 	public void eliminarLiga_Us(Liga a, String usuario) {
 		
 		
@@ -526,8 +538,7 @@ public class ConexionJDBC extends Conexion {
 			int res = pS.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
 	
 	public void eliminarEquipo_Us(Equipo eq,String usuario) {
@@ -547,8 +558,44 @@ public class ConexionJDBC extends Conexion {
 		
 	}
 	
+	public int contarJugador_Us(Jugador eq) {
+		String query = "SELECT count(idUsuarioUs_Jug) FROM Us_Jug WHERE idJugadorUs_Jug = ?";
+		int res = 0;
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setInt(1, eq.getId());
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					res = rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
 	public int contarEquipo_Us(Equipo eq) {
 		String query = "SELECT count(idUsuarioUs_Eq) FROM Us_Eq WHERE idEquipoUs_Eq = ?";
+		int res = 0;
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
+			pS.setInt(1, eq.getId());
+			ResultSet rs = pS.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					res = rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public int contarLiga_Us(Liga eq) {
+		String query = "SELECT count(idUsuarioUs_Lig) FROM Us_Lig WHERE idLigaUs_Lig = ?";
 		int res = 0;
 		try {
 			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query);
@@ -578,6 +625,18 @@ public class ConexionJDBC extends Conexion {
 		}
 		
 		eliminarJugador(j);
+	}
+	
+	public void eliminarJugador_Us2(Jugador eq,String usuario) {	
+		String privado = "DELETE FROM Us_Jug WHERE (idUsuarioUs_Jug = ? && idJugadorUs_Jug = ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(privado);
+			pS.setString(1, usuario);
+			pS.setInt(2, eq.getId());
+			int res = pS.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

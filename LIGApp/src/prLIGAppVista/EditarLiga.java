@@ -197,8 +197,8 @@ public class EditarLiga extends JFrame {
 			listaJ.addElement(j.toString());
 		}
 		
-		JButton button = new JButton("Eliminar");
-		button.addActionListener(new ActionListener() {
+		JButton btnEliminarEquipo = new JButton("Eliminar Equipo");
+		btnEliminarEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!list.isSelectionEmpty()) {
 					accesoBD.eliminarEquipoEnLiga(listae.get(list.getSelectedIndex()), Ligas.seleccionado);
@@ -211,8 +211,8 @@ public class EditarLiga extends JFrame {
 				}
 			}
 		});
-		button.setBounds(132, 390, 130, 30);
-		panel_1.add(button);
+		btnEliminarEquipo.setBounds(132, 390, 130, 30);
+		panel_1.add(btnEliminarEquipo);
 		
 		JList list_1 = new JList();
 		list_1.setBounds(1, 1, 140, 205);
@@ -230,7 +230,7 @@ public class EditarLiga extends JFrame {
 		lblJugadores.setBounds(307, 171, 79, 16);
 		panel_1.add(lblJugadores);
 		
-		JButton btnAadir = new JButton("A\u00F1adir");
+		JButton btnAadir = new JButton("A\u00F1adir Equipo");
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!list_1.isSelectionEmpty()) {
@@ -244,7 +244,7 @@ public class EditarLiga extends JFrame {
 				
 			}
 		});
-		btnAadir.setBounds(399, 397, 130, 30);
+		btnAadir.setBounds(395, 390, 130, 30);
 		panel_1.add(btnAadir);
 		
 		JScrollPane scrollPane1 = new JScrollPane();
@@ -261,5 +261,4 @@ public class EditarLiga extends JFrame {
 		
 		this.setLocationRelativeTo(null);
 	}
-
 }

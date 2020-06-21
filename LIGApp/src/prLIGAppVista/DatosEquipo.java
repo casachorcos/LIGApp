@@ -197,8 +197,8 @@ public class DatosEquipo extends JFrame {
 			listaJ.addElement(j.toString());
 		}
 		
-		JButton button = new JButton("Eliminar");
-		button.addActionListener(new ActionListener() {
+		JButton btnEliminarJugador = new JButton("Eliminar Jugador");
+		btnEliminarJugador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!list.isSelectionEmpty()) {
 					accesoBD.eliminarJugadorEnEquipo(listae.get(list.getSelectedIndex()), Equipos.seleccionado);
@@ -210,8 +210,8 @@ public class DatosEquipo extends JFrame {
 				}
 			}
 		});
-		button.setBounds(131, 390, 130, 30);
-		panel_1.add(button);
+		btnEliminarJugador.setBounds(131, 390, 130, 30);
+		panel_1.add(btnEliminarJugador);
 		
 		JList list_1 = new JList();
 		list_1.setBounds(1, 1, 140, 205);
@@ -229,7 +229,7 @@ public class DatosEquipo extends JFrame {
 		lblJugadores.setBounds(298, 171, 79, 16);
 		panel_1.add(lblJugadores);
 		
-		JButton btnAadir = new JButton("A\u00F1adir");
+		JButton btnAadir = new JButton("A\u00F1adir Jugador");
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!list_1.isSelectionEmpty()) {

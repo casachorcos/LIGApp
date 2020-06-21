@@ -232,7 +232,7 @@ public class FormularioJugador extends JFrame {
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (!list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()) {
+				if (list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()) {
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
 					String pos = new String(comboBox.getSelectedItem().toString());
@@ -242,7 +242,19 @@ public class FormularioJugador extends JFrame {
 					Jugadores j = new Jugadores();
 					j.setVisible(true);
 					setVisible(false);
-				} else {
+				} else if(!list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()){
+					Conexion accesoBD;
+					accesoBD = ConexionJDBC.getInstance();
+					String pos = new String(comboBox.getSelectedItem().toString());
+					Jugador jugador = new Jugador(accesoBD.generarID(), nombre.getText(), Integer.parseInt(edad.getText()));
+					jugador.setRol(pos);
+					accesoBD.crearJugador_Usuario(jugador, Inicio.nombreUsuario);
+					accesoBD.crearJugadorEnEquipo(jugador, listae.get(list.getSelectedIndex()));
+					Jugadores j = new Jugadores();
+					j.setVisible(true);
+					setVisible(false);
+					
+				}else {
 					error.setText("Debes rellenar los campos");
 				}
 			}

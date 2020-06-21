@@ -52,10 +52,14 @@ public abstract class Conexion {
 	public abstract List<Jugador> plantilla(int idEquipo);
 	
 	public abstract void eliminarLiga_Us(Liga a, String usuario);
+	public abstract void eliminarLiga_Us2(Liga a, String usuario);
 	public abstract void eliminarEquipo_Us(Equipo eq,String usuario);
 	public abstract void eliminarEquipo_Us2(Equipo eq,String usuario);
 	public abstract void eliminarJugador_Us(Jugador j,String usuario);
+	public abstract void eliminarJugador_Us2(Jugador j,String usuario);
 	public abstract int contarEquipo_Us(Equipo eq);
+	public abstract int contarJugador_Us(Jugador jug);
+	public abstract int contarLiga_Us(Liga lig);
 	
 	public abstract void crearJornada(Jornada jor);
 	public abstract void eliminarJornada(Jornada jor);
