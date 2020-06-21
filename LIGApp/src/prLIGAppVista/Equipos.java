@@ -149,7 +149,7 @@ public class Equipos extends JFrame {
 				setVisible(false);
 			}
 		});
-		anyadir.setBounds(450, 78, 152, 30);
+		anyadir.setBounds(450, 85, 152, 30);
 		panel_1.add(anyadir);
 		
 		
