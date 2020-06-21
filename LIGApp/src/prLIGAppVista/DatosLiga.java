@@ -17,8 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;

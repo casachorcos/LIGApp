@@ -20,10 +20,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Equipo;
-import prLIGAppModelo.Jugador;
+import prLIGAppClases.Equipo;
+import prLIGAppClases.Jugador;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;

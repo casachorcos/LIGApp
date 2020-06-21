@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;

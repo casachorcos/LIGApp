@@ -21,10 +21,10 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Equipo;
-import prLIGAppModelo.Partido;
+import prLIGAppClases.Equipo;
+import prLIGAppClases.Partido;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 public class Partidos extends JFrame {
 

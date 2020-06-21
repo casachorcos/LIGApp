@@ -20,9 +20,9 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Equipo;
+import prLIGAppClases.Equipo;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 public class Equipos extends JFrame {
 

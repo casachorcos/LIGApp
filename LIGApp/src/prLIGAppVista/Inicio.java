@@ -8,9 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Usuario;
+import prLIGAppClases.Usuario;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 import java.awt.Color;
 import javax.swing.JLabel;

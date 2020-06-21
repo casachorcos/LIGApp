@@ -9,12 +9,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Equipo;
-import prLIGAppModelo.Jornada;
-import prLIGAppModelo.Liga;
-import prLIGAppModelo.Partido;
+import prLIGAppClases.Equipo;
+import prLIGAppClases.Jornada;
+import prLIGAppClases.Liga;
+import prLIGAppClases.Partido;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 class JornadasEquiposParesTest {
 

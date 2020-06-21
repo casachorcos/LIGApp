@@ -19,9 +19,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Usuario;
+import prLIGAppClases.Usuario;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
+
 import java.awt.event.KeyAdapter;
 
 public class Registro extends JFrame {

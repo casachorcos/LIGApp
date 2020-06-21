@@ -8,12 +8,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Equipo;
-import prLIGAppModelo.Jugador;
-import prLIGAppModelo.Liga;
-import prLIGAppModelo.Usuario;
+import prLIGAppClases.Equipo;
+import prLIGAppClases.Jugador;
+import prLIGAppClases.Liga;
+import prLIGAppClases.Usuario;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 class TablasRelacionUsuarioTest {
 	

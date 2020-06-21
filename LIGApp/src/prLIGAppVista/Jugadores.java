@@ -17,13 +17,14 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import prLIGAppClases.Jugador;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
+
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingConstants;
-
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Jugador;
 
 public class Jugadores extends JFrame {
 

@@ -20,11 +20,11 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Equipo;
-import prLIGAppModelo.Jornada;
-import prLIGAppModelo.Partido;
+import prLIGAppClases.Equipo;
+import prLIGAppClases.Jornada;
+import prLIGAppClases.Partido;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 public class Jornadas extends JFrame {
 

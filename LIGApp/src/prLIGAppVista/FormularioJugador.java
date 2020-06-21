@@ -17,10 +17,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Equipo;
-import prLIGAppModelo.Jugador;
+import prLIGAppClases.Equipo;
+import prLIGAppClases.Jugador;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;

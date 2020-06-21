@@ -17,10 +17,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import prLIGAppControlador.Conexion;
-import prLIGAppControlador.ConexionJDBC;
-import prLIGAppModelo.Jugador;
-import prLIGAppModelo.Liga;
+import prLIGAppClases.Jugador;
+import prLIGAppClases.Liga;
+import prLIGAppConexion.Conexion;
+import prLIGAppConexion.ConexionJDBC;
 
 public class FormularioLiga extends JFrame {
 
