@@ -146,11 +146,11 @@ public class Partidos extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Jornada " + Jornadas.seleccionado.getNumeroJornada() + "  -  Del "  
 				+ Jornadas.seleccionado.getFechaInicio().getDate() + " / "
-				+ Jornadas.seleccionado.getFechaInicio().getMonth() + " / " 
+				+ (Jornadas.seleccionado.getFechaInicio().getMonth() + 1) + " / " 
 				+ (Jornadas.seleccionado.getFechaInicio().getYear() + 1900)
 				+ "  al  " + Jornadas.seleccionado.getFechaFin().getDate() + " / " 
-				+ Jornadas.seleccionado.getFechaFin().getMonth()
-				+ " / " + (Jornadas.seleccionado.getFechaFin().getYear() + 1900));
+				+ (Jornadas.seleccionado.getFechaFin().getMonth() + 1) + " / " 
+				+ (Jornadas.seleccionado.getFechaFin().getYear() + 1900));
 		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 26));
 		lblNewLabel.setBounds(20, 11, 633, 53);
 		panel_1.add(lblNewLabel);
