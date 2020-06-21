@@ -22,6 +22,7 @@ import prLIGAppModelo.Liga;
 import prLIGAppModelo.Partido;
 import prLIGAppModelo.Usuario;
 import prLIGAppVista.Jornadas;
+import prLIGAppVista.Jugadores;
 import prLIGAppVista.Ligas;
 import prLIGAppVista.Partidos;
 
@@ -168,6 +169,7 @@ public class ConexionJDBC extends Conexion {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public void crearEquipo(Equipo eq) {
 		String query = "INSERT INTO Equipo (id, nombre) VALUES (?, ?)";
