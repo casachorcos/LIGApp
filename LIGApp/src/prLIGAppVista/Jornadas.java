@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
+import prLIGAppModelo.Equipo;
 import prLIGAppModelo.Jornada;
 import prLIGAppModelo.Partido;
 
@@ -33,6 +34,7 @@ public class Jornadas extends JFrame {
 	public static Jornada seleccionado;
 	public static String nombreJornada;
 	public static String nombreJornadaSimple;
+	private List<Equipo> equipos;
 
 	/**
 	 * Launch the application.
@@ -195,7 +197,16 @@ public class Jornadas extends JFrame {
 		JButton anyadir = new JButton("Añadir Nueva Jornada");
 		anyadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				List<Equipo> equipos = accesoBD.equiposLiga(Ligas.seleccionado.getId());
+				
 				if (listae.isEmpty()) {
+					if (equipos.size() < 2) {
+
+						error.setText("Debe haber al menos dos equipos en la liga");
+						
+					} else {
+						
 					Jornada jor = new Jornada(accesoBD.generarCodJornada(), Ligas.seleccionado.getId());
 					accesoBD.crearJornada(jor);
 					accesoBD.actualizarCodJornada(accesoBD.generarCodJornada() + 1);
@@ -203,7 +214,15 @@ public class Jornadas extends JFrame {
 					Jornadas jorna = new Jornadas();
 					jorna.setVisible(true);
 					setVisible(false);
+
+					}
 				} else {
+					if (equipos.size() < 2) {
+
+						error.setText("Debe haber al menos dos equipos en la liga");
+						
+					} else {
+						
 					int id = accesoBD.generarCodJornada();
 					Date d = new Date(listae.get(listae.size() - 1).getFechaFin().getTime() + 1 * 24 * 60 * 60 * 1000);
 					Jornada jor = new Jornada(id, listae.size() + 1, Ligas.seleccionado.getId(), d);
@@ -213,6 +232,7 @@ public class Jornadas extends JFrame {
 					Jornadas jorna = new Jornadas();
 					jorna.setVisible(true);
 					setVisible(false);
+					}
 				}
 			}
 		});

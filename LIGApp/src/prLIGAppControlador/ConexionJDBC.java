@@ -795,22 +795,22 @@ public class ConexionJDBC extends Conexion {
     }
 
 	public void emparejamientos(Jornada jor) {
-        List<Equipo> equipos = equiposLiga(jor.getNombreLiga());
-        listaEquipos();
-        do {
-            int i, j;
-            Random r = new Random();
+		List<Equipo> equipos = equiposLiga(jor.getNombreLiga());
+		listaEquipos();
+		do {
+			int i, j;
+			Random r = new Random();
+			
+			i = Math.abs(r.nextInt() % equipos.size());
+			Equipo eq1 = equipos.get(i);
+			equipos.remove(i);
+			j = Math.abs(r.nextInt() % equipos.size());
+			Equipo eq2 = equipos.get(j);
+			equipos.remove(j);
+			parEnfrentado(eq1, eq2, jor);
+		} while (equipos.size() > 1);
+	}
 
-            i = Math.abs(r.nextInt() % equipos.size());
-            Equipo eq1 = equipos.get(i);
-            equipos.remove(i);
-            j = Math.abs(r.nextInt() % equipos.size());
-            Equipo eq2 = equipos.get(j);
-            equipos.remove(j);
-            parEnfrentado(eq1, eq2, jor);
-        } while (equipos.size() > 1);
-    }
-	
 	public List<Partido> listaPartidos(int codJornada) {
         ArrayList<Partido> partidos = new ArrayList<>();
         String query = "SELECT * FROM Partido WHERE jornada = " + codJornada;
