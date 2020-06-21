@@ -292,7 +292,11 @@ public class DatosJugadores extends JFrame {
 		
 		
 		for (Equipo j : listadelosequipos) {
-			listaJ.addElement(j.toString());
+			if (accesoBD.capitan(j, Jugadores.seleccionado)) {
+				listaJ.addElement(j.toString() + " (C)");
+			} else {
+				listaJ.addElement(j.toString());
+			}
 		}
 		
 		
