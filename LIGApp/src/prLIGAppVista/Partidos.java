@@ -144,9 +144,15 @@ public class Partidos extends JFrame {
 		panel_1.add(error);
 		error.setForeground(Color.RED);
 		
-		JLabel lblNewLabel = new JLabel("Jornada " + Jornadas.seleccionado.getNumeroJornada());
-		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 33));
-		lblNewLabel.setBounds(25, 11, 438, 53);
+		JLabel lblNewLabel = new JLabel("Jornada " + Jornadas.seleccionado.getNumeroJornada() + "  -  Del "  
+				+ Jornadas.seleccionado.getFechaInicio().getDate() + " / "
+				+ Jornadas.seleccionado.getFechaInicio().getMonth() + " / " 
+				+ (Jornadas.seleccionado.getFechaInicio().getYear() + 1900)
+				+ "  al  " + Jornadas.seleccionado.getFechaFin().getDate() + " / " 
+				+ Jornadas.seleccionado.getFechaFin().getMonth()
+				+ " / " + (Jornadas.seleccionado.getFechaFin().getYear() + 1900));
+		lblNewLabel.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 26));
+		lblNewLabel.setBounds(10, 11, 633, 53);
 		panel_1.add(lblNewLabel);
 		
 		Conexion accesoBD;
