@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
+import prLIGAppModelo.Jornada;
 
 public class DatosJornadas extends JFrame {
 
@@ -29,6 +30,8 @@ public class DatosJornadas extends JFrame {
 	private JTextField aniotxt;
 	private JTextField duraciontxt;
 	private JTextField visitantetxt;
+	public static Jornada seleccionado;
+	private List<Jornada> listajor;
 
 	/**
 	 * Launch the application.
@@ -188,6 +191,8 @@ public class DatosJornadas extends JFrame {
 		Conexion acceso;
 		acceso = ConexionJDBC.getInstance();
 		
+		seleccionado = Jornadas.seleccionado;
+		
 		JButton eliminar = new JButton("Aceptar");
 		eliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -198,7 +203,11 @@ public class DatosJornadas extends JFrame {
 					int anio = Integer.parseInt(aniotxt.getText());
 					int dur = Integer.parseInt(duraciontxt.getText());
 					
-					acceso.actualizarFechaJornada(Jornadas.seleccionado, dia, mes, anio, dur);
+					acceso.actualizarFechaJornada(seleccionado, dia, mes, anio, dur);
+					
+					listajor = acceso.listaJornadas(Ligas.seleccionado.getId());
+					
+					Jornadas.seleccionado = listajor.get(seleccionado.getNumeroJornada() - 1);
 					
 					Partidos par = new Partidos();
 					par.setVisible(true);
