@@ -99,4 +99,7 @@ public abstract class Conexion {
 
 	public abstract List<Equipo> equiposLiga(int codLiga);
 	public abstract void actualizarFechaJornada(Jornada seleccionado, int dia, int mes, int anio, int dur);
+	
+	public abstract void setCapi(Equipo equipo, Jugador jug);
+	public abstract boolean capitan(Equipo equipo, Jugador jug);
 }

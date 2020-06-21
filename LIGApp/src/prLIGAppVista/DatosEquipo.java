@@ -194,7 +194,12 @@ public class DatosEquipo extends JFrame {
 		panel_1.add(lblPlantilla);
 		
 		for (Jugador j : listae) {
-			listaJ.addElement(j.toString());
+			if (accesoBD.capitan(Equipos.seleccionado, j)) {
+				listaJ.addElement(j.toString() + " (C)");
+			} else {
+				listaJ.addElement(j.toString());
+			}
+			
 		}
 		
 		JButton btnEliminarJugador = new JButton("Eliminar Jugador");
@@ -210,7 +215,7 @@ public class DatosEquipo extends JFrame {
 				}
 			}
 		});
-		btnEliminarJugador.setBounds(131, 390, 130, 30);
+		btnEliminarJugador.setBounds(60, 390, 130, 30);
 		panel_1.add(btnEliminarJugador);
 		
 		JList list_1 = new JList();
@@ -256,6 +261,23 @@ public class DatosEquipo extends JFrame {
 		scrollPane2.setViewportView(list_1);
 		list_1.setLayoutOrientation(JList.VERTICAL);
 		panel_1.add(scrollPane2);
+		
+		JButton btnElegirCapitn = new JButton("Elegir Capit\u00E1n");
+		btnElegirCapitn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!list.isSelectionEmpty()) {
+					accesoBD.setCapi(Equipos.seleccionado, listae.get(list.getSelectedIndex()));
+					DatosEquipo de = new DatosEquipo();
+					setVisible(false);
+					de.setVisible(true);
+				} else {
+					error.setText("Debes seleccionar primero un jugador");
+				}
+			}
+		});
+		btnElegirCapitn.setBounds(206, 390, 130, 30);
+		panel_1.add(btnElegirCapitn);
+		
 		
 		this.setLocationRelativeTo(null);
 	}

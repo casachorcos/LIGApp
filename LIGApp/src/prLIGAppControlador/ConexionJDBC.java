@@ -1233,5 +1233,42 @@ public class ConexionJDBC extends Conexion {
 
 		return equipos;
 	}
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void setCapi(Equipo equipo, Jugador jug) {
+		PreparedStatement ps = null;
+		String query;
+		try {
+			query = "UPDATE Equipo SET capitan = ? WHERE id = ?";
+			ps = (PreparedStatement) con.prepareStatement(query);
+			ps.setInt(1, jug.getId());
+			ps.setInt(2, equipo.getId());
+			int res = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public boolean capitan(Equipo equipo, Jugador jug) {
+		boolean res = false;
 
+		String query = "SELECT capitan FROM Equipo WHERE id = " + equipo.getId();
+		try {
+			PreparedStatement ps = (PreparedStatement) con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					int c = rs.getInt(1);
+					if (c == jug.getId()) {
+						res = true;
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
 }
