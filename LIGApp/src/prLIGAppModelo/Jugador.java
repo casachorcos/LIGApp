@@ -20,13 +20,17 @@ public class Jugador {
     }
 
     public void setRol(String rol){
-        if(this.rol != null){
-            this.rol = rol;
-        }
+    	if (rol != null) {
+    		this.rol = rol.toString();
+    	}
     }
     
     public String getRol(){
-    	return rol;
+    	if (rol == null) {
+    		return "Sin posición";
+    	} else {
+    		return rol;
+    	}
     }
 
     public void incGoles(int g){

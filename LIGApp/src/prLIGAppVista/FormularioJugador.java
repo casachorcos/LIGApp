@@ -36,6 +36,8 @@ public class FormularioJugador extends JFrame {
 	private List<Equipo> listae;
 	private JTextField textoCodigo;
 
+	
+//	private JTextField pos;
 	/**
 	 * Launch the application.
 	 */
@@ -210,6 +212,8 @@ public class FormularioJugador extends JFrame {
 		list.setModel(listaJ);
 		list.setLayoutOrientation(JList.VERTICAL);
 		
+//		pos = new JTextField(20);
+		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(206, 132, 289, 20);
 		panel_1.add(comboBox);
@@ -217,6 +221,9 @@ public class FormularioJugador extends JFrame {
 		comboBox.addItem("Defensa");
 		comboBox.addItem("Centrocampista");
 		comboBox.addItem("Delantero/a");
+		
+		
+		
 				
 		JLabel lblPosicin = new JLabel("Posici\u00F3n:");
 		lblPosicin.setBounds(47, 135, 95, 14);
@@ -225,22 +232,13 @@ public class FormularioJugador extends JFrame {
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()) {
+				if (!list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()) {
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
+					String pos = new String(comboBox.getSelectedItem().toString());
 					Jugador jugador = new Jugador(accesoBD.generarID(), nombre.getText(), Integer.parseInt(edad.getText()));
-					jugador.setRol(comboBox.getSelectedItem().toString());
+					jugador.setRol(pos);
 					accesoBD.crearJugador_Usuario(jugador, Inicio.nombreUsuario);
-					Jugadores j = new Jugadores();
-					j.setVisible(true);
-					setVisible(false);
-				} else if (!list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()){
-					Conexion accesoBD;
-					accesoBD = ConexionJDBC.getInstance();
-					int id = accesoBD.generarID();
-					accesoBD.crearJugador_Usuario(new Jugador(id, nombre.getText(), Integer.parseInt(edad.getText())), Inicio.nombreUsuario);
-					Equipo equipo = listae.get(list.getSelectedIndex());
-					accesoBD.crearJugadorEnEquipo(new Jugador(id, nombre.getText(), Integer.parseInt(edad.getText())), equipo);
 					Jugadores j = new Jugadores();
 					j.setVisible(true);
 					setVisible(false);

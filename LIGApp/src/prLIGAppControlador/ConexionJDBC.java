@@ -315,8 +315,10 @@ public class ConexionJDBC extends Conexion {
 					String nombre = rs.getString(1);
 					int id = rs.getInt(3);
 					int edad = rs.getInt(4);
-					
-					jugadores.add(new Jugador(id, nombre, edad));
+					String pos = rs.getString(5);
+					Jugador jug = new Jugador(id, nombre, edad);
+					jug.setRol(pos);
+					jugadores.add(jug);
 				}
 			}
 		} catch (SQLException e) {

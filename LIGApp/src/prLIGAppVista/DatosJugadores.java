@@ -149,7 +149,7 @@ public class DatosJugadores extends JFrame {
 		
 		JLabel lblEdad = new JLabel("Edad:");
 		lblEdad.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblEdad.setBounds(47, 100, 107, 14);
+		lblEdad.setBounds(47, 121, 107, 14);
 		panel_1.add(lblEdad);
 		
 		
@@ -172,11 +172,10 @@ public class DatosJugadores extends JFrame {
 		
 		edad = new JTextField();
 		edad.setColumns(10);
-		edad.setBounds(125, 100, 357, 20);
+		edad.setBounds(125, 119, 357, 20);
 		panel_1.add(edad);
 		
 		positionField = new JTextField();
-		positionField.setEditable(false);
 		positionField.setBounds(125, 162, 357, 20);
 		panel_1.add(positionField);
 		positionField.setColumns(10);
@@ -184,6 +183,10 @@ public class DatosJugadores extends JFrame {
 		nombre.setText(Jugadores.seleccionado.getNombre());
 		edad.setText(String.valueOf(Jugadores.seleccionado.getEdad()));
 		positionField.setText(Jugadores.seleccionado.getRol());
+		
+		nombre.setEditable(false);
+		edad.setEditable(false);
+		positionField.setEditable(false);
 		
 		Conexion acceso;
 		acceso = ConexionJDBC.getInstance();
@@ -213,6 +216,11 @@ public class DatosJugadores extends JFrame {
 		lblPlantilla.setFont(new Font("Gadugi", Font.PLAIN, 12));
 		lblPlantilla.setBounds(47, 221, 74, 20);
 		panel_1.add(lblPlantilla);
+		
+		JLabel lblPosicin = new JLabel("Posici\u00F3n:");
+		lblPosicin.setFont(new Font("Gadugi", Font.PLAIN, 12));
+		lblPosicin.setBounds(47, 165, 95, 14);
+		panel_1.add(lblPosicin);
 		
 		for (Equipo j : listadelosequipos) {
 			listaJ.addElement(j.toString());

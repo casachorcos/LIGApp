@@ -3,6 +3,7 @@ package prueba;
 import prLIGAppControlador.Conexion;
 import prLIGAppControlador.ConexionJDBC;
 import prLIGAppModelo.Equipo;
+import prLIGAppModelo.Jugador;
 
 public class PruebaMain {
 
@@ -10,7 +11,7 @@ public class PruebaMain {
 		
 		Conexion accesoBD;
 		accesoBD = ConexionJDBC.getInstance();
-		System.out.println(accesoBD.contarEquipo_Us(new Equipo(260,"")));
+		
 		
 	}
 

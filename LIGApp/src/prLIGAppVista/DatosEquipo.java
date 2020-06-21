@@ -170,6 +170,8 @@ public class DatosEquipo extends JFrame {
 		panel_1.add(nombre);
 		nombre.setText(Equipos.seleccionado.getNombre());
 		
+		nombre.setEditable(false);
+		
 		Conexion accesoBD;
 		accesoBD = ConexionJDBC.getInstance();
 

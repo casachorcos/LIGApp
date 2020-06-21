@@ -39,7 +39,7 @@ public class Codigo extends JFrame {
 	 * Create the frame.
 	 */
 	public Codigo() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(100, 100, 600, 225);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,6 +52,8 @@ public class Codigo extends JFrame {
 		textField.setColumns(10);
 		textField.setText(Inicio.codigo);
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		textField.setEditable(false);
 		
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
