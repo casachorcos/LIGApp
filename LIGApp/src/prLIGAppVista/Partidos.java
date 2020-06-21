@@ -174,7 +174,7 @@ public class Partidos extends JFrame {
 			Equipo e1 = new Equipo(id1, null);
 			int id2 = partidoslista.get(i).getIdVisitante();
 			Equipo e2 = new Equipo(id2, null);
-			for (Equipo equi : teams) {
+			for (Equipo equi : equiposEnLaLiga) {
 				if (equi.equals(e1)) {
 					n1 = equi.getNombre();
 				}
@@ -201,7 +201,7 @@ public class Partidos extends JFrame {
 			int id2 = p.getIdVisitante();
 			Equipo e2 = new Equipo(id2, null);
 			
-			for (Equipo equi : teams) {
+			for (Equipo equi : equiposEnLaLiga) {
 				if (equi.equals(e1)) {
 					n1 = equi.getNombre();
 				}
