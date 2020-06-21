@@ -48,7 +48,126 @@ public class ConexionJDBC extends Conexion {
 		return instanciaInterfaz;
 	}
 	
+	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
+	// MÉTODOS CREAR BÁSICOS (CREAN EN BASE DE DATOS EL OBJETO CORRESPONDIENTE) 
+	
+	
+	
+	
+	public void crearUsuario(Usuario u) {
+		String query = "INSERT INTO Usuario (nombre, correo, password) VALUES (?, ?, ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			pS.setString(1, u.getNombre());
+			pS.setString(2, u.getCorreo());
+			pS.setString(3, u.getPassword());
+			int res = pS.executeUpdate();
+			ResultSet rs = pS.getGeneratedKeys();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	public void crearJugador(Jugador j) {
+		String query = "INSERT INTO Jugador (nombre, id, edad, posicion) VALUES (?, ?, ?, ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			pS.setString(1, j.getNombre());
+			pS.setInt(2, j.getId());
+			pS.setInt(3, j.getEdad());
+			pS.setString(4, j.getRol());
+			int res = pS.executeUpdate();
+			ResultSet rs = pS.getGeneratedKeys();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void crearEquipo(Equipo eq) {
+		String query = "INSERT INTO Equipo (id, nombre) VALUES (?, ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			pS.setInt(1, eq.getId());
+			pS.setString(2, eq.getNombre());
+			int res = pS.executeUpdate();
+			ResultSet rs = pS.getGeneratedKeys();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void crearLiga(Liga a) {
+		String query = "INSERT INTO Liga (id, nombre) VALUES (?, ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			pS.setInt(1, a.getId());
+			pS.setString(2, a.getNombre());
+			int res = pS.executeUpdate();
+			ResultSet rs = pS.getGeneratedKeys();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void crearJornada(Jornada jor) {
+		String query = "INSERT INTO Jornada (codjornada, numjornada, liga, iniciojornada, finjornada) VALUES (?, ?, ?, ?, ?)";
+		try {
+			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			pS.setInt(1, jor.getCodigoJornada());
+			pS.setInt(2, jor.getNumeroJornada());
+			pS.setInt(3, jor.getNombreLiga());
+			pS.setDate(4, jor.getFechaInicio());
+			pS.setDate(5, jor.getFechaFin());
+			int res = pS.executeUpdate();
+			ResultSet rs = pS.getGeneratedKeys();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void crearPartido(Partido p) {
+        String query = "INSERT INTO Partido (codpartido, local, visitante, jornada, goleslocal,"
+        + " golesvisitante, campo, fecha, jugado, hora) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            pS.setInt(1, p.getCodigoPartido());
+            pS.setInt(2, p.getIdLocal());
+            pS.setInt(3, p.getIdVisitante());
+            pS.setInt(4, p.getCodigoJornada());
+            pS.setInt(5, p.getGolesLocal());
+            pS.setInt(6, p.getGolesVisitante());
+            pS.setString(7, p.getCampo());
+            pS.setDate(8, p.getFecha());
+            pS.setBoolean(9, p.getJugado());
+            pS.setString(10, p.getHora());
+            int res = pS.executeUpdate();
+            ResultSet rs = pS.getGeneratedKeys();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	
+	
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	
+	
+	// MÉTODOS CREAR AVANZADOS (CREAN EN BASE DE DATOS LA RELACION CORRESPONDIENTE) 
+	
+	
+	
 	
 	public List<Usuario> listaUsuarios() {
 		ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -139,37 +258,6 @@ public class ConexionJDBC extends Conexion {
 		return ligas;
 	}		
 	
-	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
-	public void crearUsuario(Usuario u) {
-		String query = "INSERT INTO Usuario (nombre, correo, password) VALUES (?, ?, ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			pS.setString(1, u.getNombre());
-			pS.setString(2, u.getCorreo());
-			pS.setString(3, u.getPassword());
-			int res = pS.executeUpdate();
-			ResultSet rs = pS.getGeneratedKeys();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void crearJugador(Jugador j) {
-		String query = "INSERT INTO Jugador (nombre, id, edad, posicion) VALUES (?, ?, ?, ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			pS.setString(1, j.getNombre());
-			pS.setInt(2, j.getId());
-			pS.setInt(3, j.getEdad());
-			pS.setString(4, j.getRol());
-			int res = pS.executeUpdate();
-			ResultSet rs = pS.getGeneratedKeys();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public void actualizarJugador(Jugador j) {
 		String updateBody = "UPDATE Jugador p SET goles = ?, amarillas = ?, rojas = ? WHERE id = " + 
 				Jugadores.seleccionado.getId();
@@ -184,31 +272,7 @@ public class ConexionJDBC extends Conexion {
 		}
 	}
 	
-	public void crearEquipo(Equipo eq) {
-		String query = "INSERT INTO Equipo (id, nombre) VALUES (?, ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			pS.setInt(1, eq.getId());
-			pS.setString(2, eq.getNombre());
-			int res = pS.executeUpdate();
-			ResultSet rs = pS.getGeneratedKeys();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void crearLiga(Liga a) {
-		String query = "INSERT INTO Liga (id, nombre) VALUES (?, ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			pS.setInt(1, a.getId());
-			pS.setString(2, a.getNombre());
-			int res = pS.executeUpdate();
-			ResultSet rs = pS.getGeneratedKeys();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -662,21 +726,6 @@ public class ConexionJDBC extends Conexion {
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public void crearJornada(Jornada jor) {
-		String query = "INSERT INTO Jornada (codjornada, numjornada, liga, iniciojornada, finjornada) VALUES (?, ?, ?, ?, ?)";
-		try {
-			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			pS.setInt(1, jor.getCodigoJornada());
-			pS.setInt(2, jor.getNumeroJornada());
-			pS.setInt(3, jor.getNombreLiga());
-			pS.setDate(4, jor.getFechaInicio());
-			pS.setDate(5, jor.getFechaFin());
-			int res = pS.executeUpdate();
-			ResultSet rs = pS.getGeneratedKeys();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	@Override
 	public void eliminarJornada(Jornada jor) {
@@ -861,27 +910,6 @@ public class ConexionJDBC extends Conexion {
         return partidos;
     }
 	
-	public void crearPartido(Partido p) {
-        String query = "INSERT INTO Partido (codpartido, local, visitante, jornada, goleslocal,"
-        + " golesvisitante, campo, fecha, jugado, hora) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            pS.setInt(1, p.getCodigoPartido());
-            pS.setInt(2, p.getIdLocal());
-            pS.setInt(3, p.getIdVisitante());
-            pS.setInt(4, p.getCodigoJornada());
-            pS.setInt(5, p.getGolesLocal());
-            pS.setInt(6, p.getGolesVisitante());
-            pS.setString(7, p.getCampo());
-            pS.setDate(8, p.getFecha());
-            pS.setBoolean(9, p.getJugado());
-            pS.setString(10, p.getHora());
-            int res = pS.executeUpdate();
-            ResultSet rs = pS.getGeneratedKeys();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 	
 	public void eliminarPartido(Partido p) {
         String deleteBody = "DELETE FROM Partido WHERE (codpartido = ?)";
