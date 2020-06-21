@@ -29,6 +29,7 @@ public class DatosJugadores extends JFrame {
 	private JPanel contentPane;
 	private JTextField nombre;
 	private JTextField edad;
+	private JTextField positionField;
 	DefaultListModel listaJ;
 	private List<Equipo> listadelosequipos;
 
@@ -143,12 +144,12 @@ public class DatosJugadores extends JFrame {
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblNombre.setBounds(47, 125, 95, 14);
+		lblNombre.setBounds(47, 75, 95, 14);
 		panel_1.add(lblNombre);
 		
 		JLabel lblEdad = new JLabel("Edad:");
 		lblEdad.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblEdad.setBounds(47, 165, 107, 14);
+		lblEdad.setBounds(47, 100, 107, 14);
 		panel_1.add(lblEdad);
 		
 		
@@ -165,17 +166,24 @@ public class DatosJugadores extends JFrame {
 		panel_1.add(volver);
 		
 		nombre = new JTextField();
-		nombre.setBounds(125, 123, 357, 20);
+		nombre.setBounds(125, 75, 357, 20);
 		panel_1.add(nombre);
 		nombre.setColumns(10);
 		
 		edad = new JTextField();
 		edad.setColumns(10);
-		edad.setBounds(125, 163, 357, 20);
+		edad.setBounds(125, 100, 357, 20);
 		panel_1.add(edad);
+		
+		positionField = new JTextField();
+		positionField.setEditable(false);
+		positionField.setBounds(125, 162, 357, 20);
+		panel_1.add(positionField);
+		positionField.setColumns(10);
 		
 		nombre.setText(Jugadores.seleccionado.getNombre());
 		edad.setText(String.valueOf(Jugadores.seleccionado.getEdad()));
+		positionField.setText(Jugadores.seleccionado.getRol());
 		
 		Conexion acceso;
 		acceso = ConexionJDBC.getInstance();

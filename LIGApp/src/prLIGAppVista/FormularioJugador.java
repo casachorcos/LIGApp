@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -153,22 +154,22 @@ public class FormularioJugador extends JFrame {
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblNombre.setBounds(47, 100, 95, 14);
+		lblNombre.setBounds(46, 70, 95, 14);
 		panel_1.add(lblNombre);
 		
 		nombre = new JTextField();
 		nombre.setColumns(10);
-		nombre.setBounds(207, 98, 288, 20);
+		nombre.setBounds(206, 68, 289, 20);
 		panel_1.add(nombre);
 		
 		JLabel lblEdad = new JLabel("Edad:");
 		lblEdad.setFont(new Font("Gadugi", Font.PLAIN, 12));
-		lblEdad.setBounds(47, 131, 107, 14);
+		lblEdad.setBounds(46, 102, 107, 14);
 		panel_1.add(lblEdad);
 		
 		edad = new JTextField();
 		edad.setColumns(10);
-		edad.setBounds(208, 129, 288, 20);
+		edad.setBounds(206, 100, 289, 20);
 		panel_1.add(edad);
 		
 		JButton cancelar = new JButton("Cancelar");
@@ -209,13 +210,27 @@ public class FormularioJugador extends JFrame {
 		list.setModel(listaJ);
 		list.setLayoutOrientation(JList.VERTICAL);
 		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(206, 132, 289, 20);
+		panel_1.add(comboBox);
+		comboBox.addItem("Portero/a");
+		comboBox.addItem("Defensa");
+		comboBox.addItem("Centrocampista");
+		comboBox.addItem("Delantero/a");
+				
+		JLabel lblPosicin = new JLabel("Posici\u00F3n:");
+		lblPosicin.setBounds(47, 135, 95, 14);
+		panel_1.add(lblPosicin);
+		
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (list.isSelectionEmpty() && !nombre.getText().isEmpty() && !edad.getText().isEmpty()) {
 					Conexion accesoBD;
 					accesoBD = ConexionJDBC.getInstance();
-					accesoBD.crearJugador_Usuario(new Jugador(accesoBD.generarID(), nombre.getText(), Integer.parseInt(edad.getText())), Inicio.nombreUsuario);
+					Jugador jugador = new Jugador(accesoBD.generarID(), nombre.getText(), Integer.parseInt(edad.getText()));
+					jugador.setRol(comboBox.getSelectedItem().toString());
+					accesoBD.crearJugador_Usuario(jugador, Inicio.nombreUsuario);
 					Jugadores j = new Jugadores();
 					j.setVisible(true);
 					setVisible(false);

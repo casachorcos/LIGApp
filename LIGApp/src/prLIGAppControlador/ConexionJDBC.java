@@ -155,12 +155,13 @@ public class ConexionJDBC extends Conexion {
 	}
 
 	public void crearJugador(Jugador j) {
-		String query = "INSERT INTO Jugador (nombre, id, edad) VALUES (?, ?, ?)";
+		String query = "INSERT INTO Jugador (nombre, id, edad, posicion) VALUES (?, ?, ?, ?)";
 		try {
 			PreparedStatement pS = (PreparedStatement) con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			pS.setString(1, j.getNombre());
 			pS.setInt(2, j.getId());
 			pS.setInt(3, j.getEdad());
+			pS.setString(4, j.getRol());
 			int res = pS.executeUpdate();
 			ResultSet rs = pS.getGeneratedKeys();
 		} catch (SQLException e) {
